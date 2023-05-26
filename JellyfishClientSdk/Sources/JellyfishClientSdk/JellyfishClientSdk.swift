@@ -3,8 +3,4 @@ public struct JellyfishClientSdk {
 
     public init() {
     }
-
-    public func hello() {
-        print("SIEMA ENIU")
-    }
 }
