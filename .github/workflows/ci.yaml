@@ -1,0 +1,17 @@
+name: Run lint & tests
+on: [push]
+
+jobs:
+  lint:
+    runs-on: macos-12
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Install deps
+        run: brew install swift-format xcbeautify
+
+      - name: Run formatter
+        run: swift-format format -i -r ./JellyfishClientSdk/Sources/**/*.swift --configuration swift-format-config.json
+
+      - name: Run lint
+        run: swift-format lint -r ./JellyfishClientSdk/Sources/**/*.swift --configuration swift-format-config.json
