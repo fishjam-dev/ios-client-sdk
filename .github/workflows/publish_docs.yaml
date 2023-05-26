@@ -1,0 +1,28 @@
+name: Deploy Docs
+on:
+  push:
+    tags:
+      - "*"
+
+jobs:
+  build:
+    runs-on: macos-12
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Build Docs
+        run: mkdir JellyfishClientSdk/docs && xcodebuild docbuild -scheme JellyfishClientSdk -destination generic/platform=iOS OTHER_DOCC_FLAGS="--transform-for-static-hosting --output-path docs --hosting-base-path ios-client-sdk"
+
+      - name: Install coreutils
+        run: brew install coreutils
+
+      - name: Change PATH
+        run: echo "/usr/local/opt/coreutils/libexec/gnubin" >> $GITHUB_PATH
+
+      - name: Deploy
+        uses: s0/git-publish-subdir-action@develop
+        env:
+          REPO: self
+          BRANCH: gh-pages
+          FOLDER: JellyfishClientSdk/docs
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
