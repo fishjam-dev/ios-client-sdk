@@ -240,6 +240,8 @@
 				Base,
 			);
 			mainGroup = 2FB8B3C52A20C6DA0060E251;
+			packageReferences = (
+			);
 			productRefGroup = 2FB8B3CF2A20C6DA0060E251 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
