@@ -1,21 +1,30 @@
 import MembraneRTC
+import WebRTC
+
+public struct Config {
+  var websocketUrl: String;
+  var token: String;
+  
+  public init(websocketUrl: String, token: String) {
+      self.websocketUrl = websocketUrl
+      self.token = token
+  }
+}
 
 public class JellyfishClientSdk {
-   private var listiner: JellyfishClientListener
-   
-   public init(listener: JellyfishClientListener) {
-     listiner = listener;
-   }
-   
-   private var client = JellyfishClientInternal(self.listener)
+  private var client: JellyfishClientInternal
+
+  public init(delegate: MembraneRTCDelegate){
+    self.client = JellyfishClientInternal(delegate: delegate)
+  }
 
    /**
     * Connects to the server using the WebSocket connection
     *
     * @param config - Configuration object for the client
     */
-   public func connect(config: Config) {
-       client.connect(config)
+  public func connect(config: Config) {
+     client.connect(config: config)
    }
 
    /**
@@ -42,8 +51,8 @@ public class JellyfishClientSdk {
     * @param peerMetadata - Any information that other peers will receive in onPeerJoined
     * after accepting this peer
     */
-   public func join(peerMetadata: Metadata = emptyMap()) {
-       client.webrtcClient.join(peerMetadata)
+   public func join(peerMetadata: Metadata) {
+     client.webrtcClient.join(peerMetadata: peerMetadata)
    }
 
    /**
@@ -60,9 +69,9 @@ public class JellyfishClientSdk {
    public func createVideoTrack(
        videoParameters: VideoParameters,
        metadata: Metadata,
-       captureDeviceName: String? = null,
+       captureDeviceName: String? = nil
    ) -> LocalVideoTrack {
-       return client.webrtcClient.createVideoTrack(videoParameters, metadata, captureDeviceName)
+     return client.webrtcClient.createVideoTrack(videoParameters: videoParameters, metadata: metadata,captureDeviceId: captureDeviceName)
    }
 
    /**
@@ -74,7 +83,7 @@ public class JellyfishClientSdk {
     * @return an instance of the audio track
     */
    public func createAudioTrack(metadata: Metadata) -> LocalAudioTrack {
-       return client.webrtcClient.createAudioTrack(metadata)
+     return client.webrtcClient.createAudioTrack(metadata: metadata)
    }
 
    /**
@@ -89,16 +98,18 @@ public class JellyfishClientSdk {
     * @return an instance of the screencast track
     */
    public func createScreencastTrack(
-       mediaProjectionPermission: Intent,
-       videoParameters: VideoParameters,
-       metadata: Metadata,
-       onEnd: (() -> Unit)? = null,
-   ) -> LocalScreencastTrack {
+    appGroup: String,
+    videoParameters: VideoParameters,
+    metadata: Metadata,
+    onStart: @escaping (_ track: LocalScreenBroadcastTrack) -> Void,
+    onStop: @escaping () -> Void
+   ) -> LocalScreenBroadcastTrack {
        return client.webrtcClient.createScreencastTrack(
-           mediaProjectionPermission,
-           videoParameters,
-           metadata,
-           onEnd,
+        appGroup: appGroup,
+        videoParameters: videoParameters,
+        metadata: metadata,
+        onStart: onStart,
+        onStop: onStop
        )
    }
 
@@ -108,8 +119,8 @@ public class JellyfishClientSdk {
     * @param trackId an id of a valid local track that has been created using the current client
     * @return a boolean whether the track has been successfully removed or not
     */
-   public func removeTrack(trackId: String) -> Boolean {
-       return client.webrtcClient.removeTrack(trackId)
+   public func removeTrack(trackId: String) -> Bool {
+     return client.webrtcClient.removeTrack(trackId: trackId)
    }
 
    /**
@@ -123,7 +134,7 @@ public class JellyfishClientSdk {
     * @param encoding an encoding to receive
     */
    public func setTargetTrackEncoding(trackId: String, encoding: TrackEncoding) {
-       client.webrtcClient.setTargetTrackEncoding(trackId, encoding)
+     client.webrtcClient.setTargetTrackEncoding(trackId: trackId, encoding: encoding)
    }
 
    /**
@@ -133,7 +144,7 @@ public class JellyfishClientSdk {
     * @param encoding an encoding that will be enabled
     */
    public func enableTrackEncoding(trackId: String, encoding: TrackEncoding) {
-       client.webrtcClient.enableTrackEncoding(trackId, encoding)
+     client.webrtcClient.enableTrackEncoding(trackId: trackId, encoding: encoding)
    }
 
    /**
@@ -143,7 +154,7 @@ public class JellyfishClientSdk {
     * @param encoding an encoding that will be disabled
     */
    public func disableTrackEncoding(trackId: String, encoding: TrackEncoding) {
-       client.webrtcClient.disableTrackEncoding(trackId, encoding)
+     client.webrtcClient.disableTrackEncoding(trackId: trackId, encoding: encoding)
    }
 
    /**
@@ -154,7 +165,7 @@ public class JellyfishClientSdk {
     * callback `onPeerUpdated` will be triggered for other peers in the room.
     */
    public func updatePeerMetadata(peerMetadata: Metadata) {
-       client.webrtcClient.updatePeerMetadata(peerMetadata)
+     client.webrtcClient.updatePeerMetadata(peerMetadata: peerMetadata)
    }
 
    /**
@@ -166,7 +177,7 @@ public class JellyfishClientSdk {
     * callback `onTrackUpdated` will be triggered for other peers in the room.
     */
    public func updateTrackMetadata(trackId: String, trackMetadata: Metadata) {
-       client.webrtcClient.updateTrackMetadata(trackId, trackMetadata)
+     client.webrtcClient.updateTrackMetadata(trackId: trackId, trackMetadata: trackMetadata)
    }
 
    /**
@@ -176,8 +187,8 @@ public class JellyfishClientSdk {
     * @param trackId track id of a video track
     * @param bandwidthLimit bandwidth in kbps
     */
-   public func setTrackBandwidth(trackId: String, bandwidthLimit: TrackBandwidthLimit.BandwidthLimit) {
-       client.webrtcClient.setTrackBandwidth(trackId, bandwidthLimit)
+   public func setTrackBandwidth(trackId: String, bandwidthLimit: BandwidthLimit) {
+     client.webrtcClient.setTrackBandwidth(trackId: trackId, bandwidth: bandwidthLimit)
    }
 
    /**
@@ -189,24 +200,24 @@ public class JellyfishClientSdk {
    public func setEncodingBandwidth(
        trackId: String,
        encoding: String,
-       bandwidthLimit: TrackBandwidthLimit.BandwidthLimit
+       bandwidthLimit: BandwidthLimit
    ) {
-       client.webrtcClient.setEncodingBandwidth(trackId, encoding, bandwidthLimit)
+     client.webrtcClient.setEncodingBandwidth(trackId: trackId, encoding: encoding, bandwidth: bandwidthLimit)
    }
 
    /**
     * Changes severity level of debug logs
     * @param severity enum value representing the logging severity
     */
-   public func changeWebRTCLoggingSeverity(severity: Logging.Severity) {
-       client.webrtcClient.changeWebRTCLoggingSeverity(severity)
+   public func changeWebRTCLoggingSeverity(severity: RTCLoggingSeverity) {
+     client.webrtcClient.changeWebRTCLoggingSeverity(severity: severity)
    }
 
    /**
     * Returns current connection stats
     * @return a map containing statistics
     */
-   public func getStats() -> [String, RTCStats] {
+  public func getStats() -> [String: RTCStats] {
        return client.webrtcClient.getStats()
    }
 }

@@ -1,3 +1,6 @@
+import Foundation
+import MembraneRTC
+
 protocol JellyfishClientListener {
     /**
    * Emitted when the websocket connection is closed
@@ -7,7 +10,7 @@ protocol JellyfishClientListener {
     /**
    * Emitted when occurs an error in the websocket connection
    */
-    func onSocketError(t: Throwable, response: Response?)
+    func onSocketError()
     /**
    * Emitted when the websocket connection is opened
    */
@@ -31,7 +34,7 @@ protocol JellyfishClientListener {
     /**
    * Called when peer was accepted.
    */
-    func onJoinSuccess(peerID: String, peersInRoom: List<Peer>)
+    func onJoinSuccess(peerID: String, peersInRoom: [Peer])
 
     /**
    * Called when peer was not accepted
@@ -90,5 +93,5 @@ protocol JellyfishClientListener {
    * @param estimation - client's available incoming bitrate estimated
    * by the server. It's measured in bits per second.
    */
-    func onBandwidthEstimationChanged(estimation: Long)
+    func onBandwidthEstimationChanged(estimation: Int)
 }
