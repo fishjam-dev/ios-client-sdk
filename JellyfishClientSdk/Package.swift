@@ -6,8 +6,8 @@ import PackageDescription
 let package = Package(
     name: "JellyfishClientSdk",
     platforms: [
-            .iOS(.v13)
-        ],
+        .iOS(.v13)
+    ],
     products: [
         // Products define the executables and libraries a package produces, and make them visible to other packages.
         .library(
@@ -15,9 +15,9 @@ let package = Package(
             targets: ["JellyfishClientSdk"])
     ],
     dependencies: [
-      .package(url: "https://github.com/apple/swift-protobuf.git", from: "1.6.0"),
-      .package(url: "https://github.com/jellyfish-dev/membrane-webrtc-ios.git", branch:"graszka22/swift-package"),
-//      .package(url: "https://github.com/daltoniam/Starscream.git", from: "3.0.0")
+        .package(url: "https://github.com/apple/swift-protobuf.git", from: "1.6.0"),
+        .package(url: "https://github.com/jellyfish-dev/membrane-webrtc-ios.git", branch: "graszka22/swift-package"),
+        .package(url: "https://github.com/daltoniam/Starscream.git", from: "3.0.0"),
     ],
     targets: [
         // Targets are the basic building blocks of a package. A target can define a module or a test suite.
@@ -25,9 +25,9 @@ let package = Package(
         .target(
             name: "JellyfishClientSdk",
             dependencies: [
-              .product(name: "MembraneRTC", package: "membrane-webrtc-ios"),
-              .product(name: "SwiftProtobuf", package: "swift-protobuf"),
-//              .product(name: "Starscream", package:"Starscream")
+                .product(name: "MembraneRTC", package: "membrane-webrtc-ios"),
+                .product(name: "SwiftProtobuf", package: "swift-protobuf"),
+                .product(name: "Starscream", package: "Starscream"),
             ])
     ]
 )
