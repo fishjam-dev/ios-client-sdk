@@ -138,7 +138,7 @@ internal class JellyfishClientInternal: NSObject, JellyfishClientListener, Membr
     }
 
     func onAuthSuccess() {
-
+        print("authed")
     }
 
     func onAuthError() {
