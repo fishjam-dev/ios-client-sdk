@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		2FB1EE8D2A29E8F500BB4294 /* ContentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FB1EE8C2A29E8F500BB4294 /* ContentViewController.swift */; };
+		2FB1EE902A2A1EEE00BB4294 /* ParticipantVideoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FB1EE8F2A2A1EED00BB4294 /* ParticipantVideoView.swift */; };
 		2FB8B3D22A20C6DA0060E251 /* JellyfishClientDemoApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FB8B3D12A20C6DA0060E251 /* JellyfishClientDemoApp.swift */; };
 		2FB8B3D42A20C6DA0060E251 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FB8B3D32A20C6DA0060E251 /* ContentView.swift */; };
 		2FB8B3D62A20C6DD0060E251 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2FB8B3D52A20C6DD0060E251 /* Assets.xcassets */; };
@@ -38,6 +39,7 @@
 /* Begin PBXFileReference section */
 		2FB1EE8C2A29E8F500BB4294 /* ContentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentViewController.swift; sourceTree = "<group>"; };
 		2FB1EE8E2A2A023600BB4294 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		2FB1EE8F2A2A1EED00BB4294 /* ParticipantVideoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticipantVideoView.swift; sourceTree = "<group>"; };
 		2FB8B3CE2A20C6DA0060E251 /* JellyfishClientDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = JellyfishClientDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2FB8B3D12A20C6DA0060E251 /* JellyfishClientDemoApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JellyfishClientDemoApp.swift; sourceTree = "<group>"; };
 		2FB8B3D32A20C6DA0060E251 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -106,6 +108,7 @@
 			children = (
 				2FB1EE8E2A2A023600BB4294 /* Info.plist */,
 				2FB8B3D12A20C6DA0060E251 /* JellyfishClientDemoApp.swift */,
+				2FB1EE8F2A2A1EED00BB4294 /* ParticipantVideoView.swift */,
 				2FB1EE8C2A29E8F500BB4294 /* ContentViewController.swift */,
 				2FB8B3D32A20C6DA0060E251 /* ContentView.swift */,
 				2FB8B3D52A20C6DD0060E251 /* Assets.xcassets */,
@@ -291,6 +294,7 @@
 			files = (
 				2FB8B3D42A20C6DA0060E251 /* ContentView.swift in Sources */,
 				2FB1EE8D2A29E8F500BB4294 /* ContentViewController.swift in Sources */,
+				2FB1EE902A2A1EEE00BB4294 /* ParticipantVideoView.swift in Sources */,
 				2FB8B3D22A20C6DA0060E251 /* JellyfishClientDemoApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
