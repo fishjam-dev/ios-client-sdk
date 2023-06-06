@@ -175,6 +175,7 @@ internal class JellyfishClientInternal: JellyfishClientListener, WebSocketDelega
     }
 
     func onDisconnected() {
+        print("disconnected")
         listiner.onDisconnected()
     }
 

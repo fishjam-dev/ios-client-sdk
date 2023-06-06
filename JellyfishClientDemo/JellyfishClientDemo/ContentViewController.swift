@@ -58,22 +58,48 @@ class ContentViewController: ObservableObject {
         self.participants = [:]
         self.participantVideos = []
         self.localParticipantId = "local"
+
+        self.jellyfishClient = JellyfishClientSdk(listiner: self)
+
     }
 
     public func connect() {
-        self.jellyfishClient = JellyfishClientSdk(listiner: self)
-
         let conf = Config(
-            websocketUrl: "ws://192.168.83.89:4000/socket/peer/websocket",
+            websocketUrl: "ws://192.168.0.164:4000/socket/peer/websocket",
             token:
-                "SFMyNTY.g2gDdAAAAAJkAAdwZWVyX2lkbQAAACRiMjg2ZWVkYS1lMWJkLTQ5ZWQtYTBlOC1mMGNlYmFjNzY0ZDlkAAdyb29tX2lkbQAAACQzY2NhYzcwNC0xYTY4LTQ0YjgtYjExZi01NDQ0OTIyZTJhZGJuBgCBHIp8iAFiAAFRgA.bnmKFlThJ2C01F8R_OL_o17Fm_FrEKE1DgeWyVet9dg"
+                "SFMyNTY.g2gDdAAAAAJkAAdwZWVyX2lkbQAAACQ5MTEzZmRkYy02M2I0LTRhNjItYTZjOC0xOTMxODQ4M2M3MDJkAAdyb29tX2lkbQAAACQwMTM3NGE0OC0yOGRjLTQ0YzgtOWFhNC0yZDY2ZWQ0YjRkNTJuBgDizoiPiAFiAAFRgA.wKMlKH3klK_L_c1CHvVKJOwhISSNeDJaGdxociu-wDE"
+        )
+
+        let isMicEnabled = true
+        let isCameraEnabled = true
+        let isScreensharingEnabled = false
+
+        let videoTrackMetadata =
+            [
+                "user_id": "UNKNOWN", "active": true, "type": "camera",
+            ] as [String: Any]
+        let audioTrackMetadata =
+            [
+                "user_id": "UNKNOWN", "active": true, "type": "audio",
+            ] as [String: Any]
+
+        let preset = VideoParameters.presetHD43
+        let videoParameters = VideoParameters(
+            dimensions: preset.dimensions.flip(),
+            maxBandwidth: .SimulcastBandwidthLimit(["l": 150, "m": 500, "h": 1500]),
+            simulcastConfig: SimulcastConfig(enabled: false)
         )
 
         jellyfishClient?.connect(config: conf)
+
+        self.localVideoTrack = jellyfishClient?.createVideoTrack(
+            videoParameters: videoParameters, metadata: .init(videoTrackMetadata))
+        self.localAudioTrack = jellyfishClient?.createAudioTrack(metadata: .init(audioTrackMetadata))
+
     }
 
     public func disconnect() {
-        jellyfishClient?.leave()
+        jellyfishClient?.cleanUp()
     }
 }
 
