@@ -13,8 +13,6 @@ struct ContentView: View {
 
     init() {
         self.contentViewController = ContentViewController()
-        print(contentViewController.participants)
-
     }
 
     @ViewBuilder

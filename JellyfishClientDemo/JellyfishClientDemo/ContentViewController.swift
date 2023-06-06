@@ -131,12 +131,9 @@ extension ContentViewController: JellyfishClientListener {
         })
     }
 
-    func onSendMediaEvent(event: SerializedMediaEvent) {
-        print("sed", event)
-    }
+    func onSendMediaEvent(event: SerializedMediaEvent) {}
 
     func onJoinSuccess(peerID: String, peersInRoom: [Peer]) {
-        print("join success")
         self.localParticipantId = peerID
 
         let localParticipant = Participant(id: peerID, displayName: "Me", isAudioTrackActive: true)
