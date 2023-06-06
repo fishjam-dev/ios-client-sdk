@@ -9,6 +9,7 @@ import SwiftUI
 
 struct ContentView: View {
     @ObservedObject var contentViewController: ContentViewController
+    @State private var token: String = ""
 
     init() {
         self.contentViewController = ContentViewController()
@@ -37,12 +38,14 @@ struct ContentView: View {
         }
     }
 
-    func connectButt() {
-        contentViewController.connect()
+    func connect() {
+        contentViewController.connect(peerToken: token)
+        contentViewController.connected = true
     }
 
     func disconnect() {
         contentViewController.disconnect()
+        contentViewController.connected = false
     }
 
     var body: some View {
@@ -51,9 +54,30 @@ struct ContentView: View {
                 .imageScale(.large)
                 .foregroundColor(.accentColor)
             Text("Hello, world!")
-            Button("Connect", action: connectButt)
-            Button("Disconnect", action: disconnect)
-            participantsVideoViews(contentViewController.participantVideos, size: 100)
+            if contentViewController.connected {
+                Button("Disconnect", action: disconnect)
+                participantsVideoViews(contentViewController.participantVideos, size: 100)
+            } else {
+                VStack(alignment: .leading) {
+                    Text("Peer token")
+                        .padding()
+                        .foregroundColor(.white)
+                        .font(.system(size: 16, weight: .bold))
+
+                    TextField("peer token", text: $token)
+                        .padding()
+                        .background(Color.white)
+                        .cornerRadius(6)
+                        .padding(4)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 6)
+                                .stroke(Color.blue, lineWidth: 2.5)
+                        )
+                        .padding(3)
+                        .foregroundColor(.blue)
+                    Button("Connect", action: connect)
+                }
+            }
         }
         .padding()
     }

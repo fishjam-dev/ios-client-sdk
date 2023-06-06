@@ -47,6 +47,7 @@ class ContentViewController: ObservableObject {
 
     @Published var participants: [String: Participant]
     @Published var participantVideos: [ParticipantVideo]
+    @Published var connected: Bool
 
     var localParticipantId: String
     var localVideoTrack: LocalVideoTrack?
@@ -58,21 +59,16 @@ class ContentViewController: ObservableObject {
         self.participants = [:]
         self.participantVideos = []
         self.localParticipantId = "local"
+        self.connected = false
 
         self.jellyfishClient = JellyfishClientSdk(listiner: self)
-
     }
 
-    public func connect() {
+    public func connect(peerToken: String) {
         let conf = Config(
             websocketUrl: "ws://192.168.0.164:4000/socket/peer/websocket",
-            token:
-                "SFMyNTY.g2gDdAAAAAJkAAdwZWVyX2lkbQAAACQ5MTEzZmRkYy02M2I0LTRhNjItYTZjOC0xOTMxODQ4M2M3MDJkAAdyb29tX2lkbQAAACQwMTM3NGE0OC0yOGRjLTQ0YzgtOWFhNC0yZDY2ZWQ0YjRkNTJuBgDizoiPiAFiAAFRgA.wKMlKH3klK_L_c1CHvVKJOwhISSNeDJaGdxociu-wDE"
+            token: peerToken
         )
-
-        let isMicEnabled = true
-        let isCameraEnabled = true
-        let isScreensharingEnabled = false
 
         let videoTrackMetadata =
             [
