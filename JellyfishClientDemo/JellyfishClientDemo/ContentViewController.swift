@@ -272,11 +272,17 @@ extension ContentViewController: JellyfishClientListener {
 
     func onPeerUpdated(peer _: Peer) {}
 
-    func onSocketClose(code: Int, reason: String) {}
+    func onSocketClose(code: Int, reason: String) {
+        if code != 1000 || reason == "invalid token" {
+            self.errorMessage = setErrorMessage(code: code, message: reason)
+        }
+    }
 
     func onSocketError() {}
 
-    func onSocketOpen() {}
+    func onSocketOpen() {
+        self.errorMessage = ""
+    }
 
     func onAuthSuccess() {
         jellyfishClient?.join(peerMetadata: .init(["displayName": "iphoneUser"]))
@@ -285,4 +291,8 @@ extension ContentViewController: JellyfishClientListener {
     func onAuthError() {}
 
     func onDisconnected() {}
+
+    private func setErrorMessage(code: Int, message: String) -> String {
+        return String(code) + ": " + message
+    }
 }

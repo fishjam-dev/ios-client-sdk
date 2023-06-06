@@ -48,28 +48,25 @@ internal class JellyfishClientInternal: JellyfishClientListener, WebSocketDelega
     }
 
     func websocketDidDisconnect(socket: Starscream.WebSocketClient, error: Error?) {
-        print("disconnect")
-        onSocketClose(code: 1000, reason: "TODO")
+        if let error = error as? WSError {
+            onSocketClose(code: error.code, reason: error.message)
+        }
     }
 
     func websocketDidReceiveMessage(socket: Starscream.WebSocketClient, text: String) {
         // UNSUPPORTED
-        print("xd")
         onSocketError()
     }
 
     func websocketDidReceiveData(socket: Starscream.WebSocketClient, data: Data) {
         do {
             let peerMessage = try Jellyfish_PeerMessage(serializedData: data)
-            print("GOT FROM SERVER: \(peerMessage)")
             if case .authenticated(_) = peerMessage.content {
-                print("AUTH SUCCESS")
                 onAuthSuccess()
             } else if peerMessage.mediaEvent.isInitialized {
-                print("MEDIA EVENT")
                 receiveEvent(event: peerMessage.mediaEvent.data)
             } else {
-                print("Received unexpected websocket message: $peerMessage")
+                print("Received unexpected websocket message: \(peerMessage)")
             }
         } catch {
             print("Unexpected error: \(error).")
@@ -81,22 +78,18 @@ internal class JellyfishClientInternal: JellyfishClientListener, WebSocketDelega
     }
 
     private func receiveEvent(event: SerializedMediaEvent) {
-        print("recieved", event)
         webrtcClient?.receiveMediaEvent(mediaEvent: event)
     }
 
     func onJoinError(metadata: Any) {
-        print("join error", metadata)
         listiner.onJoinError(metadata: metadata)
     }
 
     func onJoinSuccess(peerID: String, peersInRoom: [Peer]) {
-        print("join success")
         listiner.onJoinSuccess(peerID: peerID, peersInRoom: peersInRoom)
     }
 
     func onPeerJoined(peer: Peer) {
-        print("peer")
         listiner.onPeerJoined(peer: peer)
     }
 
@@ -115,7 +108,6 @@ internal class JellyfishClientInternal: JellyfishClientListener, WebSocketDelega
                     $0.data = event
                 })
             })
-        print(mediaEvent)
 
         guard let serialzedData = try? mediaEvent.serializedData() else {
             return
@@ -124,7 +116,6 @@ internal class JellyfishClientInternal: JellyfishClientListener, WebSocketDelega
     }
 
     func onTrackAdded(ctx: TrackContext) {
-        print("Added")
         listiner.onTrackAdded(ctx: ctx)
     }
 
@@ -141,7 +132,6 @@ internal class JellyfishClientInternal: JellyfishClientListener, WebSocketDelega
     }
 
     func onRemoved(reason: String) {
-        print("onRemoved")
         listiner.onRemoved(reason: reason)
     }
 
@@ -150,24 +140,19 @@ internal class JellyfishClientInternal: JellyfishClientListener, WebSocketDelega
     }
 
     func onSocketClose(code: Int, reason: String) {
-        print("socket closed")
         listiner.onSocketClose(code: code, reason: reason)
     }
 
     func onSocketError() {
-        print("soket error")
         listiner.onSocketError()
     }
 
     func onSocketOpen() {
-        print("socket open")
         listiner.onSocketOpen()
     }
 
     func onAuthSuccess() {
-        print("auth success")
         listiner.onAuthSuccess()
-
     }
 
     func onAuthError() {
@@ -175,7 +160,6 @@ internal class JellyfishClientInternal: JellyfishClientListener, WebSocketDelega
     }
 
     func onDisconnected() {
-        print("disconnected")
         listiner.onDisconnected()
     }
 

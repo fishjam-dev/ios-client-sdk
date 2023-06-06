@@ -50,10 +50,10 @@ struct ContentView: View {
 
     var body: some View {
         VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundColor(.accentColor)
-            Text("Hello, world!")
+            Text(contentViewController.errorMessage ?? "")
+                .padding()
+                .foregroundColor(.red)
+                .font(.system(size: 23, weight: .bold))
             if contentViewController.connected {
                 Button("Disconnect", action: disconnect)
                 participantsVideoViews(contentViewController.participantVideos, size: 100)
