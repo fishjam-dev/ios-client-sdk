@@ -126,7 +126,7 @@ extension ContentViewController: JellyfishClientListener {
 
     func findParticipantVideoByOwner(participantId: String, isScreencast: Bool = false) -> ParticipantVideo? {
         return self.participantVideos.first(where: {
-            $0.participant.id == participantId && $0.isScreensharing == isScreencast
+            $0.participant.id == participantId
         })
     }
 
