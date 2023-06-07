@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		2FB1A6CF2A308771004C2B3C /* Debug.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 2FB1A6CE2A308771004C2B3C /* Debug.xcconfig */; };
 		2FB1A6D12A3087BF004C2B3C /* Release.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 2FB1A6D02A3087BF004C2B3C /* Release.xcconfig */; };
 		2FB1EE8D2A29E8F500BB4294 /* ContentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FB1EE8C2A29E8F500BB4294 /* ContentViewController.swift */; };
 		2FB1EE902A2A1EEE00BB4294 /* ParticipantVideoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FB1EE8F2A2A1EED00BB4294 /* ParticipantVideoView.swift */; };
@@ -19,6 +18,7 @@
 		2FB8B3ED2A20C6DD0060E251 /* JellyfishClientDemoUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FB8B3EC2A20C6DD0060E251 /* JellyfishClientDemoUITests.swift */; };
 		2FB8B3EF2A20C6DD0060E251 /* JellyfishClientDemoUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FB8B3EE2A20C6DD0060E251 /* JellyfishClientDemoUITestsLaunchTests.swift */; };
 		2FB8B4022A20D5B30060E251 /* JellyfishClientSdk in Frameworks */ = {isa = PBXBuildFile; productRef = 2FB8B4012A20D5B30060E251 /* JellyfishClientSdk */; };
+		2FF8FFCD2A30A95E00216541 /* Debug.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 2FF8FFCC2A30A95E00216541 /* Debug.xcconfig */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -39,7 +39,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		2FB1A6CE2A308771004C2B3C /* Debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Debug.xcconfig; sourceTree = "<group>"; };
 		2FB1A6D02A3087BF004C2B3C /* Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Release.xcconfig; sourceTree = "<group>"; };
 		2FB1EE8C2A29E8F500BB4294 /* ContentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentViewController.swift; sourceTree = "<group>"; };
 		2FB1EE8E2A2A023600BB4294 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
@@ -56,6 +55,7 @@
 		2FB8B3EE2A20C6DD0060E251 /* JellyfishClientDemoUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JellyfishClientDemoUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		2FB8B3FE2A20D5110060E251 /* JellyfishClientSdk */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = JellyfishClientSdk; path = ../JellyfishClientSdk; sourceTree = "<group>"; };
 		2FB8B3FF2A20D53A0060E251 /* JellyfishClientSdk */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = JellyfishClientSdk; path = ../JellyfishClientSdk; sourceTree = "<group>"; };
+		2FF8FFCC2A30A95E00216541 /* Debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Debug.xcconfig; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -87,8 +87,8 @@
 		2FB8B3C52A20C6DA0060E251 = {
 			isa = PBXGroup;
 			children = (
+				2FF8FFCC2A30A95E00216541 /* Debug.xcconfig */,
 				2FB1A6D02A3087BF004C2B3C /* Release.xcconfig */,
-				2FB1A6CE2A308771004C2B3C /* Debug.xcconfig */,
 				2FB8B3FE2A20D5110060E251 /* JellyfishClientSdk */,
 				2FB8B3FB2A20C7A60060E251 /* Packages */,
 				2FB8B3D02A20C6DA0060E251 /* JellyfishClientDemo */,
@@ -272,10 +272,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2FF8FFCD2A30A95E00216541 /* Debug.xcconfig in Resources */,
 				2FB1A6D12A3087BF004C2B3C /* Release.xcconfig in Resources */,
 				2FB8B3D92A20C6DD0060E251 /* Preview Assets.xcassets in Resources */,
 				2FB8B3D62A20C6DD0060E251 /* Assets.xcassets in Resources */,
-				2FB1A6CF2A308771004C2B3C /* Debug.xcconfig in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -342,7 +342,7 @@
 /* Begin XCBuildConfiguration section */
 		2FB8B3F02A20C6DD0060E251 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 2FB1A6CE2A308771004C2B3C /* Debug.xcconfig */;
+			baseConfigurationReference = 2FF8FFCC2A30A95E00216541 /* Debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;

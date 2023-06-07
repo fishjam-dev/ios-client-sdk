@@ -18,7 +18,6 @@ struct Participant {
 
 class ParticipantVideo: Identifiable, ObservableObject {
     let id: String
-    let isScreensharing: Bool
 
     @Published var participant: Participant
     @Published var isActive: Bool
@@ -27,14 +26,13 @@ class ParticipantVideo: Identifiable, ObservableObject {
     @Published var vadStatus: VadStatus
 
     init(
-        id: String, participant: Participant, videoTrack: VideoTrack? = nil, isScreensharing: Bool = false,
+        id: String, participant: Participant, videoTrack: VideoTrack? = nil,
         isActive: Bool = false,
         mirror: Bool = false
     ) {
         self.id = id
         self.participant = participant
         self.videoTrack = videoTrack
-        self.isScreensharing = isScreensharing
         self.isActive = isActive
         self.mirror = mirror
         self.vadStatus = VadStatus.silence
@@ -124,7 +122,7 @@ extension ContentViewController: JellyfishClientListener {
         }
     }
 
-    func findParticipantVideoByOwner(participantId: String, isScreencast: Bool = false) -> ParticipantVideo? {
+    func findParticipantVideoByOwner(participantId: String) -> ParticipantVideo? {
         return self.participantVideos.first(where: {
             $0.participant.id == participantId
         })
@@ -192,7 +190,7 @@ extension ContentViewController: JellyfishClientListener {
         // track is seen for the first time so initialize the participant's video
         let video = ParticipantVideo(
             id: ctx.trackId, participant: participant, videoTrack: videoTrack,
-            isScreensharing: false, isActive: ctx.metadata["active"] as? Bool == true)
+            isActive: ctx.metadata["active"] as? Bool == true)
 
         guard let existingVideo = self.findParticipantVideoByOwner(participantId: ctx.peer.id) else {
             add(video: video)

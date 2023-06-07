@@ -60,17 +60,14 @@ struct ParticipantVideoView: View {
             VStack {
                 Spacer()
 
-                Text(
-                    self.participantVideo.participant.displayName
-                        + (self.participantVideo.isScreensharing ? " (presentation)" : "")
-                )
-                .font(.system(size: 20))
-                .bold()
-                .shadow(color: .black, radius: 1)
-                .foregroundColor(Color.white)
-                .padding(10)
-                .frame(maxWidth: self.width - 10)
-                .fixedSize()
+                Text(self.participantVideo.participant.displayName)
+                    .font(.system(size: 20))
+                    .bold()
+                    .shadow(color: .black, radius: 1)
+                    .foregroundColor(Color.white)
+                    .padding(10)
+                    .frame(maxWidth: self.width - 10)
+                    .fixedSize()
             }
 
         }.frame(width: width, height: height)
