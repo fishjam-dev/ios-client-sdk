@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2FB1A6CF2A308771004C2B3C /* Debug.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 2FB1A6CE2A308771004C2B3C /* Debug.xcconfig */; };
+		2FB1A6D12A3087BF004C2B3C /* Release.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 2FB1A6D02A3087BF004C2B3C /* Release.xcconfig */; };
 		2FB1EE8D2A29E8F500BB4294 /* ContentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FB1EE8C2A29E8F500BB4294 /* ContentViewController.swift */; };
 		2FB1EE902A2A1EEE00BB4294 /* ParticipantVideoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FB1EE8F2A2A1EED00BB4294 /* ParticipantVideoView.swift */; };
 		2FB8B3D22A20C6DA0060E251 /* JellyfishClientDemoApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FB8B3D12A20C6DA0060E251 /* JellyfishClientDemoApp.swift */; };
@@ -37,6 +39,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		2FB1A6CE2A308771004C2B3C /* Debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Debug.xcconfig; sourceTree = "<group>"; };
+		2FB1A6D02A3087BF004C2B3C /* Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Release.xcconfig; sourceTree = "<group>"; };
 		2FB1EE8C2A29E8F500BB4294 /* ContentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentViewController.swift; sourceTree = "<group>"; };
 		2FB1EE8E2A2A023600BB4294 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		2FB1EE8F2A2A1EED00BB4294 /* ParticipantVideoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticipantVideoView.swift; sourceTree = "<group>"; };
@@ -83,6 +87,8 @@
 		2FB8B3C52A20C6DA0060E251 = {
 			isa = PBXGroup;
 			children = (
+				2FB1A6D02A3087BF004C2B3C /* Release.xcconfig */,
+				2FB1A6CE2A308771004C2B3C /* Debug.xcconfig */,
 				2FB8B3FE2A20D5110060E251 /* JellyfishClientSdk */,
 				2FB8B3FB2A20C7A60060E251 /* Packages */,
 				2FB8B3D02A20C6DA0060E251 /* JellyfishClientDemo */,
@@ -266,8 +272,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2FB1A6D12A3087BF004C2B3C /* Release.xcconfig in Resources */,
 				2FB8B3D92A20C6DD0060E251 /* Preview Assets.xcassets in Resources */,
 				2FB8B3D62A20C6DD0060E251 /* Assets.xcassets in Resources */,
+				2FB1A6CF2A308771004C2B3C /* Debug.xcconfig in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -334,6 +342,7 @@
 /* Begin XCBuildConfiguration section */
 		2FB8B3F02A20C6DD0060E251 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2FB1A6CE2A308771004C2B3C /* Debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -394,6 +403,7 @@
 		};
 		2FB8B3F12A20C6DD0060E251 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2FB1A6D02A3087BF004C2B3C /* Release.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -592,7 +602,7 @@
 				2FB8B3F12A20C6DD0060E251 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
 		2FB8B3F22A20C6DD0060E251 /* Build configuration list for PBXNativeTarget "JellyfishClientDemo" */ = {
 			isa = XCConfigurationList;
@@ -601,7 +611,7 @@
 				2FB8B3F42A20C6DD0060E251 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
 		2FB8B3F52A20C6DD0060E251 /* Build configuration list for PBXNativeTarget "JellyfishClientDemoTests" */ = {
 			isa = XCConfigurationList;
@@ -610,7 +620,7 @@
 				2FB8B3F72A20C6DD0060E251 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
 		2FB8B3F82A20C6DD0060E251 /* Build configuration list for PBXNativeTarget "JellyfishClientDemoUITests" */ = {
 			isa = XCConfigurationList;
@@ -619,7 +629,7 @@
 				2FB8B3FA2A20C6DD0060E251 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
 /* End XCConfigurationList section */
 
