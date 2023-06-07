@@ -82,7 +82,6 @@ class ContentViewController: ObservableObject {
         let preset = VideoParameters.presetHD43
         let videoParameters = VideoParameters(
             dimensions: preset.dimensions.flip(),
-            maxBandwidth: .SimulcastBandwidthLimit(["l": 150, "m": 500, "h": 1500]),
             simulcastConfig: SimulcastConfig(enabled: false)
         )
 
@@ -165,15 +164,6 @@ extension ContentViewController: JellyfishClientListener {
     }
 
     func onTrackReady(ctx: TrackContext) {
-        ctx.setOnVoiceActivityChangedListener { trackContext in
-            if let participantVideo = self.participantVideos.first(where: { $0.participant.id == trackContext.peer.id })
-            {
-                DispatchQueue.main.async {
-                    participantVideo.vadStatus = trackContext.vadStatus
-                }
-            }
-        }
-
         guard var participant = participants[ctx.peer.id] else {
             return
         }
@@ -200,17 +190,11 @@ extension ContentViewController: JellyfishClientListener {
         }
 
         // track is seen for the first time so initialize the participant's video
-        let isScreensharing = ctx.metadata["type"] as? String == "screensharing"
         let video = ParticipantVideo(
             id: ctx.trackId, participant: participant, videoTrack: videoTrack,
-            isScreensharing: isScreensharing, isActive: ctx.metadata["active"] as? Bool == true || isScreensharing)
+            isScreensharing: false, isActive: ctx.metadata["active"] as? Bool == true)
 
         guard let existingVideo = self.findParticipantVideoByOwner(participantId: ctx.peer.id) else {
-            add(video: video)
-            return
-        }
-
-        if isScreensharing {
             add(video: video)
             return
         }

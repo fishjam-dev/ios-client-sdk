@@ -59,7 +59,7 @@ struct ContentView: View {
                 VStack(alignment: .leading) {
                     Text("Peer token")
                         .padding()
-                        .foregroundColor(.white)
+                        .foregroundColor(.blue)
                         .font(.system(size: 16, weight: .bold))
 
                     TextField("peer token", text: $token)
