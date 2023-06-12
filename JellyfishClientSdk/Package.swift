@@ -1,4 +1,4 @@
-// swift-tools-version: 5.7.1
+// swift-tools-version:5.5
 // The swift-tools-version declares the minimum version of Swift required to build this package.
 
 import PackageDescription
@@ -16,7 +16,7 @@ let package = Package(
     ],
     dependencies: [
         .package(url: "https://github.com/apple/swift-protobuf.git", from: "1.6.0"),
-        .package(url: "https://github.com/jellyfish-dev/membrane-webrtc-ios.git", branch: "graszka22/swift-package"),
+        .package(url: "https://github.com/jellyfish-dev/membrane-webrtc-ios.git", branch: "jellyfish"),
         .package(url: "https://github.com/daltoniam/Starscream.git", from: "3.0.0"),
     ],
     targets: [
@@ -28,6 +28,7 @@ let package = Package(
                 .product(name: "MembraneRTC", package: "membrane-webrtc-ios"),
                 .product(name: "SwiftProtobuf", package: "swift-protobuf"),
                 .product(name: "Starscream", package: "Starscream"),
-            ])
+            ]),
+        .testTarget(name: "JellyfishClientSdkTests", dependencies: ["JellyfishClientSdk"]),
     ]
 )
