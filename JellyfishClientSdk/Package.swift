@@ -18,6 +18,8 @@ let package = Package(
         .package(url: "https://github.com/apple/swift-protobuf.git", from: "1.6.0"),
         .package(url: "https://github.com/jellyfish-dev/membrane-webrtc-ios.git", branch: "jellyfish"),
         .package(url: "https://github.com/daltoniam/Starscream.git", from: "3.0.0"),
+        .package(name: "Mockingbird", url: "https://github.com/birdrides/mockingbird.git", .upToNextMinor(from: "0.20.0")),
+
     ],
     targets: [
         // Targets are the basic building blocks of a package. A target can define a module or a test suite.
@@ -29,6 +31,6 @@ let package = Package(
                 .product(name: "SwiftProtobuf", package: "swift-protobuf"),
                 .product(name: "Starscream", package: "Starscream"),
             ]),
-        .testTarget(name: "JellyfishClientSdkTests", dependencies: ["JellyfishClientSdk"]),
+        .testTarget(name: "JellyfishClientSdkTests", dependencies: ["JellyfishClientSdk", "Mockingbird"]),
     ]
 )

@@ -1,9 +1,18 @@
+import Foundation
 import MembraneRTC
 import XCTest
+import Mockingbird
+import Starscream
 
 @testable import JellyfishClientSdk
 
 final class JellyfishClientSdkTests: XCTestCase, JellyfishClientListener {
+    let mockedWebSocket = mock(WebSocket.self)
+  
+    func onSendMediaEvent(event: SerializedMediaEvent) {
+      
+    }
+  
     func onSocketClose(code: Int, reason: String) {
 
     }
@@ -28,7 +37,7 @@ final class JellyfishClientSdkTests: XCTestCase, JellyfishClientListener {
 
     }
 
-    func onJoinSuccess(peerID: String, peersInRoom: [MembraneRTC.Peer]) {
+    func onJoinSuccess(peerID: String, peersInRoom: [Peer]) {
 
     }
 
@@ -40,31 +49,31 @@ final class JellyfishClientSdkTests: XCTestCase, JellyfishClientListener {
 
     }
 
-    func onPeerJoined(peer: MembraneRTC.Peer) {
+    func onPeerJoined(peer: Peer) {
 
     }
 
-    func onPeerLeft(peer: MembraneRTC.Peer) {
+    func onPeerLeft(peer: Peer) {
 
     }
 
-    func onPeerUpdated(peer: MembraneRTC.Peer) {
+    func onPeerUpdated(peer: Peer) {
 
     }
 
-    func onTrackReady(ctx: MembraneRTC.TrackContext) {
+    func onTrackReady(ctx: TrackContext) {
 
     }
 
-    func onTrackAdded(ctx: MembraneRTC.TrackContext) {
+    func onTrackAdded(ctx: TrackContext) {
 
     }
 
-    func onTrackRemoved(ctx: MembraneRTC.TrackContext) {
+    func onTrackRemoved(ctx: TrackContext) {
 
     }
 
-    func onTrackUpdated(ctx: MembraneRTC.TrackContext) {
+    func onTrackUpdated(ctx: TrackContext) {
 
     }
 
@@ -72,8 +81,19 @@ final class JellyfishClientSdkTests: XCTestCase, JellyfishClientListener {
 
     }
 
+  
+    func getMockWebsocket(url: String) -> WebSocket {
+      return self.mockedWebSocket;
+    }
+  
     func testExample() throws {
-        let x = JellyfishClientSdk(listiner: self)
-        XCTAssertEqual("xd", "xd")
+        let x = JellyfishClientInternal(listiner: self, websocketFactory: getMockWebsocket)
+      
+      
+      let testConfig = Config(websocketUrl: "ws:\\test.com", token: "testTOKEN")
+      x.connect(config: testConfig)
+      
+      verify(self.mockedWebSocket.connect()).wasCalled()
+      
     }
 }

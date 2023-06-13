@@ -6,18 +6,19 @@ internal class JellyfishClientInternal: JellyfishClientListener, WebSocketDelega
     private var config: Config?
     private var webSocket: WebSocket?
     private var listiner: JellyfishClientListener
+    private var websocketFactory: (String)->WebSocket
     var webrtcClient: MembraneRTC?
 
-    public init(listiner: JellyfishClientListener) {
+  public init(listiner: JellyfishClientListener, websocketFactory: @escaping (String)->WebSocket) {
         self.listiner = listiner
+        self.websocketFactory = websocketFactory
     }
 
     func connect(config: Config) {
         self.webrtcClient = MembraneRTC.create(delegate: self)
         self.config = config
-        let url = URL(string: config.websocketUrl)
 
-        webSocket = WebSocket(url: url!)
+        webSocket = websocketFactory(config.websocketUrl)
         webSocket?.delegate = self
         webSocket?.connect()
     }
@@ -166,3 +167,13 @@ internal class JellyfishClientInternal: JellyfishClientListener, WebSocketDelega
     func onTrackEncodingChanged(peerId: String, trackId: String, encoding: String) {
     }
 }
+
+
+protocol JellyfishWebsocket {
+  var delegate: WebSocketDelegate? { get set }
+  func connect()
+  func disconnect()
+  func write(data: Data, completion: (() -> ())?)
+}
+
+extension WebSocket: JellyfishWebsocket {}
