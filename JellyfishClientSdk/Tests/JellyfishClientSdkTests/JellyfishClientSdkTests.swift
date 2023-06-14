@@ -6,40 +6,7 @@ import Mockingbird
 @testable import Starscream
 @testable import JellyfishClientSdk
 
-public class MockJellyfishClientListener: JellyfishClientListener {
-  public func onSocketClose(code: Int, reason: String) {}
 
-  public func onSocketError() {}
-
-  public func onSocketOpen() {}
-
-  public func onAuthSuccess() {}
-
-  public func onAuthError() {}
-
-  public func onDisconnected() {}
-
-  public func onJoinSuccess(peerID: String, peersInRoom: [Peer]) {}
-
-  public func onJoinError(metadata: Any) {}
-
-  public func onPeerJoined(peer: Peer) {}
-
-  public func onPeerLeft(peer: Peer) {}
-
-  public func onPeerUpdated(peer: Peer) {}
-
-  public func onTrackReady(ctx: TrackContext) {}
-
-  public func onTrackAdded(ctx: TrackContext) {}
-
-  public func onTrackRemoved(ctx: TrackContext) {}
-
-  public func onTrackUpdated(ctx: TrackContext) {}
-
-  public func onSendMediaEvent(event: SerializedMediaEvent) {}
-
-}
 
 final class JellyfishClientSdkTests: XCTestCase {
     let mockedWebSocket = mock(JellyfishWebsocket.self)

@@ -5,4 +5,4 @@ swift package describe --type json > project.json
 .build/checkouts/mockingbird/mockingbird generate --project project.json \
   --output-dir Tests/JellyfishClientSdkTests/JellyfishClientSdkMocks \
   --testbundle JellyfishClientSdkTests \
-  --targets JellyfishClientSdk JellyfishClientSdkTests
+  --targets JellyfishClientSdk
