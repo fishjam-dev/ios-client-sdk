@@ -2,20 +2,22 @@ import Foundation
 import MembraneRTC
 import Starscream
 
-internal class JellyfishClientInternal: JellyfishClientListener, WebSocketDelegate {
+internal class JellyfishClientInternal: JellyfishClientListener, JellyfishWebSocketDelegate {
     private var config: Config?
     private var webSocket: JellyfishWebsocket?
     private var listiner: JellyfishClientListener
     private var websocketFactory: (String)->JellyfishWebsocket
-    var webrtcClient: MembraneRTC?
+    private var membraneRtcFactory: (MembraneRTCDelegate)->JellyfishMembraneRtc
+    var webrtcClient: JellyfishMembraneRtc?
 
-  public init(listiner: JellyfishClientListener, websocketFactory: @escaping (String)->JellyfishWebsocket) {
+  public init(listiner: JellyfishClientListener, websocketFactory: @escaping (String)->JellyfishWebsocket, membraneRtcFactory: @escaping (MembraneRTCDelegate) -> JellyfishMembraneRtc) {
         self.listiner = listiner
         self.websocketFactory = websocketFactory
+        self.membraneRtcFactory = membraneRtcFactory
     }
 
     func connect(config: Config) {
-        self.webrtcClient = MembraneRTC.create(delegate: self)
+        self.webrtcClient = membraneRtcFactory(self)
         self.config = config
 
         webSocket = websocketFactory(config.websocketUrl)
@@ -34,7 +36,7 @@ internal class JellyfishClientInternal: JellyfishClientListener, WebSocketDelega
         onDisconnected()
     }
 
-    func websocketDidConnect(socket: Starscream.WebSocketClient) {
+    func websocketDidConnect() {
         onSocketOpen()
         let authRequest = Jellyfish_PeerMessage.with({
             $0.authRequest = Jellyfish_PeerMessage.AuthRequest.with({
@@ -48,18 +50,13 @@ internal class JellyfishClientInternal: JellyfishClientListener, WebSocketDelega
         sendEvent(peerMessage: serialzedData)
     }
 
-    func websocketDidDisconnect(socket: Starscream.WebSocketClient, error: Error?) {
+    func websocketDidDisconnect(error: Error?) {
         if let error = error as? WSError {
             onSocketClose(code: error.code, reason: error.message)
         }
     }
 
-    func websocketDidReceiveMessage(socket: Starscream.WebSocketClient, text: String) {
-        // UNSUPPORTED
-        onSocketError()
-    }
-
-    func websocketDidReceiveData(socket: Starscream.WebSocketClient, data: Data) {
+    func websocketDidReceiveData(data: Data) {
         do {
             let peerMessage = try Jellyfish_PeerMessage(serializedData: data)
             if case .authenticated(_) = peerMessage.content {
@@ -75,7 +72,7 @@ internal class JellyfishClientInternal: JellyfishClientListener, WebSocketDelega
     }
 
     private func sendEvent(peerMessage: Data) {
-      self.webSocket?.write(data: peerMessage, completion: nil)
+      self.webSocket?.write(data: peerMessage)
     }
 
     private func receiveEvent(event: SerializedMediaEvent) {

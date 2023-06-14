@@ -13,28 +13,20 @@ public struct Config {
     }
 }
 
-protocol JellyfishWebsocket: WebSocketClient {
-  var delegate: WebSocketDelegate? {get set}
-  var pongDelegate: WebSocketPongDelegate? {get set}
-  var disableSSLCertValidation: Bool {get set}
-  var overrideTrustHostname: Bool {get set}
-  var desiredTrustHostname: String? {get set}
-  var sslClientCertificate: SSLClientCertificate? {get set}
-  #if os(Linux)
-  #else
-  var security: SSLTrustValidator? {get set}
-  var enabledSSLCipherSuites: [SSLCipherSuite]? {get set}
-  #endif
-  var isConnected: Bool {get}
-  
-  func connect()
-  func disconnect(forceTimeout: TimeInterval?, closeCode: UInt16)
-  func disconnect()
-  func write(string: String, completion: (() -> ())?)
-  func write(data: Data, completion: (() -> ())?)
-  func write(ping: Data, completion: (() -> ())?)
-  func write(pong: Data, completion: (() -> ())?)
+public protocol JellyfishWebSocketDelegate {
+    func websocketDidConnect()
+    func websocketDidDisconnect(error: Error?)
+    func websocketDidReceiveData(data: Data)
 }
+
+
+protocol JellyfishWebsocket: JellyfishWebSocketDelegate {
+  var delegate: JellyfishWebSocketDelegate? {get set}
+  func connect()
+  func disconnect()
+  func write(data: Data)
+}
+
 
 public class MockJellyfishClientListener: JellyfishClientListener {
   public func onSocketClose(code: Int, reason: String) {}
@@ -71,18 +63,146 @@ public class MockJellyfishClientListener: JellyfishClientListener {
 
 }
 
-extension WebSocket: JellyfishWebsocket {}
+
+protocol JellyfishMembraneRtc {
+  static func create(with options: MembraneRTC.CreateOptions, delegate: MembraneRTCDelegate) -> MembraneRTC
+  func join(peerMetadata: Metadata)
+  func disconnect()
+  func receiveMediaEvent(mediaEvent: SerializedMediaEvent)
+  func createVideoTrack(videoParameters: VideoParameters, metadata: Metadata, captureDeviceId: String?) -> LocalVideoTrack
+  func createAudioTrack(metadata: Metadata) -> LocalAudioTrack
+  func createScreencastTrack(
+      appGroup: String, videoParameters: VideoParameters, metadata: Metadata,
+      onStart: @escaping (_ track: LocalScreenBroadcastTrack) -> Void, onStop: @escaping () -> Void
+  ) -> LocalScreenBroadcastTrack
+  func setTargetTrackEncoding(trackId: String, encoding: TrackEncoding)
+  func removeTrack(trackId: String) -> Bool
+  func enableTrackEncoding(trackId: String, encoding: TrackEncoding)
+  func disableTrackEncoding(trackId: String, encoding: TrackEncoding)
+  func setTrackBandwidth(trackId: String, bandwidth: BandwidthLimit)
+  func updatePeerMetadata(peerMetadata: Metadata)
+  func updateTrackMetadata(trackId: String, trackMetadata: Metadata)
+  func setEncodingBandwidth(trackId: String, encoding: String, bandwidth: BandwidthLimit)
+  func getStats() -> [String: RTCStats]
+  func changeWebRTCLoggingSeverity(severity: RTCLoggingSeverity)
+}
+
+class JellyfishMembraneRtcWrapper: JellyfishMembraneRtc {
+  var membraneRTC: MembraneRTC?
+  
+  init() {
+    self.membraneRTC = MembraneRTC.create(with: options, delegate: delegate)
+  }
+
+  func disconnect() {
+    self.membraneRTC?.disconnect()
+  }
+  
+  func receiveMediaEvent(mediaEvent: SerializedMediaEvent) {
+    self.membraneRTC?.receiveMediaEvent(mediaEvent: mediaEvent)
+  }
+  
+  func createVideoTrack(videoParameters: VideoParameters, metadata: Metadata, captureDeviceId: String?) -> LocalVideoTrack {
+    return self.membraneRTC!.createVideoTrack(videoParameters: videoParameters, metadata: metadata)
+  }
+  
+  func createAudioTrack(metadata: MembraneRTC.Metadata) -> MembraneRTC.LocalAudioTrack {
+    <#code#>
+  }
+  
+  func createScreencastTrack(appGroup: String, videoParameters: MembraneRTC.VideoParameters, metadata: MembraneRTC.Metadata, onStart: @escaping (MembraneRTC.LocalScreenBroadcastTrack) -> Void, onStop: @escaping () -> Void) -> MembraneRTC.LocalScreenBroadcastTrack {
+    <#code#>
+  }
+  
+  func setTargetTrackEncoding(trackId: String, encoding: MembraneRTC.TrackEncoding) {
+    <#code#>
+  }
+  
+  func removeTrack(trackId: String) -> Bool {
+    <#code#>
+  }
+  
+  func enableTrackEncoding(trackId: String, encoding: MembraneRTC.TrackEncoding) {
+    <#code#>
+  }
+  
+  func disableTrackEncoding(trackId: String, encoding: MembraneRTC.TrackEncoding) {
+    <#code#>
+  }
+  
+  func setTrackBandwidth(trackId: String, bandwidth: MembraneRTC.BandwidthLimit) {
+    <#code#>
+  }
+  
+  func updatePeerMetadata(peerMetadata: MembraneRTC.Metadata) {
+    <#code#>
+  }
+  
+  func updateTrackMetadata(trackId: String, trackMetadata: MembraneRTC.Metadata) {
+    <#code#>
+  }
+  
+  func setEncodingBandwidth(trackId: String, encoding: String, bandwidth: MembraneRTC.BandwidthLimit) {
+    <#code#>
+  }
+  
+  func getStats() -> [String : MembraneRTC.RTCStats] {
+    <#code#>
+  }
+  
+  func changeWebRTCLoggingSeverity(severity: RTCLoggingSeverity) {
+    <#code#>
+  }
+  
+  func join(peerMetadata: Metadata) {
+    
+  }
+  
+  
+}
+
+class JellyfishWebsocketWrapper: JellyfishWebsocket {
+  var delegate: JellyfishWebSocketDelegate?
+  var socket: WebSocket
+  
+  func websocketDidConnect() {}
+  
+  func websocketDidDisconnect(error: Error?) {}
+    
+  func websocketDidReceiveData(data: Data) {}
+  
+  public init(socket: WebSocket) {
+    self.delegate = nil
+    self.socket = socket
+  }
+
+  func connect() {
+    socket.connect()
+  }
+
+  func disconnect() {
+    socket.disconnect()
+  }
+
+  func write(data: Data) {
+    socket.write(data: data)
+  }
+}
 
 func websocketFactory(url: String) -> JellyfishWebsocket {
   let url = URL(string: url)
-  return WebSocket(url: url!)
+  return JellyfishWebsocketWrapper(socket: WebSocket(url: url!))
 }
+
+
 
 public class JellyfishClientSdk {
     private var client: JellyfishClientInternal
+    private var webrtc: MembraneRTC
 
     public init(listiner: JellyfishClientListener) {
-      self.client = JellyfishClientInternal(listiner: listiner, websocketFactory: websocketFactory)
+      webrtc = MembraneRTC.create(delegate: )
+      self.client = JellyfishClientInternal(listiner: listiner, websocketFactory: websocketFactory, JellyfishMembraneRtcWrapper(webrtc))
     }
 
     /**

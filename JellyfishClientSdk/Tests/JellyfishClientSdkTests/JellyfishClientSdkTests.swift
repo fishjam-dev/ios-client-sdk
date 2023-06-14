@@ -7,7 +7,6 @@ import Mockingbird
 @testable import JellyfishClientSdk
 
 
-
 final class JellyfishClientSdkTests: XCTestCase {
     let mockedWebSocket = mock(JellyfishWebsocket.self)
     let jellyfichClientListiner = mock(MockJellyfishClientListener.self)
@@ -77,14 +76,14 @@ final class JellyfishClientSdkTests: XCTestCase {
     }
   
     override func setUp() {
-      self.jellyfishClient = JellyfishClientInternal(listiner: self.jellyfichClientListiner, websocketFactory: getMockWebsocket)
+      self.jellyfishClient = JellyfishClientInternal(listiner: self.jellyfichClientListiner, websocketFactory: getMockWebsocket, membraneRtcFactory: )
       
       givenSwift(self.mockedWebSocket.connect()).will {
-        self.jellyfishClient?.websocketDidConnect(socket: self.mockedWebSocket as WebSocketClient)
+        self.jellyfishClient?.websocketDidConnect()
       }
       
-      givenSwift(self.mockedWebSocket.write(data: getExpectedAuthRequest(), completion: nil)).will {_,_ in
-        self.jellyfishClient?.websocketDidReceiveData(socket: self.mockedWebSocket as WebSocketClient, data: self.getExpectedAuthResponse())
+      givenSwift(self.mockedWebSocket.write(data: getExpectedAuthRequest())).will {_ in
+        self.jellyfishClient?.websocketDidReceiveData(data: self.getExpectedAuthResponse())
       }
     }
   
@@ -92,7 +91,7 @@ final class JellyfishClientSdkTests: XCTestCase {
       jellyfishClient?.connect(config: self.testConfig)
       
       verify(self.mockedWebSocket.connect()).wasCalled()
-      verify(self.mockedWebSocket.write(data: getExpectedAuthRequest(), completion: nil)).wasCalled()
+      verify(self.mockedWebSocket.write(data: getExpectedAuthRequest())).wasCalled()
       verify(self.jellyfichClientListiner.onAuthSuccess()).wasCalled()
     }
   
@@ -105,22 +104,22 @@ final class JellyfishClientSdkTests: XCTestCase {
     }
   
   func testRecieveAndSendsMediaEvents() throws {
-    givenSwift(self.mockedWebSocket.write(data: getExpectedJoinEvent(), completion: nil)).will {_,_ in
-      self.jellyfishClient?.websocketDidReceiveData(socket: self.mockedWebSocket as WebSocketClient, data: self.getSdpOfferResponse())
+    givenSwift(self.mockedWebSocket.write(data: getExpectedJoinEvent())).will {_ in
+      self.jellyfishClient?.websocketDidReceiveData(data: self.getSdpOfferResponse())
     }
     
     jellyfishClient?.connect(config: self.testConfig)
 
     
     jellyfishClient?.onSendMediaEvent(event: "join")
-    verify(self.mockedWebSocket.write(data: getExpectedJoinEvent(), completion: nil)).wasCalled()
+    verify(self.mockedWebSocket.write(data: getExpectedJoinEvent())).wasCalled()
   }
   
   func testCloseWithError() throws {
     let err = WSError(type: ErrorType.closeError, message: "Test reason", code: 1009)
     
     jellyfishClient?.connect(config: self.testConfig)
-    jellyfishClient?.websocketDidDisconnect(socket: self.mockedWebSocket, error: err)
+    jellyfishClient?.websocketDidDisconnect(error: err)
     
     verify(self.jellyfichClientListiner.onSocketClose(code: 1009, reason: "Test reason")).wasCalled()
   }
