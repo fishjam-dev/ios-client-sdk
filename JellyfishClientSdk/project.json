@@ -52,7 +52,7 @@
   ],
   "manifest_display_name" : "JellyfishClientSdk",
   "name" : "JellyfishClientSdk",
-  "path" : "/Users/karolsygiet/sygiet/work/membrane/ios-client-sdk/JellyfishClientSdk",
+  "path" : "/Users/angelikaserwa/Projects/ios-client-sdk/JellyfishClientSdk",
   "platforms" : [
     {
       "name" : "ios",
@@ -83,7 +83,6 @@
       ],
       "sources" : [
         "JellyfishClientSdkMocks/JellyfishClientSdkMocks.generated.swift",
-        "JellyfishClientSdkMocks/JellyfishClientSdkTestsMocks.generated.swift",
         "JellyfishClientSdkTests.swift"
       ],
       "target_dependencies" : [
