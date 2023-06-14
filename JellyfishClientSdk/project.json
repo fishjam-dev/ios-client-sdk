@@ -82,6 +82,7 @@
         "Mockingbird"
       ],
       "sources" : [
+        "JellyfishClientSdkMocks/JellyfishClientSdkMocks.generated.swift",
         "JellyfishClientSdkMocks/JellyfishClientSdkTestsMocks.generated.swift",
         "JellyfishClientSdkTests.swift"
       ],

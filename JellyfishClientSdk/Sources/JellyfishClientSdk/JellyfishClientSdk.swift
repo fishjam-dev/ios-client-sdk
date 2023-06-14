@@ -13,7 +13,32 @@ public struct Config {
     }
 }
 
-func websocketFactory(url: String) -> WebSocket {
+protocol JellyfishWebsocket: WebSocketClient {
+  var delegate: WebSocketDelegate? {get set}
+  var pongDelegate: WebSocketPongDelegate? {get set}
+  var disableSSLCertValidation: Bool {get set}
+  var overrideTrustHostname: Bool {get set}
+  var desiredTrustHostname: String? {get set}
+  var sslClientCertificate: SSLClientCertificate? {get set}
+  #if os(Linux)
+  #else
+  var security: SSLTrustValidator? {get set}
+  var enabledSSLCipherSuites: [SSLCipherSuite]? {get set}
+  #endif
+  var isConnected: Bool {get}
+  
+  func connect()
+  func disconnect(forceTimeout: TimeInterval?, closeCode: UInt16)
+  func disconnect()
+  func write(string: String, completion: (() -> ())?)
+  func write(data: Data, completion: (() -> ())?)
+  func write(ping: Data, completion: (() -> ())?)
+  func write(pong: Data, completion: (() -> ())?)
+}
+
+extension WebSocket: JellyfishWebsocket {}
+
+func websocketFactory(url: String) -> JellyfishWebsocket {
   let url = URL(string: url)
   return WebSocket(url: url!)
 }

@@ -93,3 +93,14 @@ iOSInjectionProject/
 node_modules
 
 JellyfishClientDemo/Debug.xcconfig
+
+# Generated
+*.generated.swift
+
+# Binaries
+lib_InternalSwiftSyntaxParser.dylib
+
+# Caches
+.mockingbird/
+
+.DS_Store

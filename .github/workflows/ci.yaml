@@ -15,3 +15,6 @@ jobs:
 
       - name: Run lint
         run: swift-format lint -r ./JellyfishClientSdk/Sources/**/*.swift --configuration swift-format-config.json
+
+      - name: Run tests
+        run: set -o pipefail && xcodebuild -scheme JellyfishClientSdkTests test -destination "platform=iOS Simulator,name=iPhone 14,OS=latest" | xcbeautify

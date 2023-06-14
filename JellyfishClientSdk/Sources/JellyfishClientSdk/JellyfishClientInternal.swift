@@ -4,12 +4,12 @@ import Starscream
 
 internal class JellyfishClientInternal: JellyfishClientListener, WebSocketDelegate {
     private var config: Config?
-    private var webSocket: WebSocket?
+    private var webSocket: JellyfishWebsocket?
     private var listiner: JellyfishClientListener
-    private var websocketFactory: (String)->WebSocket
+    private var websocketFactory: (String)->JellyfishWebsocket
     var webrtcClient: MembraneRTC?
 
-  public init(listiner: JellyfishClientListener, websocketFactory: @escaping (String)->WebSocket) {
+  public init(listiner: JellyfishClientListener, websocketFactory: @escaping (String)->JellyfishWebsocket) {
         self.listiner = listiner
         self.websocketFactory = websocketFactory
     }
@@ -64,7 +64,7 @@ internal class JellyfishClientInternal: JellyfishClientListener, WebSocketDelega
             let peerMessage = try Jellyfish_PeerMessage(serializedData: data)
             if case .authenticated(_) = peerMessage.content {
                 onAuthSuccess()
-            } else if peerMessage.mediaEvent.isInitialized {
+            } else if  case .mediaEvent(_) = peerMessage.content {
                 receiveEvent(event: peerMessage.mediaEvent.data)
             } else {
                 print("Received unexpected websocket message: \(peerMessage)")
@@ -75,7 +75,7 @@ internal class JellyfishClientInternal: JellyfishClientListener, WebSocketDelega
     }
 
     private func sendEvent(peerMessage: Data) {
-        self.webSocket?.write(data: peerMessage)
+      self.webSocket?.write(data: peerMessage, completion: nil)
     }
 
     private func receiveEvent(event: SerializedMediaEvent) {
@@ -169,11 +169,3 @@ internal class JellyfishClientInternal: JellyfishClientListener, WebSocketDelega
 }
 
 
-protocol JellyfishWebsocket {
-  var delegate: WebSocketDelegate? { get set }
-  func connect()
-  func disconnect()
-  func write(data: Data, completion: (() -> ())?)
-}
-
-extension WebSocket: JellyfishWebsocket {}
