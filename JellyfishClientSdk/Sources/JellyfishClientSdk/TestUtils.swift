@@ -2,21 +2,21 @@ import MembraneRTC
 import WebRTC
 import Starscream
 
-public protocol JellyfishWebSocketDelegate {
+internal protocol JellyfishWebSocketDelegate {
   func websocketDidConnect()
   func websocketDidDisconnect(error: Error?)
   func websocketDidReceiveData(data: Data)
 }
 
 
-protocol JellyfishWebsocket: JellyfishWebSocketDelegate {
+internal protocol JellyfishWebsocket: JellyfishWebSocketDelegate {
   var delegate: JellyfishWebSocketDelegate? {get set}
   func connect()
   func disconnect()
   func write(data: Data)
 }
 
-class JellyfishWebsocketWrapper: JellyfishWebsocket {
+internal class JellyfishWebsocketWrapper: JellyfishWebsocket {
   var delegate: JellyfishWebSocketDelegate?
   var socket: WebSocket
   
@@ -51,7 +51,7 @@ internal protocol JellyfishMembraneRTC {
 
 extension MembraneRTC: JellyfishMembraneRTC {}
 
-func websocketFactory(url: String) -> JellyfishWebsocket {
+internal func websocketFactory(url: String) -> JellyfishWebsocket {
   let url = URL(string: url)
   return JellyfishWebsocketWrapper(socket: WebSocket(url: url!))
 }

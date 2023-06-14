@@ -9,7 +9,7 @@ import Mockingbird
 
 final class JellyfishClientSdkTests: XCTestCase {
   let mockedWebSocket = mock(JellyfishWebsocket.self)
-  let jellyfichClientListiner = mock(JellyfishClientListener.self)
+  let jellyfishClientListener = mock(JellyfishClientListener.self)
   let testConfig = Config(websocketUrl: "ws:\\test.com", token: "testTOKEN")
   var jellyfishClient: JellyfishClientInternal?
   var webrtc: JellyfishMembraneRTC?
@@ -19,11 +19,11 @@ final class JellyfishClientSdkTests: XCTestCase {
   }
   
   static func generateDataFromMessage(_ message: Jellyfish_PeerMessage) -> Data {
-    guard let serialzedData = try? message.serializedData() else {
+    guard let serializedData = try? message.serializedData() else {
       return Data()
     }
     
-    return serialzedData
+    return serializedData
   }
   
   let authRequest = generateDataFromMessage(
@@ -56,8 +56,9 @@ final class JellyfishClientSdkTests: XCTestCase {
   
   override func setUp() {
     let webrtc = mock(JellyfishMembraneRTC.self)
-    self.jellyfishClient = JellyfishClientInternal(listiner: self.jellyfichClientListiner, websocketFactory: getMockWebsocket)
-    self.jellyfishClient?.create(webrtcClient: webrtc)
+    let jellyfishClient = JellyfishClientInternal(listener: self.jellyfishClientListener, websocketFactory: getMockWebsocket)
+    jellyfishClient.webrtcClient = webrtc
+    self.jellyfishClient = jellyfishClient
     self.webrtc = webrtc
     
     givenSwift(self.mockedWebSocket.connect()).will {
@@ -67,9 +68,7 @@ final class JellyfishClientSdkTests: XCTestCase {
   
   func connect() {
     jellyfishClient?.connect(config: self.testConfig)
-    
     verifyClientSent(authRequest)
-    
     sendToClient(authResponse)
   }
   
@@ -83,31 +82,25 @@ final class JellyfishClientSdkTests: XCTestCase {
   
   func testConnectAndAuthenticate() throws {
     connect()
-    
-    verify(self.jellyfichClientListiner.onAuthSuccess()).wasCalled()
+    verify(self.jellyfishClientListener.onAuthSuccess()).wasCalled()
   }
   
   func testCleansUp() throws {
     connect()
-    
     jellyfishClient?.cleanUp()
     verify(self.mockedWebSocket.disconnect()).wasCalled()
-    verify(self.jellyfichClientListiner.onDisconnected()).wasCalled()
+    verify(self.jellyfishClientListener.onDisconnected()).wasCalled()
   }
   
   func testReceivesMediaEvents() throws {
     connect()
-    
     sendToClient(sdpOfferEvent)
-    
     verify(self.webrtc?.receiveMediaEvent(mediaEvent: "sdpOffer")).wasCalled()
   }
   
   func testSendsMediaEvents() throws {
     connect()
-    
     jellyfishClient?.onSendMediaEvent(event: "join")
-    
     verifyClientSent(joinEvent)
   }
   
@@ -117,6 +110,6 @@ final class JellyfishClientSdkTests: XCTestCase {
     connect()
     jellyfishClient?.websocketDidDisconnect(error: err)
     
-    verify(self.jellyfichClientListiner.onSocketClose(code: 1009, reason: "Test reason")).wasCalled()
+    verify(self.jellyfishClientListener.onSocketClose(code: 1009, reason: "Test reason")).wasCalled()
   }
 }

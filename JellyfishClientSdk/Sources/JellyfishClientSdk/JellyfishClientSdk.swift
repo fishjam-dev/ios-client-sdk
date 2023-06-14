@@ -20,7 +20,7 @@ public class JellyfishClientSdk {
     public init(listener: JellyfishClientListener) {
       self.client = JellyfishClientInternal(listener: listener, websocketFactory: websocketFactory)
       self.webrtcClient = MembraneRTC.create(delegate: self.client)
-      self.client.create(webrtcClient: self.webrtcClient)
+      self.client.webrtcClient = self.webrtcClient
     }
 
     /**

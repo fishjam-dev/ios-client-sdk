@@ -59,7 +59,7 @@ class ContentViewController: ObservableObject {
         self.localParticipantId = "local"
         self.connected = false
 
-        self.jellyfishClient = JellyfishClientSdk(listiner: self)
+        self.jellyfishClient = JellyfishClientSdk(listener: self)
     }
 
     public func connect(peerToken: String) {
@@ -97,6 +97,14 @@ class ContentViewController: ObservableObject {
 }
 
 extension ContentViewController: JellyfishClientListener {
+  func onRemoved(reason: String) {
+    
+  }
+  
+  func onBandwidthEstimationChanged(estimation: Int) {
+    
+  }
+  
     func findParticipantVideo(id: String) -> ParticipantVideo? {
         return participantVideos.first(where: { $0.id == id })
     }
