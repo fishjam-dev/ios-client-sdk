@@ -1,7 +1,6 @@
 import MembraneRTC
-import WebRTC
 import Starscream
-
+import WebRTC
 
 public struct Config {
     var websocketUrl: String
@@ -15,12 +14,12 @@ public struct Config {
 
 public class JellyfishClientSdk {
     private var client: JellyfishClientInternal
-  private var webrtcClient: MembraneRTC
+    private var webrtcClient: MembraneRTC
 
     public init(listener: JellyfishClientListener) {
-      self.client = JellyfishClientInternal(listener: listener, websocketFactory: websocketFactory)
-      self.webrtcClient = MembraneRTC.create(delegate: self.client)
-      self.client.webrtcClient = self.webrtcClient
+        self.client = JellyfishClientInternal(listener: listener, websocketFactory: websocketFactory)
+        self.webrtcClient = MembraneRTC.create(delegate: self.client)
+        self.client.webrtcClient = self.webrtcClient
     }
 
     /**

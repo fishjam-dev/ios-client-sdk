@@ -90,6 +90,7 @@ final class JellyfishClientSdkTests: XCTestCase {
     jellyfishClient?.cleanUp()
     verify(self.mockedWebSocket.disconnect()).wasCalled()
     verify(self.jellyfishClientListener.onDisconnected()).wasCalled()
+    verify(self.webrtc?.disconnect()).wasCalled()
   }
   
   func testReceivesMediaEvents() throws {
