@@ -1,4 +1,5 @@
 import MembraneRTC
+import Starscream
 import WebRTC
 
 public struct Config {
@@ -13,9 +14,12 @@ public struct Config {
 
 public class JellyfishClientSdk {
     private var client: JellyfishClientInternal
+    private var webrtcClient: MembraneRTC
 
-    public init(listiner: JellyfishClientListener) {
-        self.client = JellyfishClientInternal(listiner: listiner)
+    public init(listener: JellyfishClientListener) {
+        self.client = JellyfishClientInternal(listener: listener, websocketFactory: websocketFactory)
+        self.webrtcClient = MembraneRTC.create(delegate: self.client)
+        self.client.webrtcClient = self.webrtcClient
     }
 
     /**
@@ -52,7 +56,7 @@ public class JellyfishClientSdk {
     * after accepting this peer
     */
     public func join(peerMetadata: Metadata) {
-        client.webrtcClient?.join(peerMetadata: peerMetadata)
+        webrtcClient.join(peerMetadata: peerMetadata)
     }
 
     /**
@@ -71,7 +75,7 @@ public class JellyfishClientSdk {
         metadata: Metadata,
         captureDeviceName: String? = nil
     ) -> LocalVideoTrack? {
-        return client.webrtcClient?.createVideoTrack(
+        return webrtcClient.createVideoTrack(
             videoParameters: videoParameters, metadata: metadata, captureDeviceId: captureDeviceName)
     }
 
@@ -84,7 +88,7 @@ public class JellyfishClientSdk {
     * @return an instance of the audio track
     */
     public func createAudioTrack(metadata: Metadata) -> LocalAudioTrack? {
-        return client.webrtcClient?.createAudioTrack(metadata: metadata)
+        return webrtcClient.createAudioTrack(metadata: metadata)
     }
 
     /**
@@ -105,7 +109,7 @@ public class JellyfishClientSdk {
         onStart: @escaping (_ track: LocalScreenBroadcastTrack) -> Void,
         onStop: @escaping () -> Void
     ) -> LocalScreenBroadcastTrack? {
-        return client.webrtcClient?.createScreencastTrack(
+        return webrtcClient.createScreencastTrack(
             appGroup: appGroup,
             videoParameters: videoParameters,
             metadata: metadata,
@@ -121,7 +125,7 @@ public class JellyfishClientSdk {
     * @return a boolean whether the track has been successfully removed or not
     */
     public func removeTrack(trackId: String) -> Bool {
-        return client.webrtcClient?.removeTrack(trackId: trackId) ?? false
+        return webrtcClient.removeTrack(trackId: trackId)
     }
 
     /**
@@ -135,7 +139,7 @@ public class JellyfishClientSdk {
     * @param encoding an encoding to receive
     */
     public func setTargetTrackEncoding(trackId: String, encoding: TrackEncoding) {
-        client.webrtcClient?.setTargetTrackEncoding(trackId: trackId, encoding: encoding)
+        webrtcClient.setTargetTrackEncoding(trackId: trackId, encoding: encoding)
     }
 
     /**
@@ -145,7 +149,7 @@ public class JellyfishClientSdk {
     * @param encoding an encoding that will be enabled
     */
     public func enableTrackEncoding(trackId: String, encoding: TrackEncoding) {
-        client.webrtcClient?.enableTrackEncoding(trackId: trackId, encoding: encoding)
+        webrtcClient.enableTrackEncoding(trackId: trackId, encoding: encoding)
     }
 
     /**
@@ -155,7 +159,7 @@ public class JellyfishClientSdk {
     * @param encoding an encoding that will be disabled
     */
     public func disableTrackEncoding(trackId: String, encoding: TrackEncoding) {
-        client.webrtcClient?.disableTrackEncoding(trackId: trackId, encoding: encoding)
+        webrtcClient.disableTrackEncoding(trackId: trackId, encoding: encoding)
     }
 
     /**
@@ -166,7 +170,7 @@ public class JellyfishClientSdk {
     * callback `onPeerUpdated` will be triggered for other peers in the room.
     */
     public func updatePeerMetadata(peerMetadata: Metadata) {
-        client.webrtcClient?.updatePeerMetadata(peerMetadata: peerMetadata)
+        webrtcClient.updatePeerMetadata(peerMetadata: peerMetadata)
     }
 
     /**
@@ -178,7 +182,7 @@ public class JellyfishClientSdk {
     * callback `onTrackUpdated` will be triggered for other peers in the room.
     */
     public func updateTrackMetadata(trackId: String, trackMetadata: Metadata) {
-        client.webrtcClient?.updateTrackMetadata(trackId: trackId, trackMetadata: trackMetadata)
+        webrtcClient.updateTrackMetadata(trackId: trackId, trackMetadata: trackMetadata)
     }
 
     /**
@@ -189,7 +193,7 @@ public class JellyfishClientSdk {
     * @param bandwidthLimit bandwidth in kbps
     */
     public func setTrackBandwidth(trackId: String, bandwidthLimit: BandwidthLimit) {
-        client.webrtcClient?.setTrackBandwidth(trackId: trackId, bandwidth: bandwidthLimit)
+        webrtcClient.setTrackBandwidth(trackId: trackId, bandwidth: bandwidthLimit)
     }
 
     /**
@@ -203,7 +207,7 @@ public class JellyfishClientSdk {
         encoding: String,
         bandwidthLimit: BandwidthLimit
     ) {
-        client.webrtcClient?.setEncodingBandwidth(trackId: trackId, encoding: encoding, bandwidth: bandwidthLimit)
+        webrtcClient.setEncodingBandwidth(trackId: trackId, encoding: encoding, bandwidth: bandwidthLimit)
     }
 
     /**
@@ -211,7 +215,7 @@ public class JellyfishClientSdk {
     * @param severity enum value representing the logging severity
     */
     public func changeWebRTCLoggingSeverity(severity: RTCLoggingSeverity) {
-        client.webrtcClient?.changeWebRTCLoggingSeverity(severity: severity)
+        webrtcClient.changeWebRTCLoggingSeverity(severity: severity)
     }
 
     /**
@@ -219,6 +223,6 @@ public class JellyfishClientSdk {
     * @return a map containing statistics
     */
     public func getStats() -> [String: RTCStats] {
-        return client.webrtcClient?.getStats() ?? [:]
+        return webrtcClient.getStats()
     }
 }

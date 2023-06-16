@@ -1,7 +1,7 @@
 import Foundation
 import MembraneRTC
 
-public protocol JellyfishClientListener: MembraneRTCDelegate {
+public protocol JellyfishClientListener {
     /**
      * Emitted when the websocket connection is closed
      */
