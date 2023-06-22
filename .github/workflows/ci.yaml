@@ -14,7 +14,7 @@ jobs:
         run: swift-format format -i -r ./JellyfishClientSdk/Sources/**/*.swift --configuration swift-format-config.json
 
       - name: Run lint
-        run: swift-format lint -r ./JellyfishClientSdk/Sources/**/*.swift --configuration swift-format-config.json
+        run: swift-format lint -r ./JellyfishClientSdk/**/*.swift --configuration swift-format-config.json
       
       - name: Generate mocks
         run: cd JellyfishClientSdk && swift package update Mockingbird && ./gen-mocks.sh
