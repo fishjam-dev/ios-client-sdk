@@ -7,17 +7,17 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Install deps
+      - name: Install deps 📡
         run: brew install swift-format xcbeautify
 
-      - name: Run formatter
+      - name: Run formatter 🎨
         run: swift-format format -i -r ./JellyfishClientSdk/Sources/**/*.swift --configuration swift-format-config.json
 
-      - name: Run lint
+      - name: Run lint 👀
         run: swift-format lint -r -s ./JellyfishClientSdk/**/**/*.swift --configuration swift-format-config.json
-      
-      - name: Generate mocks
+
+      - name: Generate mocks 🫥
         run: cd JellyfishClientSdk && swift package update Mockingbird && ./gen-mocks.sh
 
-      - name: Run tests
+      - name: Run tests 💀
         run: set -o pipefail && xcodebuild -scheme JellyfishClientSdkTests test -destination "platform=iOS Simulator,name=iPhone 14,OS=latest" | xcbeautify
