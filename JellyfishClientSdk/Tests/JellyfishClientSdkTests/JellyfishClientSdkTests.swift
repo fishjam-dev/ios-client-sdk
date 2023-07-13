@@ -10,6 +10,7 @@ final class JellyfishClientSdkTests: XCTestCase {
     let mockedWebSocket = mock(JellyfishWebsocket.self)
     let jellyfishClientListener = mock(JellyfishClientListener.self)
     let testConfig = Config(websocketUrl: "ws:\\test.com", token: "testTOKEN")
+    let socket = WebSocket(url: URL(string: "ws:\\test.com")!)
     var jellyfishClient: JellyfishClientInternal?
     var webrtc: JellyfishMembraneRTC?
 
@@ -62,7 +63,7 @@ final class JellyfishClientSdkTests: XCTestCase {
         self.webrtc = webrtc
 
         givenSwift(self.mockedWebSocket.connect()).will {
-            self.jellyfishClient?.websocketDidConnect()
+          self.jellyfishClient?.websocketDidConnect(socket: socket)
         }
     }
 
@@ -73,7 +74,7 @@ final class JellyfishClientSdkTests: XCTestCase {
     }
 
     func sendToClient(_ data: Data) {
-        self.jellyfishClient?.websocketDidReceiveData(data: data)
+      self.jellyfishClient?.websocketDidReceiveData(socket: socket, data: data)
     }
 
     func verifyClientSent(_ data: Data) {
@@ -109,7 +110,7 @@ final class JellyfishClientSdkTests: XCTestCase {
         let err = WSError(type: ErrorType.closeError, message: "Test reason", code: 1009)
 
         connect()
-        jellyfishClient?.websocketDidDisconnect(error: err)
+      jellyfishClient?.websocketDidDisconnect(socket: socket, error: err)
 
         verify(self.jellyfishClientListener.onSocketClose(code: 1009, reason: "Test reason")).wasCalled()
     }

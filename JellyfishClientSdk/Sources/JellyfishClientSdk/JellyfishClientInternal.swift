@@ -2,7 +2,7 @@ import Foundation
 import MembraneRTC
 import Starscream
 
-internal class JellyfishClientInternal: JellyfishClientListener, JellyfishWebSocketDelegate, MembraneRTCDelegate {
+internal class JellyfishClientInternal: MembraneRTCDelegate, WebSocketDelegate {
     private var config: Config?
     private var webSocket: JellyfishWebsocket?
     private var listener: JellyfishClientListener
@@ -32,28 +32,30 @@ internal class JellyfishClientInternal: JellyfishClientListener, JellyfishWebSoc
         webSocket = nil
         onDisconnected()
     }
+  
+    func websocketDidConnect(socket: WebSocketClient) {
+      print("did conecnt")
+      onSocketOpen()
+      let authRequest = Jellyfish_PeerMessage.with({
+          $0.authRequest = Jellyfish_PeerMessage.AuthRequest.with({
+              $0.token = self.config?.token ?? ""
+          })
+      })
 
-    func websocketDidConnect() {
-        onSocketOpen()
-        let authRequest = Jellyfish_PeerMessage.with({
-            $0.authRequest = Jellyfish_PeerMessage.AuthRequest.with({
-                $0.token = self.config?.token ?? ""
-            })
-        })
-
-        guard let serializedData = try? authRequest.serializedData() else {
-            return
-        }
-        sendEvent(peerMessage: serializedData)
+      guard let serializedData = try? authRequest.serializedData() else {
+          return
+      }
+      sendEvent(peerMessage: serializedData)
     }
-
-    func websocketDidDisconnect(error: Error?) {
+    
+    func websocketDidDisconnect(socket: WebSocketClient, error: Error?) {
+      print("disconnect", error)
         if let error = error as? WSError {
             onSocketClose(code: error.code, reason: error.message)
         }
     }
-
-    func websocketDidReceiveData(data: Data) {
+    
+    func websocketDidReceiveData(socket: WebSocketClient, data: Data) {
         do {
             let peerMessage = try Jellyfish_PeerMessage(serializedData: data)
             if case .authenticated(_) = peerMessage.content {
@@ -67,36 +69,44 @@ internal class JellyfishClientInternal: JellyfishClientListener, JellyfishWebSoc
             print("Unexpected error: \(error).")
         }
     }
+    
+    func websocketDidReceiveMessage(socket: WebSocketClient, text: String) {
+      print("TODO")
+    }
 
     private func sendEvent(peerMessage: Data) {
+      print("send event", peerMessage)
+
         self.webSocket?.write(data: peerMessage)
     }
 
     private func receiveEvent(event: SerializedMediaEvent) {
+      print("recieve event")
+
         webrtcClient?.receiveMediaEvent(mediaEvent: event)
     }
+    
+    func onEndpointAdded(endpoint: Endpoint) {
+      print("onEndpointAdded event")
 
-    func onJoinError(metadata: Any) {
-        listener.onJoinError(metadata: metadata)
+      listener.onPeerJoined(peer: endpoint)
     }
+    
+    func onEndpointRemoved(endpoint: Endpoint) {
+      print("onEndpointRemoved event")
 
-    func onJoinSuccess(peerID: String, peersInRoom: [Peer]) {
-        listener.onJoinSuccess(peerID: peerID, peersInRoom: peersInRoom)
+      listener.onPeerLeft(peer: endpoint)
     }
+    
+    func onEndpointUpdated(endpoint: Endpoint) {
+      print("onEndpointUpdated event")
 
-    func onPeerJoined(peer: Peer) {
-        listener.onPeerJoined(peer: peer)
-    }
-
-    func onPeerLeft(peer: Peer) {
-        listener.onPeerLeft(peer: peer)
-    }
-
-    func onPeerUpdated(peer: Peer) {
-        listener.onPeerUpdated(peer: peer)
+      listener.onPeerUpdated(peer: endpoint)
     }
 
     func onSendMediaEvent(event: SerializedMediaEvent) {
+      print("on send ", event)
+
         let mediaEvent =
             Jellyfish_PeerMessage.with({
                 $0.mediaEvent = Jellyfish_PeerMessage.MediaEvent.with({
@@ -126,38 +136,58 @@ internal class JellyfishClientInternal: JellyfishClientListener, JellyfishWebSoc
         listener.onTrackUpdated(ctx: ctx)
     }
 
-    func onRemoved(reason: String) {
-        listener.onRemoved(reason: reason)
-    }
-
     func onBandwidthEstimationChanged(estimation: Int) {
         listener.onBandwidthEstimationChanged(estimation: estimation)
     }
 
     func onSocketClose(code: Int, reason: String) {
+      print("onSocketClose event")
+
         listener.onSocketClose(code: code, reason: reason)
     }
 
     func onSocketError() {
+      print("onSocketError event")
+
         listener.onSocketError()
     }
 
     func onSocketOpen() {
+      print("onSocketOpen event")
+
         listener.onSocketOpen()
     }
 
     func onAuthSuccess() {
+      print("onAuthSuccess event")
+
         listener.onAuthSuccess()
     }
 
     func onAuthError() {
+      print("onAuthError event")
+
         listener.onAuthError()
     }
 
     func onDisconnected() {
+      print("onDisconnected event")
+
         listener.onDisconnected()
     }
+  
+    func onConnected(endpointId: String, otherEndpoints: [Peer]) {
+      print("onConnected event")
 
-    func onTrackEncodingChanged(peerId: String, trackId: String, encoding: String) {
+      listener.onJoined(peerID: endpointId, peersInRoom: otherEndpoints)
+    }
+    
+    func onConnectionError(metadata: Any) {
+      print("onConnectionError event")
+
+      listener.onJoinError(metadata: metadata)
+    }
+
+    func onTrackEncodingChanged(endpointId: String, trackId: String, encoding: String) {
     }
 }
