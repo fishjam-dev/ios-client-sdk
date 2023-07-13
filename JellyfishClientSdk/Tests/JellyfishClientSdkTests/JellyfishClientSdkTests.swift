@@ -63,7 +63,7 @@ final class JellyfishClientSdkTests: XCTestCase {
         self.webrtc = webrtc
 
         givenSwift(self.mockedWebSocket.connect()).will {
-          self.jellyfishClient?.websocketDidConnect(socket: socket)
+            self.jellyfishClient?.websocketDidConnect(socket: socket)
         }
     }
 
@@ -74,7 +74,7 @@ final class JellyfishClientSdkTests: XCTestCase {
     }
 
     func sendToClient(_ data: Data) {
-      self.jellyfishClient?.websocketDidReceiveData(socket: socket, data: data)
+        self.jellyfishClient?.websocketDidReceiveData(socket: socket, data: data)
     }
 
     func verifyClientSent(_ data: Data) {
@@ -110,7 +110,7 @@ final class JellyfishClientSdkTests: XCTestCase {
         let err = WSError(type: ErrorType.closeError, message: "Test reason", code: 1009)
 
         connect()
-      jellyfishClient?.websocketDidDisconnect(socket: socket, error: err)
+        jellyfishClient?.websocketDidDisconnect(socket: socket, error: err)
 
         verify(self.jellyfishClientListener.onSocketClose(code: 1009, reason: "Test reason")).wasCalled()
     }
