@@ -49,7 +49,6 @@ internal class JellyfishClientInternal: MembraneRTCDelegate, WebSocketDelegate {
     }
     
     func websocketDidDisconnect(socket: WebSocketClient, error: Error?) {
-      print("disconnect", error)
         if let error = error as? WSError {
             onSocketClose(code: error.code, reason: error.message)
         }
