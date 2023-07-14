@@ -69,7 +69,7 @@ internal class JellyfishClientInternal: MembraneRTCDelegate, WebSocketDelegate {
     }
     
     func websocketDidReceiveMessage(socket: WebSocketClient, text: String) {
-      print("UNSUPPORTED")
+      print("Unsupported socket callback 'websocketDidReceiveMessage' was called.")
       onSocketError()
     }
 
@@ -81,15 +81,15 @@ internal class JellyfishClientInternal: MembraneRTCDelegate, WebSocketDelegate {
         webrtcClient?.receiveMediaEvent(mediaEvent: event)
     }
     
-    func onEndpointAdded(endpoint: Endpoint) {
+    func onEndpointAdded(endpoint: Peer) {
         listener.onPeerJoined(peer: endpoint)
     }
     
-    func onEndpointRemoved(endpoint: Endpoint) {
+    func onEndpointRemoved(endpoint: Peer) {
         listener.onPeerLeft(peer: endpoint)
     }
     
-    func onEndpointUpdated(endpoint: Endpoint) {
+    func onEndpointUpdated(endpoint: Peer) {
         listener.onPeerUpdated(peer: endpoint)
     }
 

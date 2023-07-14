@@ -39,24 +39,24 @@ public protocol JellyfishClientListener {
     func onJoined(peerID: String, peersInRoom: [Peer])
 
     /**
-     * Called when endpoint was not accepted
+     * Called when peer was not accepted
      * @param metadata - Pass thru for client application to communicate further actions to frontend
      */
     func onJoinError(metadata: Any)
 
 
     /**
-     * Called each time new endpoint joins the room.
+     * Called each time new peer joins the room.
      */
     func onPeerJoined(peer: Peer)
 
     /**
-     * Called each time endpoint leaves the room.
+     * Called each time peer leaves the room.
      */
     func onPeerLeft(peer: Peer)
 
     /**
-     * Called each time endpoint has its metadata updated.
+     * Called each time peer has its metadata updated.
      */
     func onPeerUpdated(peer: Peer)
 
@@ -69,19 +69,19 @@ public protocol JellyfishClientListener {
     func onTrackReady(ctx: TrackContext)
 
     /**
-     * Called each time the endpoint which was already in the room, adds new track. Fields track and stream will be set to null.
+     * Called each time the peer which was already in the room, adds new track. Fields track and stream will be set to null.
      * These fields will be set to non-null value in {@link JellyfishClientListener.onTrackReady}
      */
     func onTrackAdded(ctx: TrackContext)
     /**
      * Called when some track will no longer be sent.
      *
-     * It will also be called before {@link JellyfishClientListener.onEndpointRemoved} for each track of this endpoint.
+     * It will also be called before {@link JellyfishClientListener.onPeerLeft} for each track of this peer.
      */
     func onTrackRemoved(ctx: TrackContext)
 
     /**
-     * Called each time endpoint has its track metadata updated.
+     * Called each time peer has its track metadata updated.
      */
     func onTrackUpdated(ctx: TrackContext)
 

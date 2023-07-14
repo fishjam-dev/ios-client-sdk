@@ -108,7 +108,7 @@ extension ContentViewController: JellyfishClientListener {
     func add(video: ParticipantVideo) {
         DispatchQueue.main.async {
             guard self.findParticipantVideo(id: video.id) == nil else {
-                print("RoomController tried to add already existing ParticipantVideo")
+                print("Controller tried to add already existing ParticipantVideo")
                 return
             }
 
@@ -268,7 +268,7 @@ extension ContentViewController: JellyfishClientListener {
     }
 
     func onAuthSuccess() {
-        jellyfishClient?.join(endpointMetadata: .init(["displayName": "iphoneUser"]))
+        jellyfishClient?.join(peerMetadata: .init(["displayName": "iphoneUser"]))
     }
 
     func onAuthError() {}
