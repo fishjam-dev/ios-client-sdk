@@ -10,9 +10,9 @@ final class JellyfishClientSdkTests: XCTestCase {
     let mockedWebSocket = mock(JellyfishWebsocket.self)
     let jellyfishClientListener = mock(JellyfishClientListener.self)
     let testConfig = Config(websocketUrl: "ws:\\test.com", token: "testTOKEN")
-    let socket = WebSocket(url: URL(string: "ws:\\test.com")!)
     var jellyfishClient: JellyfishClientInternal?
     var webrtc: JellyfishMembraneRTC?
+    let socket = WebSocket(url: URL(string: "ws://test:4000/socket/peer/websocket")!)
 
     func getMockWebsocket(url: String) -> JellyfishWebsocket {
         return self.mockedWebSocket
@@ -61,6 +61,7 @@ final class JellyfishClientSdkTests: XCTestCase {
         jellyfishClient.webrtcClient = webrtc
         self.jellyfishClient = jellyfishClient
         self.webrtc = webrtc
+
 
         givenSwift(self.mockedWebSocket.connect()).will {
             self.jellyfishClient?.websocketDidConnect(socket: self.socket)
