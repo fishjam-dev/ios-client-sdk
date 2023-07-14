@@ -61,8 +61,6 @@ final class JellyfishClientSdkTests: XCTestCase {
         jellyfishClient.webrtcClient = webrtc
         self.jellyfishClient = jellyfishClient
         self.webrtc = webrtc
-
-
         givenSwift(self.mockedWebSocket.connect()).will {
             self.jellyfishClient?.websocketDidConnect(socket: self.socket)
         }
