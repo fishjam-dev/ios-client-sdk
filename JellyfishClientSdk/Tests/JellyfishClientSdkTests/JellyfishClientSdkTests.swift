@@ -9,9 +9,11 @@ import XCTest
 final class JellyfishClientSdkTests: XCTestCase {
     let mockedWebSocket = mock(JellyfishWebsocket.self)
     let jellyfishClientListener = mock(JellyfishClientListener.self)
-    let testConfig = Config(websocketUrl: "ws:\\test.com", token: "testTOKEN")
+    let testConfig = Config(websocketUrl: "ws://test:4000/socket/peer/websocket", token: "testTOKEN")
     var jellyfishClient: JellyfishClientInternal?
     var webrtc: JellyfishMembraneRTC?
+    // "Real" websocket class has to be used here since it is needed as a parameter for callbacks.
+    // It is safe to use it here because callbacks implemented in the JellyfishClientInternal ignore this parameter.
     let socket = WebSocket(url: URL(string: "ws://test:4000/socket/peer/websocket")!)
 
     func getMockWebsocket(url: String) -> JellyfishWebsocket {
