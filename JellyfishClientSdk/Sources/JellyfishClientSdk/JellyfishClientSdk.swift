@@ -12,6 +12,40 @@ public struct Config {
     }
 }
 
+internal protocol JellyfishWebsocket {
+    var delegate: WebSocketDelegate? { get set }
+    func connect()
+    func disconnect()
+    func write(data: Data)
+}
+
+public class JellyfishClientWebSocket: JellyfishWebsocket {
+  var socket: WebSocket
+  var delegate: WebSocketDelegate? { set{self.socket.delegate = newValue} get{self.socket.delegate}}
+  
+  public init(socket: WebSocket) {
+      self.socket = socket
+  }
+  
+  func connect() {
+    self.socket.connect()
+  }
+  
+  func disconnect() {
+    self.socket.disconnect()
+  }
+  
+  func write(data: Data) {
+    self.socket.write(data: data)
+  }
+}
+
+
+internal func websocketFactory(url: String) -> JellyfishWebsocket {
+    let url = URL(string: url)
+    return JellyfishClientWebSocket(socket: WebSocket(url: url!))
+}
+
 public class JellyfishClientSdk {
     private var client: JellyfishClientInternal
     private var webrtcClient: MembraneRTC
@@ -56,7 +90,7 @@ public class JellyfishClientSdk {
     * after accepting this peer
     */
     public func join(peerMetadata: Metadata) {
-        webrtcClient.join(peerMetadata: peerMetadata)
+      webrtcClient.connect(metadata: peerMetadata)
     }
 
     /**
@@ -170,7 +204,7 @@ public class JellyfishClientSdk {
     * callback `onPeerUpdated` will be triggered for other peers in the room.
     */
     public func updatePeerMetadata(peerMetadata: Metadata) {
-        webrtcClient.updatePeerMetadata(peerMetadata: peerMetadata)
+        webrtcClient.updateEndpointMetadata(metadata: peerMetadata)
     }
 
     /**

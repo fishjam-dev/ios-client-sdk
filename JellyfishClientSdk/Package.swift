@@ -16,7 +16,7 @@ let package = Package(
     ],
     dependencies: [
         .package(url: "https://github.com/apple/swift-protobuf.git", from: "1.6.0"),
-        .package(url: "https://github.com/jellyfish-dev/membrane-webrtc-ios.git", branch: "jellyfish"),
+        .package(url: "https://github.com/jellyfish-dev/membrane-webrtc-ios.git", from:"5.0.0"),
         .package(url: "https://github.com/daltoniam/Starscream.git", from: "3.0.0"),
         .package(name: "Mockingbird", url: "https://github.com/birdrides/mockingbird.git", .upToNextMinor(from: "0.20.0")),
 

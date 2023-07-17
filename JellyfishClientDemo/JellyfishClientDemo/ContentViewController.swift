@@ -97,13 +97,9 @@ class ContentViewController: ObservableObject {
 }
 
 extension ContentViewController: JellyfishClientListener {
-  func onRemoved(reason: String) {
-    
-  }
-  
-  func onBandwidthEstimationChanged(estimation: Int) {
-    
-  }
+    func onBandwidthEstimationChanged(estimation: Int) {
+      
+    }
   
     func findParticipantVideo(id: String) -> ParticipantVideo? {
         return participantVideos.first(where: { $0.id == id })
@@ -112,7 +108,7 @@ extension ContentViewController: JellyfishClientListener {
     func add(video: ParticipantVideo) {
         DispatchQueue.main.async {
             guard self.findParticipantVideo(id: video.id) == nil else {
-                print("RoomController tried to add already existing ParticipantVideo")
+                print("Controller tried to add already existing ParticipantVideo")
                 return
             }
 
@@ -138,7 +134,7 @@ extension ContentViewController: JellyfishClientListener {
 
     func onSendMediaEvent(event: SerializedMediaEvent) {}
 
-    func onJoinSuccess(peerID: String, peersInRoom: [Peer]) {
+    func onJoined(peerID: String, peersInRoom: [Peer]) {
         self.localParticipantId = peerID
 
         let localParticipant = Participant(id: peerID, displayName: "Me", isAudioTrackActive: true)
@@ -170,15 +166,15 @@ extension ContentViewController: JellyfishClientListener {
     }
 
     func onTrackReady(ctx: TrackContext) {
-        guard var participant = participants[ctx.peer.id] else {
+        guard var participant = participants[ctx.endpoint.id] else {
             return
         }
 
         guard let videoTrack = ctx.track as? VideoTrack else {
             DispatchQueue.main.async {
                 participant.isAudioTrackActive = ctx.metadata["active"] as? Bool == true
-                self.participants[ctx.peer.id] = participant
-                let pv = self.findParticipantVideoByOwner(participantId: ctx.peer.id)
+                self.participants[ctx.endpoint.id] = participant
+                let pv = self.findParticipantVideoByOwner(participantId: ctx.endpoint.id)
                 pv?.participant = participant
             }
 
@@ -200,7 +196,7 @@ extension ContentViewController: JellyfishClientListener {
             id: ctx.trackId, participant: participant, videoTrack: videoTrack,
             isActive: ctx.metadata["active"] as? Bool == true)
 
-        guard let existingVideo = self.findParticipantVideoByOwner(participantId: ctx.peer.id) else {
+        guard let existingVideo = self.findParticipantVideoByOwner(participantId: ctx.endpoint.id) else {
             add(video: video)
             return
         }
@@ -226,17 +222,17 @@ extension ContentViewController: JellyfishClientListener {
 
         if ctx.metadata["type"] as? String == "camera" {
             DispatchQueue.main.async {
-                self.participantVideos.first(where: { $0.participant.id == ctx.peer.id })?.isActive =
+                self.participantVideos.first(where: { $0.participant.id == ctx.endpoint.id })?.isActive =
                     isActive
             }
         } else {
             DispatchQueue.main.async {
-                guard var p = self.participants[ctx.peer.id] else {
+                guard var p = self.participants[ctx.endpoint.id] else {
                     return
                 }
                 p.isAudioTrackActive = isActive
-                self.participants[ctx.peer.id] = p
-                self.participantVideos.first(where: { $0.participant.id == ctx.peer.id })?.participant = p
+                self.participants[ctx.endpoint.id] = p
+                self.participantVideos.first(where: { $0.participant.id == ctx.endpoint.id })?.participant = p
             }
 
         }

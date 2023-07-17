@@ -1,6 +1,8 @@
 import Foundation
 import MembraneRTC
 
+public typealias Peer = Endpoint
+
 public protocol JellyfishClientListener {
     /**
      * Emitted when the websocket connection is closed
@@ -34,7 +36,7 @@ public protocol JellyfishClientListener {
     /**
      * Called when peer was accepted.
      */
-    func onJoinSuccess(peerID: String, peersInRoom: [Peer])
+    func onJoined(peerID: String, peersInRoom: [Peer])
 
     /**
      * Called when peer was not accepted
@@ -42,10 +44,6 @@ public protocol JellyfishClientListener {
      */
     func onJoinError(metadata: Any)
 
-    /**
-     * Called every time a local peer is removed by the server.
-     */
-    func onRemoved(reason: String)
 
     /**
      * Called each time new peer joins the room.

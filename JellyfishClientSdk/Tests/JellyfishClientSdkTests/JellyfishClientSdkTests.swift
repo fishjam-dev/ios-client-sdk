@@ -9,9 +9,12 @@ import XCTest
 final class JellyfishClientSdkTests: XCTestCase {
     let mockedWebSocket = mock(JellyfishWebsocket.self)
     let jellyfishClientListener = mock(JellyfishClientListener.self)
-    let testConfig = Config(websocketUrl: "ws:\\test.com", token: "testTOKEN")
+    let testConfig = Config(websocketUrl: "ws://test:4000/socket/peer/websocket", token: "testTOKEN")
     var jellyfishClient: JellyfishClientInternal?
     var webrtc: JellyfishMembraneRTC?
+    // "Real" websocket class has to be used here since it is needed as a parameter for callbacks.
+    // It is safe to use it here because callbacks implemented in the JellyfishClientInternal ignore this parameter.
+    let socket = WebSocket(url: URL(string: "ws://test:4000/socket/peer/websocket")!)
 
     func getMockWebsocket(url: String) -> JellyfishWebsocket {
         return self.mockedWebSocket
@@ -60,9 +63,8 @@ final class JellyfishClientSdkTests: XCTestCase {
         jellyfishClient.webrtcClient = webrtc
         self.jellyfishClient = jellyfishClient
         self.webrtc = webrtc
-
         givenSwift(self.mockedWebSocket.connect()).will {
-            self.jellyfishClient?.websocketDidConnect()
+            self.jellyfishClient?.websocketDidConnect(socket: self.socket)
         }
     }
 
@@ -73,7 +75,7 @@ final class JellyfishClientSdkTests: XCTestCase {
     }
 
     func sendToClient(_ data: Data) {
-        self.jellyfishClient?.websocketDidReceiveData(data: data)
+        self.jellyfishClient?.websocketDidReceiveData(socket: self.socket, data: data)
     }
 
     func verifyClientSent(_ data: Data) {
@@ -109,7 +111,7 @@ final class JellyfishClientSdkTests: XCTestCase {
         let err = WSError(type: ErrorType.closeError, message: "Test reason", code: 1009)
 
         connect()
-        jellyfishClient?.websocketDidDisconnect(error: err)
+        jellyfishClient?.websocketDidDisconnect(socket: self.socket, error: err)
 
         verify(self.jellyfishClientListener.onSocketClose(code: 1009, reason: "Test reason")).wasCalled()
     }
