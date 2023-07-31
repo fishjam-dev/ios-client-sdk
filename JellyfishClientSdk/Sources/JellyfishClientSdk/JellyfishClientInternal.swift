@@ -1,8 +1,6 @@
 import Foundation
 import Starscream
 
-import protocol MembraneRTC.MembraneRTCDelegate
-import struct MembraneRTC.SerializedMediaEvent
 import class MembraneRTC.TrackContext
 
 internal class JellyfishClientInternal: MembraneRTCDelegate, WebSocketDelegate {

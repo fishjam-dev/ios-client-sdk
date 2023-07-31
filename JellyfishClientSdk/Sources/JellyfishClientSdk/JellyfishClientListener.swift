@@ -1,7 +1,4 @@
 import Foundation
-import MembraneRTC
-
-public typealias Peer = Endpoint
 
 public protocol JellyfishClientListener {
     /**

@@ -6,14 +6,10 @@
 //
 
 import Foundation
-import MembraneRTC
+import JellyfishClientSdk
 import UIKit
 
-import struct JellyfishClientSdk.Config
-import protocol JellyfishClientSdk.JellyfishClientListener
-import class JellyfishClientSdk.JellyfishClientSdk
-import struct JellyfishClientSdk.Peer
-import class JellyfishClientSdk.TrackContext
+import class MembraneRTC.MembraneRTC
 
 struct Participant {
     let id: String
