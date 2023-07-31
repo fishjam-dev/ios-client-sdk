@@ -44,7 +44,6 @@ public protocol JellyfishClientListener {
      */
     func onJoinError(metadata: Any)
 
-
     /**
      * Called each time new peer joins the room.
      */
@@ -66,24 +65,24 @@ public protocol JellyfishClientListener {
      * This callback is always called after {@link JellyfishClientListener.onTrackAdded}.
      * It informs user that data related to the given track arrives and can be played or displayed.
      */
-    func onTrackReady(ctx: TrackContext)
+    func onTrackReady(ctx: JellyfishTrackContext)
 
     /**
      * Called each time the peer which was already in the room, adds new track. Fields track and stream will be set to null.
      * These fields will be set to non-null value in {@link JellyfishClientListener.onTrackReady}
      */
-    func onTrackAdded(ctx: TrackContext)
+    func onTrackAdded(ctx: JellyfishTrackContext)
     /**
      * Called when some track will no longer be sent.
      *
      * It will also be called before {@link JellyfishClientListener.onPeerLeft} for each track of this peer.
      */
-    func onTrackRemoved(ctx: TrackContext)
+    func onTrackRemoved(ctx: JellyfishTrackContext)
 
     /**
      * Called each time peer has its track metadata updated.
      */
-    func onTrackUpdated(ctx: TrackContext)
+    func onTrackUpdated(ctx: JellyfishTrackContext)
 
     /**
      * Called every time the server estimates client's bandwidth.

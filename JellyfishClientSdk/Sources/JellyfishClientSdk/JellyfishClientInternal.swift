@@ -32,27 +32,27 @@ internal class JellyfishClientInternal: MembraneRTCDelegate, WebSocketDelegate {
         webSocket = nil
         onDisconnected()
     }
-  
-    func websocketDidConnect(socket: WebSocketClient) {
-      onSocketOpen()
-      let authRequest = Jellyfish_PeerMessage.with({
-          $0.authRequest = Jellyfish_PeerMessage.AuthRequest.with({
-              $0.token = self.config?.token ?? ""
-          })
-      })
 
-      guard let serializedData = try? authRequest.serializedData() else {
-          return
-      }
-      sendEvent(peerMessage: serializedData)
+    func websocketDidConnect(socket: WebSocketClient) {
+        onSocketOpen()
+        let authRequest = Jellyfish_PeerMessage.with({
+            $0.authRequest = Jellyfish_PeerMessage.AuthRequest.with({
+                $0.token = self.config?.token ?? ""
+            })
+        })
+
+        guard let serializedData = try? authRequest.serializedData() else {
+            return
+        }
+        sendEvent(peerMessage: serializedData)
     }
-    
+
     func websocketDidDisconnect(socket: WebSocketClient, error: Error?) {
         if let error = error as? WSError {
             onSocketClose(code: error.code, reason: error.message)
         }
     }
-    
+
     func websocketDidReceiveData(socket: WebSocketClient, data: Data) {
         do {
             let peerMessage = try Jellyfish_PeerMessage(serializedData: data)
@@ -67,10 +67,10 @@ internal class JellyfishClientInternal: MembraneRTCDelegate, WebSocketDelegate {
             print("Unexpected error: \(error).")
         }
     }
-    
+
     func websocketDidReceiveMessage(socket: WebSocketClient, text: String) {
-      print("Unsupported socket callback 'websocketDidReceiveMessage' was called.")
-      onSocketError()
+        print("Unsupported socket callback 'websocketDidReceiveMessage' was called.")
+        onSocketError()
     }
 
     private func sendEvent(peerMessage: Data) {
@@ -80,15 +80,15 @@ internal class JellyfishClientInternal: MembraneRTCDelegate, WebSocketDelegate {
     private func receiveEvent(event: SerializedMediaEvent) {
         webrtcClient?.receiveMediaEvent(mediaEvent: event)
     }
-    
+
     func onEndpointAdded(endpoint: Peer) {
         listener.onPeerJoined(peer: endpoint)
     }
-    
+
     func onEndpointRemoved(endpoint: Peer) {
         listener.onPeerLeft(peer: endpoint)
     }
-    
+
     func onEndpointUpdated(endpoint: Peer) {
         listener.onPeerUpdated(peer: endpoint)
     }
@@ -108,19 +108,23 @@ internal class JellyfishClientInternal: MembraneRTCDelegate, WebSocketDelegate {
     }
 
     func onTrackAdded(ctx: TrackContext) {
-        listener.onTrackAdded(ctx: ctx)
+        let trackContext = JellyfishTrackContext(trackContext: ctx)
+        listener.onTrackAdded(ctx: trackContext)
     }
 
     func onTrackReady(ctx: TrackContext) {
-        listener.onTrackReady(ctx: ctx)
+        let trackContext = JellyfishTrackContext(trackContext: ctx)
+        listener.onTrackReady(ctx: trackContext)
     }
 
     func onTrackRemoved(ctx: TrackContext) {
-        listener.onTrackRemoved(ctx: ctx)
+        let trackContext = JellyfishTrackContext(trackContext: ctx)
+        listener.onTrackRemoved(ctx: trackContext)
     }
 
     func onTrackUpdated(ctx: TrackContext) {
-        listener.onTrackUpdated(ctx: ctx)
+        let trackContext = JellyfishTrackContext(trackContext: ctx)
+        listener.onTrackUpdated(ctx: trackContext)
     }
 
     func onBandwidthEstimationChanged(estimation: Int) {
@@ -150,13 +154,13 @@ internal class JellyfishClientInternal: MembraneRTCDelegate, WebSocketDelegate {
     func onDisconnected() {
         listener.onDisconnected()
     }
-  
+
     func onConnected(endpointId: String, otherEndpoints: [Peer]) {
-      listener.onJoined(peerID: endpointId, peersInRoom: otherEndpoints)
+        listener.onJoined(peerID: endpointId, peersInRoom: otherEndpoints)
     }
-    
+
     func onConnectionError(metadata: Any) {
-      listener.onJoinError(metadata: metadata)
+        listener.onJoinError(metadata: metadata)
     }
 
     func onTrackEncodingChanged(endpointId: String, trackId: String, encoding: String) {

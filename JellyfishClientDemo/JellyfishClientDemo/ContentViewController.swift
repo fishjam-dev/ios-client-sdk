@@ -98,9 +98,9 @@ class ContentViewController: ObservableObject {
 
 extension ContentViewController: JellyfishClientListener {
     func onBandwidthEstimationChanged(estimation: Int) {
-      
+
     }
-  
+
     func findParticipantVideo(id: String) -> ParticipantVideo? {
         return participantVideos.first(where: { $0.id == id })
     }
@@ -165,16 +165,16 @@ extension ContentViewController: JellyfishClientListener {
         errorMessage = "Failed to join a room"
     }
 
-    func onTrackReady(ctx: TrackContext) {
-        guard var participant = participants[ctx.endpoint.id] else {
+    func onTrackReady(ctx: JellyfishTrackContext) {
+        guard var participant = participants[ctx.peer.id] else {
             return
         }
 
         guard let videoTrack = ctx.track as? VideoTrack else {
             DispatchQueue.main.async {
                 participant.isAudioTrackActive = ctx.metadata["active"] as? Bool == true
-                self.participants[ctx.endpoint.id] = participant
-                let pv = self.findParticipantVideoByOwner(participantId: ctx.endpoint.id)
+                self.participants[ctx.peer.id] = participant
+                let pv = self.findParticipantVideoByOwner(participantId: ctx.peer.id)
                 pv?.participant = participant
             }
 
@@ -196,7 +196,7 @@ extension ContentViewController: JellyfishClientListener {
             id: ctx.trackId, participant: participant, videoTrack: videoTrack,
             isActive: ctx.metadata["active"] as? Bool == true)
 
-        guard let existingVideo = self.findParticipantVideoByOwner(participantId: ctx.endpoint.id) else {
+        guard let existingVideo = self.findParticipantVideoByOwner(participantId: ctx.peer.id) else {
             add(video: video)
             return
         }
@@ -209,30 +209,30 @@ extension ContentViewController: JellyfishClientListener {
         }
     }
 
-    func onTrackAdded(ctx _: TrackContext) {}
+    func onTrackAdded(ctx _: JellyfishTrackContext) {}
 
-    func onTrackRemoved(ctx: TrackContext) {
+    func onTrackRemoved(ctx: JellyfishTrackContext) {
         if let video = participantVideos.first(where: { $0.id == ctx.trackId }) {
             remove(video: video)
         }
     }
 
-    func onTrackUpdated(ctx: TrackContext) {
+    func onTrackUpdated(ctx: JellyfishTrackContext) {
         let isActive = ctx.metadata["active"] as? Bool ?? false
 
         if ctx.metadata["type"] as? String == "camera" {
             DispatchQueue.main.async {
-                self.participantVideos.first(where: { $0.participant.id == ctx.endpoint.id })?.isActive =
+                self.participantVideos.first(where: { $0.participant.id == ctx.peer.id })?.isActive =
                     isActive
             }
         } else {
             DispatchQueue.main.async {
-                guard var p = self.participants[ctx.endpoint.id] else {
+                guard var p = self.participants[ctx.peer.id] else {
                     return
                 }
                 p.isAudioTrackActive = isActive
-                self.participants[ctx.endpoint.id] = p
-                self.participantVideos.first(where: { $0.participant.id == ctx.endpoint.id })?.participant = p
+                self.participants[ctx.peer.id] = p
+                self.participantVideos.first(where: { $0.participant.id == ctx.peer.id })?.participant = p
             }
 
         }
