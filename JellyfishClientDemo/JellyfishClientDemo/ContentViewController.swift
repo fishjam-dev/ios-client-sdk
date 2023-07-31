@@ -6,9 +6,14 @@
 //
 
 import Foundation
-import JellyfishClientSdk
 import MembraneRTC
 import UIKit
+
+import struct JellyfishClientSdk.Config
+import protocol JellyfishClientSdk.JellyfishClientListener
+import class JellyfishClientSdk.JellyfishClientSdk
+import struct JellyfishClientSdk.Peer
+import class JellyfishClientSdk.TrackContext
 
 struct Participant {
     let id: String
@@ -165,7 +170,7 @@ extension ContentViewController: JellyfishClientListener {
         errorMessage = "Failed to join a room"
     }
 
-    func onTrackReady(ctx: JellyfishTrackContext) {
+    func onTrackReady(ctx: TrackContext) {
         guard var participant = participants[ctx.peer.id] else {
             return
         }
@@ -209,15 +214,15 @@ extension ContentViewController: JellyfishClientListener {
         }
     }
 
-    func onTrackAdded(ctx _: JellyfishTrackContext) {}
+    func onTrackAdded(ctx _: TrackContext) {}
 
-    func onTrackRemoved(ctx: JellyfishTrackContext) {
+    func onTrackRemoved(ctx: TrackContext) {
         if let video = participantVideos.first(where: { $0.id == ctx.trackId }) {
             remove(video: video)
         }
     }
 
-    func onTrackUpdated(ctx: JellyfishTrackContext) {
+    func onTrackUpdated(ctx: TrackContext) {
         let isActive = ctx.metadata["active"] as? Bool ?? false
 
         if ctx.metadata["type"] as? String == "camera" {

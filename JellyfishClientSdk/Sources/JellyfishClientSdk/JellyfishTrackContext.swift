@@ -1,14 +1,12 @@
-//
-//  JellyfishTrackContext.swift
-//
-//
-//  Created by Karol Sygiet on 28/07/2023.
-//
-
-import MembraneRTC
+import enum MembraneRTC.EncodingReason
+import struct MembraneRTC.Metadata
+import protocol MembraneRTC.RemoteTrack
+import class MembraneRTC.TrackContext
+import enum MembraneRTC.TrackEncoding
+import enum MembraneRTC.VadStatus
 
 public class JellyfishTrackContext {
-    private var trackContext: TrackContext
+    private var trackContext: MembraneRTC.TrackContext
 
     public var track: RemoteTrack? { return trackContext.track }
 
@@ -24,15 +22,15 @@ public class JellyfishTrackContext {
 
     public var encodingReason: EncodingReason? { return trackContext.encodingReason }
 
-    init(trackContext: TrackContext) {
+    init(trackContext: MembraneRTC.TrackContext) {
         self.trackContext = trackContext
     }
 
-    public func setOnEncodingChangedListener(listener: ((_ trackContext: TrackContext) -> Void)?) {
+    public func setOnEncodingChangedListener(listener: ((_ trackContext: MembraneRTC.TrackContext) -> Void)?) {
         trackContext.setOnEncodingChangedListener(listener: listener)
     }
 
-    public func setOnVoiceActivityChangedListener(listener: ((_ trackContext: TrackContext) -> Void)?) {
+    public func setOnVoiceActivityChangedListener(listener: ((_ trackContext: MembraneRTC.TrackContext) -> Void)?) {
         trackContext.setOnVoiceActivityChangedListener(listener: listener)
     }
 }

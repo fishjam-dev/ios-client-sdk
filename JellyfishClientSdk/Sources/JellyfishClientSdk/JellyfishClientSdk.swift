@@ -2,7 +2,7 @@ import MembraneRTC
 import Starscream
 import WebRTC
 
-//public typealias TrackContext = JellyfishTrackContext
+public typealias TrackContext = JellyfishTrackContext
 
 public struct Config {
     var websocketUrl: String
