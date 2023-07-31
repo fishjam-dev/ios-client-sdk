@@ -1,9 +1,4 @@
-import enum MembraneRTC.EncodingReason
-import struct MembraneRTC.Metadata
-import protocol MembraneRTC.RemoteTrack
 import class MembraneRTC.TrackContext
-import enum MembraneRTC.TrackEncoding
-import enum MembraneRTC.VadStatus
 
 public class JellyfishTrackContext {
     private var trackContext: MembraneRTC.TrackContext
@@ -26,11 +21,15 @@ public class JellyfishTrackContext {
         self.trackContext = trackContext
     }
 
-    public func setOnEncodingChangedListener(listener: ((_ trackContext: MembraneRTC.TrackContext) -> Void)?) {
-        trackContext.setOnEncodingChangedListener(listener: listener)
+    public func setOnEncodingChangedListener(listener: ((_ trackContext: JellyfishTrackContext) -> Void)?) {
+        trackContext.setOnEncodingChangedListener { trackContext in
+            listener?(JellyfishTrackContext(trackContext: trackContext))
+        }
     }
 
-    public func setOnVoiceActivityChangedListener(listener: ((_ trackContext: MembraneRTC.TrackContext) -> Void)?) {
-        trackContext.setOnVoiceActivityChangedListener(listener: listener)
+    public func setOnVoiceActivityChangedListener(listener: ((_ trackContext: JellyfishTrackContext) -> Void)?) {
+        trackContext.setOnVoiceActivityChangedListener { trackContext in
+            listener?(JellyfishTrackContext(trackContext: trackContext))
+        }
     }
 }

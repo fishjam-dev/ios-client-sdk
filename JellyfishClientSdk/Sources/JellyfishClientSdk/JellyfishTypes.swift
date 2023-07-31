@@ -4,6 +4,7 @@ import struct MembraneRTC.BroadcastMessage
 import class MembraneRTC.BroadcastSampleSource
 import typealias MembraneRTC.Dimensions
 import enum MembraneRTC.Encoder
+import enum MembraneRTC.EncodingReason
 import struct MembraneRTC.Endpoint
 import enum MembraneRTC.Events
 import class MembraneRTC.IPC
@@ -15,7 +16,6 @@ import class MembraneRTC.LocalFileVideoTrack
 import class MembraneRTC.LocalScreenBroadcastTrack
 import protocol MembraneRTC.LocalScreenBroadcastTrackDelegate
 import class MembraneRTC.LocalVideoTrack
-//import class MembraneRTC.MembraneRTC
 import protocol MembraneRTC.MembraneRTCDelegate
 import typealias MembraneRTC.Metadata
 import class MembraneRTC.MulticastDelegate
@@ -51,6 +51,7 @@ public typealias BroadcastMessage = MembraneRTC.BroadcastMessage
 public typealias BroadcastSampleSource = MembraneRTC.BroadcastSampleSource
 public typealias Dimensions = MembraneRTC.Dimensions
 public typealias Encoder = MembraneRTC.Encoder
+public typealias EncodingReason = MembraneRTC.EncodingReason
 public typealias Endpoint = MembraneRTC.Endpoint
 public typealias Events = MembraneRTC.Events
 public typealias IPC = MembraneRTC.IPC
