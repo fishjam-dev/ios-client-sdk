@@ -1,5 +1,4 @@
 import Foundation
-import MembraneRTC
 import Mockingbird
 import XCTest
 

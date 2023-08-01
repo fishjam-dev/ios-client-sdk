@@ -85,6 +85,7 @@
         "Mockingbird"
       ],
       "sources" : [
+        "JellyfishClientSdkMocks/JellyfishClientSdkMocks.generated.swift",
         "JellyfishClientSdkTests.swift"
       ],
       "target_dependencies" : [
@@ -109,6 +110,8 @@
         "JellyfishClientInternal.swift",
         "JellyfishClientListener.swift",
         "JellyfishClientSdk.swift",
+        "JellyfishTrackContext.swift",
+        "JellyfishTypes.swift",
         "TestUtils.swift",
         "protos/jellyfish/peer_notifications.pb.swift"
       ],

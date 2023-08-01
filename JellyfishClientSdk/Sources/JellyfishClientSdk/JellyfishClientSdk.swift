@@ -20,26 +20,28 @@ internal protocol JellyfishWebsocket {
 }
 
 public class JellyfishClientWebSocket: JellyfishWebsocket {
-  var socket: WebSocket
-  var delegate: WebSocketDelegate? { set{self.socket.delegate = newValue} get{self.socket.delegate}}
-  
-  public init(socket: WebSocket) {
-      self.socket = socket
-  }
-  
-  func connect() {
-    self.socket.connect()
-  }
-  
-  func disconnect() {
-    self.socket.disconnect()
-  }
-  
-  func write(data: Data) {
-    self.socket.write(data: data)
-  }
-}
+    var socket: WebSocket
+    var delegate: WebSocketDelegate? {
+        set { self.socket.delegate = newValue }
+        get { self.socket.delegate }
+    }
 
+    public init(socket: WebSocket) {
+        self.socket = socket
+    }
+
+    func connect() {
+        self.socket.connect()
+    }
+
+    func disconnect() {
+        self.socket.disconnect()
+    }
+
+    func write(data: Data) {
+        self.socket.write(data: data)
+    }
+}
 
 internal func websocketFactory(url: String) -> JellyfishWebsocket {
     let url = URL(string: url)
@@ -90,7 +92,7 @@ public class JellyfishClientSdk {
     * after accepting this peer
     */
     public func join(peerMetadata: Metadata) {
-      webrtcClient.connect(metadata: peerMetadata)
+        webrtcClient.connect(metadata: peerMetadata)
     }
 
     /**
