@@ -9,8 +9,6 @@ import Foundation
 import JellyfishClientSdk
 import UIKit
 
-import class MembraneRTC.MembraneRTC
-
 struct Participant {
     let id: String
     let displayName: String
@@ -42,7 +40,6 @@ class ParticipantVideo: Identifiable, ObservableObject {
 
 class ContentViewController: ObservableObject {
     private var jellyfishClient: JellyfishClientSdk?
-    public private(set) var client: MembraneRTC?
 
     @Published var participants: [String: Participant]
     @Published var participantVideos: [ParticipantVideo]
