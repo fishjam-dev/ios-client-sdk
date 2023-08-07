@@ -45,11 +45,6 @@ import class MembraneRTC.VideoTrack
 import class MembraneRTC.VideoView
 import protocol MembraneRTC.VideoViewDelegate
 
-/**
-  For webrtc api reference check: membrane-webrtc-ios docs.
-
- */
-
 public typealias AudioTrack = MembraneRTC.AudioTrack
 public typealias BandwidthLimit = MembraneRTC.BandwidthLimit
 public typealias BroadcastMessage = MembraneRTC.BroadcastMessage
