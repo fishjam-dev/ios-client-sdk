@@ -45,6 +45,14 @@ import class MembraneRTC.VideoTrack
 import class MembraneRTC.VideoView
 import protocol MembraneRTC.VideoViewDelegate
 
+/**
+ # WebRTC Type Aliases Section
+
+ Here you define your Type Aliases, each one should be documented.
+
+ - Note: All your Type Aliases should go after this comment
+*/
+
 public typealias AudioTrack = MembraneRTC.AudioTrack
 public typealias BandwidthLimit = MembraneRTC.BandwidthLimit
 public typealias BroadcastMessage = MembraneRTC.BroadcastMessage
