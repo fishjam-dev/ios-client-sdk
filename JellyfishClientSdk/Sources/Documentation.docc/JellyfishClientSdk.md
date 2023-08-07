@@ -1,3 +1,5 @@
-# JellyfishCkientSdk
+# `JellyfishCkientSdk`
 
-## test header
+Jellyfish client.
+
+The client is responsible for relaying Jellyfish communications.
