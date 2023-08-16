@@ -11,5 +11,5 @@ printf "DONE\n\n"
 file="./protos/jellyfish/peer_notifications.proto"
 
 printf "Compiling: file $file\n"
-protoc --swift_out="./JellyfishClientSdk/Sources/JellyfishClientSdk" $file
+protoc --swift_out="./Sources/JellyfishClientSdk" $file
 printf "DONE\n"
