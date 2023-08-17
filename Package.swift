@@ -30,7 +30,8 @@ let package = Package(
                 .product(name: "MembraneRTC", package: "membrane-webrtc-ios"),
                 .product(name: "SwiftProtobuf", package: "swift-protobuf"),
                 .product(name: "Starscream", package: "Starscream"),
-            ]),
+            ],
+            path: "Sources"),
         .testTarget(name: "JellyfishClientSdkTests", dependencies: ["JellyfishClientSdk", "Mockingbird"]),
     ]
 )
