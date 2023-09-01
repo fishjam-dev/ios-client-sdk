@@ -31,7 +31,7 @@ Add JellyfishClientSDK dependency to your project.
 2. Edit `Debug.xcconfig` to set backend url in development.
 3. Run `release-it` to release. Follow the prompts, it should update version in podspec, make a commit and tag and push the new version.
 
-## COntributing
+## Contributing
 
 We welcome contributions to iOS Client SDK. Please report any bugs or issues you find or feel free to make a pull request with your own bug fixes and/or features.
 
