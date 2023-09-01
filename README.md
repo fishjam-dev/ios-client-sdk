@@ -10,7 +10,7 @@ The repository consists of 2 separapable components:
 - `JellyfishClientSdk` - Jellyfish client fully compatible with `Jellyfish`, responsible for exchaning media events and receiving media streams which then are presented to the user
 - `JellyfishCLientDemo` - Demo application utilizing `Jellyfish` client
 
-### Ezample App
+### Example App
 
 Really simple App allowing to test `Jellyfish client` functionalities. It consist of 2 screens:
 
