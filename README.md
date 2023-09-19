@@ -28,7 +28,7 @@ Add JellyfishClientSDK dependency to your project.
 ## Developing
 
 1. Run `./scripts/init.sh` in the main directory to install swift-format and release-it and set up git hooks
-2. Edit `Debug.xcconfig` to set backend url in development.
+2. Create `/JellyfishClientDemo/Debug.xcconfig` to set backend url in development. For reference see the Release.xcconfig.
 3. Run `release-it` to release. Follow the prompts, it should update version in podspec, make a commit and tag and push the new version.
 
 ## Contributing
