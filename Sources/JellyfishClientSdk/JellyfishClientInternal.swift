@@ -81,15 +81,15 @@ internal class JellyfishClientInternal: MembraneRTCDelegate, WebSocketDelegate {
         webrtcClient?.receiveMediaEvent(mediaEvent: event)
     }
 
-    func onEndpointAdded(endpoint: Peer) {
+    func onEndpointAdded(endpoint: Endpoint) {
         listener.onPeerJoined(peer: endpoint)
     }
 
-    func onEndpointRemoved(endpoint: Peer) {
+    func onEndpointRemoved(endpoint: Endpoint) {
         listener.onPeerLeft(peer: endpoint)
     }
 
-    func onEndpointUpdated(endpoint: Peer) {
+    func onEndpointUpdated(endpoint: Endpoint) {
         listener.onPeerUpdated(peer: endpoint)
     }
 
@@ -155,7 +155,7 @@ internal class JellyfishClientInternal: MembraneRTCDelegate, WebSocketDelegate {
         listener.onDisconnected()
     }
 
-    func onConnected(endpointId: String, otherEndpoints: [Peer]) {
+    func onConnected(endpointId: String, otherEndpoints: [Endpoint]) {
         listener.onJoined(peerID: endpointId, peersInRoom: otherEndpoints)
     }
 

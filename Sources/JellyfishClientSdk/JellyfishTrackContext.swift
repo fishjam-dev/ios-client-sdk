@@ -5,7 +5,7 @@ public class JellyfishTrackContext {
 
     public var track: RemoteTrack? { return trackContext.track }
 
-    public var peer: Peer { return trackContext.endpoint }
+    public var peer: Endpoint { return trackContext.endpoint }
 
     public var trackId: String { return trackContext.trackId }
 
