@@ -1,5 +1,5 @@
-import MembraneRTC
 import SwiftUI
+import JellyfishClientSdk
 
 struct ParticipantVideoView: View {
     @ObservedObject var participantVideo: ParticipantVideo

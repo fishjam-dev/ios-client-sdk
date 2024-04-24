@@ -1,7 +1,6 @@
 import Foundation
 import Starscream
 
-import class MembraneRTC.TrackContext
 
 internal class JellyfishClientInternal: MembraneRTCDelegate, WebSocketDelegate {
     private var config: Config?
@@ -108,22 +107,22 @@ internal class JellyfishClientInternal: MembraneRTCDelegate, WebSocketDelegate {
         sendEvent(peerMessage: serialzedData)
     }
 
-    func onTrackAdded(ctx: MembraneRTC.TrackContext) {
+    func onTrackAdded(ctx: TrackContext) {
         let trackContext = JellyfishTrackContext(trackContext: ctx)
         listener.onTrackAdded(ctx: trackContext)
     }
 
-    func onTrackReady(ctx: MembraneRTC.TrackContext) {
+    func onTrackReady(ctx: TrackContext) {
         let trackContext = JellyfishTrackContext(trackContext: ctx)
         listener.onTrackReady(ctx: trackContext)
     }
 
-    func onTrackRemoved(ctx: MembraneRTC.TrackContext) {
+    func onTrackRemoved(ctx: TrackContext) {
         let trackContext = JellyfishTrackContext(trackContext: ctx)
         listener.onTrackRemoved(ctx: trackContext)
     }
 
-    func onTrackUpdated(ctx: MembraneRTC.TrackContext) {
+    func onTrackUpdated(ctx: TrackContext) {
         let trackContext = JellyfishTrackContext(trackContext: ctx)
         listener.onTrackUpdated(ctx: trackContext)
     }

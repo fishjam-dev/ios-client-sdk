@@ -163,7 +163,7 @@ extension ContentViewController: JellyfishClientListener {
         errorMessage = "Failed to join a room"
     }
 
-    func onTrackReady(ctx: TrackContext) {
+    func onTrackReady(ctx: JellyfishTrackContext) {
         guard var participant = participants[ctx.peer.id] else {
             return
         }
@@ -207,15 +207,15 @@ extension ContentViewController: JellyfishClientListener {
         }
     }
 
-    func onTrackAdded(ctx _: TrackContext) {}
+    func onTrackAdded(ctx _: JellyfishTrackContext) {}
 
-    func onTrackRemoved(ctx: TrackContext) {
+    func onTrackRemoved(ctx: JellyfishTrackContext) {
         if let video = participantVideos.first(where: { $0.id == ctx.trackId }) {
             remove(video: video)
         }
     }
 
-    func onTrackUpdated(ctx: TrackContext) {
+    func onTrackUpdated(ctx: JellyfishTrackContext) {
         let isActive = ctx.metadata["active"] as? Bool ?? false
 
         if ctx.metadata["type"] as? String == "camera" {
