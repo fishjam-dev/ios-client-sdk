@@ -1,0 +1,12 @@
+*xcdebugger
+.DS_Store
+node_modules
+build
+docs
+xcuserdata
+Debug.xcconfig
+.swiftpm
+/.build
+/Packages
+DerivedData/
+/.idea/
