@@ -1,5 +1,3 @@
-
-
 public class JellyfishTrackContext {
     private var trackContext: TrackContext
 

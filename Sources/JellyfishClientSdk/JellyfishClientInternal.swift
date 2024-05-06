@@ -1,7 +1,6 @@
 import Foundation
 import Starscream
 
-
 internal class JellyfishClientInternal: MembraneRTCDelegate, WebSocketDelegate {
     private var config: Config?
     private var webSocket: JellyfishWebsocket?

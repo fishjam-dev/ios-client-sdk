@@ -20,7 +20,9 @@ let package = Package(
             name: "SwiftProtobuf", url: "https://github.com/apple/swift-protobuf.git",
             .upToNextMajor(from: "1.18.0")),
         .package(url: "https://github.com/daltoniam/Starscream.git", from: "3.0.0"),
-        .package(name: "Mockingbird", url: "https://github.com/birdrides/mockingbird.git", .upToNextMinor(from: "0.20.0")),
+        .package(
+            name: "Mockingbird", url: "https://github.com/birdrides/mockingbird.git",
+            .upToNextMinor(from: "0.20.0")),
         .package(
             name: "Promises", url: "https://github.com/google/promises.git", .upToNextMajor(from: "2.0.0")
         ),
