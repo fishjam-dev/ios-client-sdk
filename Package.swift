@@ -15,10 +15,22 @@ let package = Package(
             targets: ["JellyfishClientSdk"])
     ],
     dependencies: [
-        .package(url: "https://github.com/apple/swift-protobuf.git", from: "1.6.0"),
-        .package(url: "https://github.com/jellyfish-dev/membrane-webrtc-ios.git", from:"5.0.0"),
+        .package(name: "WebRTC", url: "https://github.com/webrtc-sdk/Specs.git", .exact("114.5735.08")),
+        .package(
+            name: "SwiftProtobuf", url: "https://github.com/apple/swift-protobuf.git",
+            .upToNextMajor(from: "1.18.0")),
         .package(url: "https://github.com/daltoniam/Starscream.git", from: "3.0.0"),
-        .package(name: "Mockingbird", url: "https://github.com/birdrides/mockingbird.git", .upToNextMinor(from: "0.20.0")),
+        .package(
+            name: "Mockingbird", url: "https://github.com/birdrides/mockingbird.git",
+            .upToNextMinor(from: "0.20.0")),
+        .package(
+            name: "Promises", url: "https://github.com/google/promises.git", .upToNextMajor(from: "2.0.0")
+        ),
+        .package(
+            name: "SwiftPhoenixClient", url: "https://github.com/davidstump/SwiftPhoenixClient.git",
+            .upToNextMajor(from: "4.0.0")),
+        .package(url: "https://github.com/apple/swift-log.git", .upToNextMajor(from: "1.4.2")),
+        .package(url: "https://github.com/apple/swift-docc-plugin", from: "1.0.0"),
 
     ],
     targets: [
@@ -27,9 +39,10 @@ let package = Package(
         .target(
             name: "JellyfishClientSdk",
             dependencies: [
-                .product(name: "MembraneRTC", package: "membrane-webrtc-ios"),
-                .product(name: "SwiftProtobuf", package: "swift-protobuf"),
+                "WebRTC", "SwiftProtobuf", "Promises", "SwiftPhoenixClient",
                 .product(name: "Starscream", package: "Starscream"),
+                .product(name: "FBLPromises", package: "Promises"),
+                .product(name: "Logging", package: "swift-log"),
             ],
             path: "Sources"),
         .testTarget(name: "JellyfishClientSdkTests", dependencies: ["JellyfishClientSdk", "Mockingbird"]),

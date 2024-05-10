@@ -1,8 +1,6 @@
 import Foundation
 import Starscream
 
-import class MembraneRTC.TrackContext
-
 internal class JellyfishClientInternal: MembraneRTCDelegate, WebSocketDelegate {
     private var config: Config?
     private var webSocket: JellyfishWebsocket?
@@ -82,15 +80,15 @@ internal class JellyfishClientInternal: MembraneRTCDelegate, WebSocketDelegate {
         webrtcClient?.receiveMediaEvent(mediaEvent: event)
     }
 
-    func onEndpointAdded(endpoint: Peer) {
+    func onEndpointAdded(endpoint: Endpoint) {
         listener.onPeerJoined(peer: endpoint)
     }
 
-    func onEndpointRemoved(endpoint: Peer) {
+    func onEndpointRemoved(endpoint: Endpoint) {
         listener.onPeerLeft(peer: endpoint)
     }
 
-    func onEndpointUpdated(endpoint: Peer) {
+    func onEndpointUpdated(endpoint: Endpoint) {
         listener.onPeerUpdated(peer: endpoint)
     }
 
@@ -108,22 +106,22 @@ internal class JellyfishClientInternal: MembraneRTCDelegate, WebSocketDelegate {
         sendEvent(peerMessage: serialzedData)
     }
 
-    func onTrackAdded(ctx: MembraneRTC.TrackContext) {
+    func onTrackAdded(ctx: TrackContext) {
         let trackContext = JellyfishTrackContext(trackContext: ctx)
         listener.onTrackAdded(ctx: trackContext)
     }
 
-    func onTrackReady(ctx: MembraneRTC.TrackContext) {
+    func onTrackReady(ctx: TrackContext) {
         let trackContext = JellyfishTrackContext(trackContext: ctx)
         listener.onTrackReady(ctx: trackContext)
     }
 
-    func onTrackRemoved(ctx: MembraneRTC.TrackContext) {
+    func onTrackRemoved(ctx: TrackContext) {
         let trackContext = JellyfishTrackContext(trackContext: ctx)
         listener.onTrackRemoved(ctx: trackContext)
     }
 
-    func onTrackUpdated(ctx: MembraneRTC.TrackContext) {
+    func onTrackUpdated(ctx: TrackContext) {
         let trackContext = JellyfishTrackContext(trackContext: ctx)
         listener.onTrackUpdated(ctx: trackContext)
     }
@@ -156,7 +154,7 @@ internal class JellyfishClientInternal: MembraneRTCDelegate, WebSocketDelegate {
         listener.onDisconnected()
     }
 
-    func onConnected(endpointId: String, otherEndpoints: [Peer]) {
+    func onConnected(endpointId: String, otherEndpoints: [Endpoint]) {
         listener.onJoined(peerID: endpointId, peersInRoom: otherEndpoints)
     }
 

@@ -33,7 +33,7 @@ public protocol JellyfishClientListener {
     /**
      * Called when peer was accepted.
      */
-    func onJoined(peerID: String, peersInRoom: [Peer])
+    func onJoined(peerID: String, peersInRoom: [Endpoint])
 
     /**
      * Called when peer was not accepted
@@ -44,17 +44,17 @@ public protocol JellyfishClientListener {
     /**
      * Called each time new peer joins the room.
      */
-    func onPeerJoined(peer: Peer)
+    func onPeerJoined(peer: Endpoint)
 
     /**
      * Called each time peer leaves the room.
      */
-    func onPeerLeft(peer: Peer)
+    func onPeerLeft(peer: Endpoint)
 
     /**
      * Called each time peer has its metadata updated.
      */
-    func onPeerUpdated(peer: Peer)
+    func onPeerUpdated(peer: Endpoint)
 
     /**
      * Called when data in a new track arrives.

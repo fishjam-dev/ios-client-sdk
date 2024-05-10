@@ -132,7 +132,7 @@ extension ContentViewController: JellyfishClientListener {
 
     func onSendMediaEvent(event: SerializedMediaEvent) {}
 
-    func onJoined(peerID: String, peersInRoom: [Peer]) {
+    func onJoined(peerID: String, peersInRoom: [Endpoint]) {
         self.localParticipantId = peerID
 
         let localParticipant = Participant(id: peerID, displayName: "Me", isAudioTrackActive: true)
@@ -163,7 +163,7 @@ extension ContentViewController: JellyfishClientListener {
         errorMessage = "Failed to join a room"
     }
 
-    func onTrackReady(ctx: TrackContext) {
+    func onTrackReady(ctx: JellyfishTrackContext) {
         guard var participant = participants[ctx.peer.id] else {
             return
         }
@@ -207,15 +207,15 @@ extension ContentViewController: JellyfishClientListener {
         }
     }
 
-    func onTrackAdded(ctx _: TrackContext) {}
+    func onTrackAdded(ctx _: JellyfishTrackContext) {}
 
-    func onTrackRemoved(ctx: TrackContext) {
+    func onTrackRemoved(ctx: JellyfishTrackContext) {
         if let video = participantVideos.first(where: { $0.id == ctx.trackId }) {
             remove(video: video)
         }
     }
 
-    func onTrackUpdated(ctx: TrackContext) {
+    func onTrackUpdated(ctx: JellyfishTrackContext) {
         let isActive = ctx.metadata["active"] as? Bool ?? false
 
         if ctx.metadata["type"] as? String == "camera" {
@@ -236,7 +236,7 @@ extension ContentViewController: JellyfishClientListener {
         }
     }
 
-    func onPeerJoined(peer: Peer) {
+    func onPeerJoined(peer: Endpoint) {
         self.participants[peer.id] = Participant(
             id: peer.id, displayName: peer.metadata["displayName"] as? String ?? "", isAudioTrackActive: false)
         let pv =
@@ -244,14 +244,14 @@ extension ContentViewController: JellyfishClientListener {
         add(video: pv)
     }
 
-    func onPeerLeft(peer: Peer) {
+    func onPeerLeft(peer: Endpoint) {
         DispatchQueue.main.async {
             self.participants.removeValue(forKey: peer.id)
             self.participantVideos = self.participantVideos.filter({ $0.participant.id != peer.id })
         }
     }
 
-    func onPeerUpdated(peer _: Peer) {}
+    func onPeerUpdated(peer _: Endpoint) {}
 
     func onSocketClose(code: Int, reason: String) {
         if code != 1000 || reason == "invalid token" {

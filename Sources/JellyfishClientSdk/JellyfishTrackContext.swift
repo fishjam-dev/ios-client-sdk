@@ -1,11 +1,9 @@
-import class MembraneRTC.TrackContext
-
 public class JellyfishTrackContext {
-    private var trackContext: MembraneRTC.TrackContext
+    private var trackContext: TrackContext
 
     public var track: RemoteTrack? { return trackContext.track }
 
-    public var peer: Peer { return trackContext.endpoint }
+    public var peer: Endpoint { return trackContext.endpoint }
 
     public var trackId: String { return trackContext.trackId }
 
@@ -17,7 +15,7 @@ public class JellyfishTrackContext {
 
     public var encodingReason: EncodingReason? { return trackContext.encodingReason }
 
-    init(trackContext: MembraneRTC.TrackContext) {
+    init(trackContext: TrackContext) {
         self.trackContext = trackContext
     }
 
