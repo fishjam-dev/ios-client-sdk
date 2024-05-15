@@ -81,15 +81,15 @@ internal class JellyfishClientInternal: MembraneRTCDelegate, WebSocketDelegate {
     }
 
     func onEndpointAdded(endpoint: Endpoint) {
-        listener.onPeerJoined(peer: endpoint)
+        listener.onPeerJoined(endpoint: endpoint)
     }
 
     func onEndpointRemoved(endpoint: Endpoint) {
-        listener.onPeerLeft(peer: endpoint)
+        listener.onPeerLeft(endpoint: endpoint)
     }
 
     func onEndpointUpdated(endpoint: Endpoint) {
-        listener.onPeerUpdated(peer: endpoint)
+        listener.onPeerUpdated(endpoint: endpoint)
     }
 
     func onSendMediaEvent(event: SerializedMediaEvent) {
@@ -107,23 +107,19 @@ internal class JellyfishClientInternal: MembraneRTCDelegate, WebSocketDelegate {
     }
 
     func onTrackAdded(ctx: TrackContext) {
-        let trackContext = JellyfishTrackContext(trackContext: ctx)
-        listener.onTrackAdded(ctx: trackContext)
+        listener.onTrackAdded(ctx: ctx)
     }
 
     func onTrackReady(ctx: TrackContext) {
-        let trackContext = JellyfishTrackContext(trackContext: ctx)
-        listener.onTrackReady(ctx: trackContext)
+        listener.onTrackReady(ctx: ctx)
     }
 
     func onTrackRemoved(ctx: TrackContext) {
-        let trackContext = JellyfishTrackContext(trackContext: ctx)
-        listener.onTrackRemoved(ctx: trackContext)
+        listener.onTrackRemoved(ctx: ctx)
     }
 
     func onTrackUpdated(ctx: TrackContext) {
-        let trackContext = JellyfishTrackContext(trackContext: ctx)
-        listener.onTrackUpdated(ctx: trackContext)
+        listener.onTrackUpdated(ctx: ctx)
     }
 
     func onBandwidthEstimationChanged(estimation: Int) {

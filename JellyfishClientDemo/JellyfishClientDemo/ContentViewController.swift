@@ -137,9 +137,10 @@ extension ContentViewController: JellyfishClientListener {
 
         let localParticipant = Participant(id: peerID, displayName: "Me", isAudioTrackActive: true)
 
-        let participants = peersInRoom.map { peer in
+        let participants = peersInRoom.map { endpoint in
             Participant(
-                id: peer.id, displayName: peer.metadata["displayName"] as? String ?? "", isAudioTrackActive: false)
+                id: endpoint.id, displayName: endpoint.metadata["displayName"] as? String ?? "",
+                isAudioTrackActive: false)
         }
 
         DispatchQueue.main.async {
@@ -163,16 +164,16 @@ extension ContentViewController: JellyfishClientListener {
         errorMessage = "Failed to join a room"
     }
 
-    func onTrackReady(ctx: JellyfishTrackContext) {
-        guard var participant = participants[ctx.peer.id] else {
+    func onTrackReady(ctx: TrackContext) {
+        guard var participant = participants[ctx.endpoint.id] else {
             return
         }
 
         guard let videoTrack = ctx.track as? VideoTrack else {
             DispatchQueue.main.async {
                 participant.isAudioTrackActive = ctx.metadata["active"] as? Bool == true
-                self.participants[ctx.peer.id] = participant
-                let pv = self.findParticipantVideoByOwner(participantId: ctx.peer.id)
+                self.participants[ctx.endpoint.id] = participant
+                let pv = self.findParticipantVideoByOwner(participantId: ctx.endpoint.id)
                 pv?.participant = participant
             }
 
@@ -194,7 +195,7 @@ extension ContentViewController: JellyfishClientListener {
             id: ctx.trackId, participant: participant, videoTrack: videoTrack,
             isActive: ctx.metadata["active"] as? Bool == true)
 
-        guard let existingVideo = self.findParticipantVideoByOwner(participantId: ctx.peer.id) else {
+        guard let existingVideo = self.findParticipantVideoByOwner(participantId: ctx.endpoint.id) else {
             add(video: video)
             return
         }
@@ -207,51 +208,51 @@ extension ContentViewController: JellyfishClientListener {
         }
     }
 
-    func onTrackAdded(ctx _: JellyfishTrackContext) {}
+    func onTrackAdded(ctx _: TrackContext) {}
 
-    func onTrackRemoved(ctx: JellyfishTrackContext) {
+    func onTrackRemoved(ctx: TrackContext) {
         if let video = participantVideos.first(where: { $0.id == ctx.trackId }) {
             remove(video: video)
         }
     }
 
-    func onTrackUpdated(ctx: JellyfishTrackContext) {
+    func onTrackUpdated(ctx: TrackContext) {
         let isActive = ctx.metadata["active"] as? Bool ?? false
 
         if ctx.metadata["type"] as? String == "camera" {
             DispatchQueue.main.async {
-                self.participantVideos.first(where: { $0.participant.id == ctx.peer.id })?.isActive =
+                self.participantVideos.first(where: { $0.participant.id == ctx.endpoint.id })?.isActive =
                     isActive
             }
         } else {
             DispatchQueue.main.async {
-                guard var p = self.participants[ctx.peer.id] else {
+                guard var p = self.participants[ctx.endpoint.id] else {
                     return
                 }
                 p.isAudioTrackActive = isActive
-                self.participants[ctx.peer.id] = p
-                self.participantVideos.first(where: { $0.participant.id == ctx.peer.id })?.participant = p
+                self.participants[ctx.endpoint.id] = p
+                self.participantVideos.first(where: { $0.participant.id == ctx.endpoint.id })?.participant = p
             }
 
         }
     }
 
-    func onPeerJoined(peer: Endpoint) {
-        self.participants[peer.id] = Participant(
-            id: peer.id, displayName: peer.metadata["displayName"] as? String ?? "", isAudioTrackActive: false)
+    func onPeerJoined(endpoint: Endpoint) {
+        self.participants[endpoint.id] = Participant(
+            id: endpoint.id, displayName: endpoint.metadata["displayName"] as? String ?? "", isAudioTrackActive: false)
         let pv =
-            ParticipantVideo(id: peer.id, participant: participants[peer.id]!, videoTrack: nil, isActive: false)
+            ParticipantVideo(id: endpoint.id, participant: participants[endpoint.id]!, videoTrack: nil, isActive: false)
         add(video: pv)
     }
 
-    func onPeerLeft(peer: Endpoint) {
+    func onPeerLeft(endpoint: Endpoint) {
         DispatchQueue.main.async {
-            self.participants.removeValue(forKey: peer.id)
-            self.participantVideos = self.participantVideos.filter({ $0.participant.id != peer.id })
+            self.participants.removeValue(forKey: endpoint.id)
+            self.participantVideos = self.participantVideos.filter({ $0.participant.id != endpoint.id })
         }
     }
 
-    func onPeerUpdated(peer _: Endpoint) {}
+    func onPeerUpdated(endpoint _: Endpoint) {}
 
     func onSocketClose(code: Int, reason: String) {
         if code != 1000 || reason == "invalid token" {
