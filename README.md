@@ -4,10 +4,11 @@
 
 ## Components
 
-The repository consists of 2 separapable components:
+The repository consists of 3 separapable components:
 
-- `FishjamClientSdk` - Fishjam client fully compatible with `Fishjam`, responsible for exchaning media events and receiving media streams which then are presented to the user
-- `FishjamCLientDemo` - Demo application utilizing `Fishjam` client
+- `JellyfishClientSdk` - Fishjam client fully compatible with `Fishjam`, responsible for exchaning media events and receiving media streams which then are presented to the user
+- `JellyfishCLientDemo` - Demo application utilizing `Fishjam` client
+- `MembraneRTC` - iOS webrtc client
 
 ### Example App
 
