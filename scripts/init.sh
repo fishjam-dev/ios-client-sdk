@@ -1,6 +1,6 @@
 #!/bin/bash
 brew install swift-format 
-npm install
+yarn
 chmod +x .githooks/*
 cp .githooks/* .git/hooks
-cp Release.xcconfig Debug.xcconfig
+cp JellyfishClientDemo/Release.xcconfig JellyfishClientDemo/Debug.xcconfig
