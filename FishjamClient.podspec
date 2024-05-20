@@ -7,15 +7,15 @@
 #
 
 Pod::Spec.new do |s|
-  s.name             = 'JellyfishSDK'
+  s.name             = 'FishjamClient'
   s.version          = '0.3.0'
-  s.summary          = 'Jellyfish SDK fully compatible with `Membrane RTC Engine` for iOS.'
+  s.summary          = 'Fishjam SDK fully compatible with `Membrane RTC Engine` for iOS.'
 
-  s.homepage         = 'https://github.com/jellyfish-dev/ios-client-sdk'
+  s.homepage         = 'https://github.com/fishjam-dev/ios-client-sdk'
   # s.screenshots     = 'www.example.com/screenshots_1', 'www.example.com/screenshots_2'
   s.license          = { :type => 'Apache-2.0 license', :file => 'LICENSE' }
   s.author           = { 'Software Mansion' => 'https://swmansion.com' }
-  s.source           = { :git => 'https://github.com/jellyfish-dev/ios-client-sdk.git', :tag => s.version.to_s }
+  s.source           = { :git => 'https://github.com/fishjam-dev/ios-client-sdk.git', :tag => s.version.to_s }
 
   s.ios.deployment_target = '13.0'
   s.swift_version = '5.0'
