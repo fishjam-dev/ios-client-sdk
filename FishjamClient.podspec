@@ -21,12 +21,16 @@ Pod::Spec.new do |s|
   s.swift_version = '5.0'
 
   s.source_files = 'Sources/**/*'
-  s.dependency 'WebRTC-SDK', '114.5735.08'
-  s.dependency 'SwiftProtobuf'
-  s.dependency 'PromisesSwift'
-  s.dependency 'SwiftPhoenixClient', '~> 4.0.0'
-  s.dependency 'SwiftLogJellyfish', '1.5.2'
+
   s.pod_target_xcconfig = { 'ENABLE_BITCODE' => 'NO' }
+  
+  s.dependency 'WebRTC-SDK', '114.5735.08'
+  s.dependency 'SwiftProtobuf', '~> 1.18.0'
+  s.dependency 'Starscream', '~> 4.0.0'
+  s.dependency 'MockingbirdFramework', '0.20.0'
+  s.dependency 'PromisesSwift'
+  s.dependency 'SwiftPhoenixClient', '~> 5.0.0'
+  s.dependency 'SwiftLogJellyfish', '1.5.2'
 
   s.subspec "Broadcast" do |spec|
     spec.source_files = "Sources/MembraneRTC/Media/BroadcastSampleSource.swift", "Sources/MembraneRTC/IPC/**/*.{h,m,mm,swift}"
