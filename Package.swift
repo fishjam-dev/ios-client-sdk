@@ -19,7 +19,7 @@ let package = Package(
         .package(
             name: "SwiftProtobuf", url: "https://github.com/apple/swift-protobuf.git",
             .upToNextMajor(from: "1.18.0")),
-        .package(url: "https://github.com/daltoniam/Starscream.git", from: "3.0.0"),
+        .package(url: "https://github.com/daltoniam/Starscream.git", from: "4.0.0"),
         .package(
             name: "Mockingbird", url: "https://github.com/birdrides/mockingbird.git",
             .upToNextMinor(from: "0.20.0")),
@@ -28,7 +28,7 @@ let package = Package(
         ),
         .package(
             name: "SwiftPhoenixClient", url: "https://github.com/davidstump/SwiftPhoenixClient.git",
-            .upToNextMajor(from: "4.0.0")),
+            .upToNextMajor(from: "5.0.0")),
         .package(url: "https://github.com/apple/swift-log.git", .upToNextMajor(from: "1.4.2")),
         .package(url: "https://github.com/apple/swift-docc-plugin", from: "1.0.0"),
 
