@@ -281,7 +281,7 @@ struct UpdateTrackMetadata: SendableEvent {
     func serialize() -> Payload {
         return .init([
             "type": "updateTrackMetadata",
-            "data": ["trackId": trackId, "trackMetadata": trackMetadata] as [String: Any],
+            "data": ["trackId": trackId, "trackMetadata": trackMetadata!] as [String: Any],
         ])
     }
 }

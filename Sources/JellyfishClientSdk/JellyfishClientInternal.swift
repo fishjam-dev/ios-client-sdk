@@ -34,7 +34,7 @@ internal class JellyfishClientInternal: MembraneRTCDelegate, WebSocketDelegate {
 
     func didReceive(event: Starscream.WebSocketEvent, client: any Starscream.WebSocketClient) {
         switch event {
-        case .connected(let headers):
+        case .connected(_):
             websocketDidConnect()
         case .disconnected(let reason, let code):
             onSocketClose(code: code, reason: reason)
@@ -52,7 +52,7 @@ internal class JellyfishClientInternal: MembraneRTCDelegate, WebSocketDelegate {
             break
         case .cancelled:
             onDisconnected()
-        case .error(let error):
+        case .error(_):
             onSocketError()
         default:
             break
