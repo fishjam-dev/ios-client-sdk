@@ -32,7 +32,34 @@ internal class JellyfishClientInternal: MembraneRTCDelegate, WebSocketDelegate {
         onDisconnected()
     }
 
-    func websocketDidConnect(socket: WebSocketClient) {
+    func didReceive(event: Starscream.WebSocketEvent, client: any Starscream.WebSocketClient) {
+        switch event {
+        case .connected(let headers):
+            websocketDidConnect()
+        case .disconnected(let reason, let code):
+            onSocketClose(code: code, reason: reason)
+        case .text(let message):
+            websocketDidReceiveMessage(text: message)
+        case .binary(let data):
+            websocketDidReceiveData(data: data)
+        case .ping(_):
+            break
+        case .pong(_):
+            break
+        case .viabilityChanged(_):
+            break
+        case .reconnectSuggested(_):
+            break
+        case .cancelled:
+            onDisconnected()
+        case .error(let error):
+            onSocketError()
+        default:
+            break
+        }
+    }
+
+    func websocketDidConnect() {
         onSocketOpen()
         let authRequest = Jellyfish_PeerMessage.with({
             $0.authRequest = Jellyfish_PeerMessage.AuthRequest.with({
@@ -46,13 +73,7 @@ internal class JellyfishClientInternal: MembraneRTCDelegate, WebSocketDelegate {
         sendEvent(peerMessage: serializedData)
     }
 
-    func websocketDidDisconnect(socket: WebSocketClient, error: Error?) {
-        if let error = error as? WSError {
-            onSocketClose(code: error.code, reason: error.message)
-        }
-    }
-
-    func websocketDidReceiveData(socket: WebSocketClient, data: Data) {
+    func websocketDidReceiveData(data: Data) {
         do {
             let peerMessage = try Jellyfish_PeerMessage(serializedData: data)
             if case .authenticated(_) = peerMessage.content {
@@ -67,7 +88,7 @@ internal class JellyfishClientInternal: MembraneRTCDelegate, WebSocketDelegate {
         }
     }
 
-    func websocketDidReceiveMessage(socket: WebSocketClient, text: String) {
+    func websocketDidReceiveMessage(text: String) {
         print("Unsupported socket callback 'websocketDidReceiveMessage' was called.")
         onSocketError()
     }
@@ -126,7 +147,7 @@ internal class JellyfishClientInternal: MembraneRTCDelegate, WebSocketDelegate {
         listener.onBandwidthEstimationChanged(estimation: estimation)
     }
 
-    func onSocketClose(code: Int, reason: String) {
+    func onSocketClose(code: UInt16, reason: String) {
         listener.onSocketClose(code: code, reason: reason)
     }
 

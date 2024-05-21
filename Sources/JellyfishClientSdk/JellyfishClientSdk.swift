@@ -44,7 +44,8 @@ public class JellyfishClientWebSocket: JellyfishWebsocket {
 
 internal func websocketFactory(url: String) -> JellyfishWebsocket {
     let url = URL(string: url)
-    return JellyfishClientWebSocket(socket: WebSocket(url: url!))
+    let urlRequest = URLRequest(url: url!)
+    return JellyfishClientWebSocket(socket: WebSocket(request: urlRequest))
 }
 
 public class JellyfishClientSdk {

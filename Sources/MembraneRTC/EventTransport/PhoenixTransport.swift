@@ -42,7 +42,7 @@ public class PhoenixTransport {
 
             self.socket.onOpen { self.onOpen() }
             self.socket.onClose { self.onClose() }
-            self.socket.onError { error in self.onError(error) }
+            self.socket.onError { error in self.onError() }
 
             let channel = self.socket.channel(self.topic, params: self.channelParams)
 
@@ -104,7 +104,7 @@ extension PhoenixTransport {
         connectionState = .closed
     }
 
-    func onError(_: Error) {
+    func onError() {
         connectionState = .closed
         delegate?.didReceive(error: PhoenixTransportError.connectionError)
     }
