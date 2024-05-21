@@ -27,7 +27,6 @@ Pod::Spec.new do |s|
   s.dependency 'WebRTC-SDK', '114.5735.08'
   s.dependency 'SwiftProtobuf', '~> 1.18.0'
   s.dependency 'Starscream', '~> 4.0.0'
-  s.dependency 'MockingbirdFramework', '0.20.0'
   s.dependency 'PromisesSwift'
   s.dependency 'SwiftPhoenixClient', '~> 5.0.0'
   s.dependency 'SwiftLogJellyfish', '1.5.2'
