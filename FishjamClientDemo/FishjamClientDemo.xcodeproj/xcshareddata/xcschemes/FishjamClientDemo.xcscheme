@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "2FB8B3CD2A20C6DA0060E251"
-               BuildableName = "JellyfishClientDemo.app"
-               BlueprintName = "JellyfishClientDemo"
-               ReferencedContainer = "container:JellyfishClientDemo.xcodeproj">
+               BuildableName = "FishjamClientDemo.app"
+               BlueprintName = "FishjamClientDemo"
+               ReferencedContainer = "container:FishjamClientDemo.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -35,9 +35,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "2FB8B3DD2A20C6DD0060E251"
-               BuildableName = "JellyfishClientDemoTests.xctest"
-               BlueprintName = "JellyfishClientDemoTests"
-               ReferencedContainer = "container:JellyfishClientDemo.xcodeproj">
+               BuildableName = "FishjamClientDemoTests.xctest"
+               BlueprintName = "FishjamClientDemoTests"
+               ReferencedContainer = "container:FishjamClientDemo.xcodeproj">
             </BuildableReference>
          </TestableReference>
          <TestableReference
@@ -46,9 +46,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "2FB8B3E72A20C6DD0060E251"
-               BuildableName = "JellyfishClientDemoUITests.xctest"
-               BlueprintName = "JellyfishClientDemoUITests"
-               ReferencedContainer = "container:JellyfishClientDemo.xcodeproj">
+               BuildableName = "FishjamClientDemoUITests.xctest"
+               BlueprintName = "FishjamClientDemoUITests"
+               ReferencedContainer = "container:FishjamClientDemo.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -68,9 +68,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "2FB8B3CD2A20C6DA0060E251"
-            BuildableName = "JellyfishClientDemo.app"
-            BlueprintName = "JellyfishClientDemo"
-            ReferencedContainer = "container:JellyfishClientDemo.xcodeproj">
+            BuildableName = "FishjamClientDemo.app"
+            BlueprintName = "FishjamClientDemo"
+            ReferencedContainer = "container:FishjamClientDemo.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -85,9 +85,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "2FB8B3CD2A20C6DA0060E251"
-            BuildableName = "JellyfishClientDemo.app"
-            BlueprintName = "JellyfishClientDemo"
-            ReferencedContainer = "container:JellyfishClientDemo.xcodeproj">
+            BuildableName = "FishjamClientDemo.app"
+            BlueprintName = "FishjamClientDemo"
+            ReferencedContainer = "container:FishjamClientDemo.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

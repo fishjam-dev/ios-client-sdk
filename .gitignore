@@ -92,7 +92,7 @@ iOSInjectionProject/
 
 node_modules
 
-JellyfishClientDemo/Debug.xcconfig
+FishjamClientDemo/Debug.xcconfig
 
 # Generated
 *.generated.swift

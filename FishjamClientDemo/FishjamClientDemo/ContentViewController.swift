@@ -1,6 +1,6 @@
 //
 //  ContentViewController.swift
-//  JellyfishClientDemo
+//  FishjamClientDemo
 //
 //  Created by Karol Sygiet on 02/06/2023.
 //

@@ -12,7 +12,7 @@ final class FishjamClientSdkTests: XCTestCase {
     var fishjamClient: FishjamClientInternal?
     var webrtc: FishjamMembraneRTC?
     // "Real" websocket class has to be used here since it is needed as a parameter for callbacks.
-    // It is safe to use it here because callbacks implemented in the JellyfishClientInternal ignore this parameter.
+    // It is safe to use it here because callbacks implemented in the FishjamClientInternal ignore this parameter.
 
     let socket = WebSocket(request: URLRequest(url: URL(string: "ws://test:4000/socket/peer/websocket")!))
 
