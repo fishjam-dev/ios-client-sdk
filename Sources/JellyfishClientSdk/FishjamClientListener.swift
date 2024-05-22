@@ -1,6 +1,6 @@
 import Foundation
 
-public protocol JellyfishClientListener {
+public protocol FishjamClientListener {
     /**
      * Emitted when the websocket connection is closed
      */
@@ -59,20 +59,20 @@ public protocol JellyfishClientListener {
     /**
      * Called when data in a new track arrives.
      *
-     * This callback is always called after {@link JellyfishClientListener.onTrackAdded}.
+     * This callback is always called after {@link FishjamClientListener.onTrackAdded}.
      * It informs user that data related to the given track arrives and can be played or displayed.
      */
     func onTrackReady(ctx: TrackContext)
 
     /**
      * Called each time the peer which was already in the room, adds new track. Fields track and stream will be set to null.
-     * These fields will be set to non-null value in {@link JellyfishClientListener.onTrackReady}
+     * These fields will be set to non-null value in {@link FishjamClientListener.onTrackReady}
      */
     func onTrackAdded(ctx: TrackContext)
     /**
      * Called when some track will no longer be sent.
      *
-     * It will also be called before {@link JellyfishClientListener.onPeerLeft} for each track of this peer.
+     * It will also be called before {@link FishjamClientListener.onPeerLeft} for each track of this peer.
      */
     func onTrackRemoved(ctx: TrackContext)
 

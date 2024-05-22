@@ -39,7 +39,7 @@ class ParticipantVideo: Identifiable, ObservableObject {
 }
 
 class ContentViewController: ObservableObject {
-    private var jellyfishClient: JellyfishClientSdk?
+    private var jellyfishClient: FishjamClientSdk?
 
     @Published var participants: [String: Participant]
     @Published var participantVideos: [ParticipantVideo]
@@ -57,7 +57,7 @@ class ContentViewController: ObservableObject {
         self.localParticipantId = "local"
         self.connected = false
 
-        self.jellyfishClient = JellyfishClientSdk(listener: self)
+        self.jellyfishClient = FishjamClientSdk(listener: self)
     }
 
     public func connect(peerToken: String) {
@@ -94,7 +94,7 @@ class ContentViewController: ObservableObject {
     }
 }
 
-extension ContentViewController: JellyfishClientListener {
+extension ContentViewController: FishjamClientListener {
     func onBandwidthEstimationChanged(estimation: Int) {
 
     }

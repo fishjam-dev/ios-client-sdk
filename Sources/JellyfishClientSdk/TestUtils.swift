@@ -1,9 +1,9 @@
 import Starscream
 import WebRTC
 
-internal protocol JellyfishMembraneRTC {
+internal protocol FishjamMembraneRTC {
     func disconnect()
     func receiveMediaEvent(mediaEvent: SerializedMediaEvent)
 }
 
-extension MembraneRTC: JellyfishMembraneRTC {}
+extension MembraneRTC: FishjamMembraneRTC {}

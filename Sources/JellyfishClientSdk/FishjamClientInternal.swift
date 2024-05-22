@@ -1,14 +1,14 @@
 import Foundation
 import Starscream
 
-internal class JellyfishClientInternal: MembraneRTCDelegate, WebSocketDelegate {
+internal class FishjamClientInternal: MembraneRTCDelegate, WebSocketDelegate {
     private var config: Config?
-    private var webSocket: JellyfishWebsocket?
-    private var listener: JellyfishClientListener
-    private var websocketFactory: (String) -> JellyfishWebsocket
-    var webrtcClient: JellyfishMembraneRTC?
+    private var webSocket: FishjamWebsocket?
+    private var listener: FishjamClientListener
+    private var websocketFactory: (String) -> FishjamWebsocket
+    var webrtcClient: FishjamMembraneRTC?
 
-    public init(listener: JellyfishClientListener, websocketFactory: @escaping (String) -> JellyfishWebsocket) {
+    public init(listener: FishjamClientListener, websocketFactory: @escaping (String) -> FishjamWebsocket) {
         self.listener = listener
         self.websocketFactory = websocketFactory
     }

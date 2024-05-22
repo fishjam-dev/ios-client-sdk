@@ -11,14 +11,14 @@ public struct Config {
     }
 }
 
-internal protocol JellyfishWebsocket {
+internal protocol FishjamWebsocket {
     var delegate: WebSocketDelegate? { get set }
     func connect()
     func disconnect()
     func write(data: Data)
 }
 
-public class JellyfishClientWebSocket: JellyfishWebsocket {
+public class FishjamClientWebSocket: FishjamWebsocket {
     var socket: WebSocket
     var delegate: WebSocketDelegate? {
         set { self.socket.delegate = newValue }
@@ -42,18 +42,18 @@ public class JellyfishClientWebSocket: JellyfishWebsocket {
     }
 }
 
-internal func websocketFactory(url: String) -> JellyfishWebsocket {
+internal func websocketFactory(url: String) -> FishjamWebsocket {
     let url = URL(string: url)
     let urlRequest = URLRequest(url: url!)
-    return JellyfishClientWebSocket(socket: WebSocket(request: urlRequest))
+    return FishjamClientWebSocket(socket: WebSocket(request: urlRequest))
 }
 
-public class JellyfishClientSdk {
-    private var client: JellyfishClientInternal
+public class FishjamClientSdk {
+    private var client: FishjamClientInternal
     private var webrtcClient: MembraneRTC
 
-    public init(listener: JellyfishClientListener) {
-        self.client = JellyfishClientInternal(listener: listener, websocketFactory: websocketFactory)
+    public init(listener: FishjamClientListener) {
+        self.client = FishjamClientInternal(listener: listener, websocketFactory: websocketFactory)
         self.webrtcClient = MembraneRTC.create(delegate: self.client)
         self.client.webrtcClient = self.webrtcClient
     }
@@ -85,8 +85,8 @@ public class JellyfishClientSdk {
     }
 
     /**
-    * Tries to join the room. If user is accepted then {@link JellyfishClient.onJoinSuccess} will be called.
-    * In other case {@link JellyfishClient.onJoinError} is invoked.
+    * Tries to join the room. If user is accepted then {@link FishjamClient.onJoinSuccess} will be called.
+    * In other case {@link FishjamClient.onJoinError} is invoked.
     *
     * @param peerMetadata - Any information that other peers will receive in onPeerJoined
     * after accepting this peer
