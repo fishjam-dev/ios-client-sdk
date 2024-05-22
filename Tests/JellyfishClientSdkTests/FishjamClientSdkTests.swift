@@ -5,18 +5,18 @@ import XCTest
 @testable import JellyfishClientSdk
 @testable import Starscream
 
-final class JellyfishClientSdkTests: XCTestCase {
-    let mockedWebSocket = mock(JellyfishWebsocket.self)
-    let jellyfishClientListener = mock(JellyfishClientListener.self)
+final class FishjamClientSdkTests: XCTestCase {
+    let mockedWebSocket = mock(FishjamWebsocket.self)
+    let fishjamClientListener = mock(FishjamClientListener.self)
     let testConfig = Config(websocketUrl: "ws://test:4000/socket/peer/websocket", token: "testTOKEN")
-    var jellyfishClient: JellyfishClientInternal?
-    var webrtc: JellyfishMembraneRTC?
+    var fishjamClient: FishjamClientInternal?
+    var webrtc: FishjamMembraneRTC?
     // "Real" websocket class has to be used here since it is needed as a parameter for callbacks.
     // It is safe to use it here because callbacks implemented in the JellyfishClientInternal ignore this parameter.
 
     let socket = WebSocket(request: URLRequest(url: URL(string: "ws://test:4000/socket/peer/websocket")!))
 
-    func getMockWebsocket(url: String) -> JellyfishWebsocket {
+    func getMockWebsocket(url: String) -> FishjamWebsocket {
         return self.mockedWebSocket
     }
 
@@ -58,24 +58,24 @@ final class JellyfishClientSdkTests: XCTestCase {
 
     override func setUp() {
         let webrtc = mock(JellyfishMembraneRTC.self)
-        let jellyfishClient = JellyfishClientInternal(
-            listener: self.jellyfishClientListener, websocketFactory: getMockWebsocket)
+        let jellyfishClient = FishjamClientInternal(
+            listener: self.fishjamClientListener, websocketFactory: getMockWebsocket)
         jellyfishClient.webrtcClient = webrtc
-        self.jellyfishClient = jellyfishClient
+        self.fishjamClient = jellyfishClient
         self.webrtc = webrtc
         givenSwift(self.mockedWebSocket.connect()).will {
-            self.jellyfishClient?.websocketDidConnect()
+            self.fishjamClient?.websocketDidConnect()
         }
     }
 
     func connect() {
-        jellyfishClient?.connect(config: self.testConfig)
+        fishjamClient?.connect(config: self.testConfig)
         verifyClientSent(authRequest)
         sendToClient(authResponse)
     }
 
     func sendToClient(_ data: Data) {
-        self.jellyfishClient?.websocketDidReceiveData(data: data)
+        self.fishjamClient?.websocketDidReceiveData(data: data)
     }
 
     func verifyClientSent(_ data: Data) {
@@ -84,14 +84,14 @@ final class JellyfishClientSdkTests: XCTestCase {
 
     func testConnectAndAuthenticate() throws {
         connect()
-        verify(self.jellyfishClientListener.onAuthSuccess()).wasCalled()
+        verify(self.fishjamClientListener.onAuthSuccess()).wasCalled()
     }
 
     func testCleansUp() throws {
         connect()
-        jellyfishClient?.cleanUp()
+        fishjamClient?.cleanUp()
         verify(self.mockedWebSocket.disconnect()).wasCalled()
-        verify(self.jellyfishClientListener.onDisconnected()).wasCalled()
+        verify(self.fishjamClientListener.onDisconnected()).wasCalled()
         verify(self.webrtc?.disconnect()).wasCalled()
     }
 
@@ -103,7 +103,7 @@ final class JellyfishClientSdkTests: XCTestCase {
 
     func testSendsMediaEvents() throws {
         connect()
-        jellyfishClient?.onSendMediaEvent(event: "join")
+        fishjamClient?.onSendMediaEvent(event: "join")
         verifyClientSent(joinEvent)
     }
 }
