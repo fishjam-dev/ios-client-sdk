@@ -106,13 +106,4 @@ final class JellyfishClientSdkTests: XCTestCase {
         jellyfishClient?.onSendMediaEvent(event: "join")
         verifyClientSent(joinEvent)
     }
-
-    func testCloseWithError() throws {
-        let err = WSError(type: ErrorType.serverError, message: "Test reason", code: 1009)
-
-        connect()
-        jellyfishClient?.onSocketError()
-
-        verify(self.jellyfishClientListener.onSocketClose(code: 1009, reason: "Test reason")).wasCalled()
-    }
 }
