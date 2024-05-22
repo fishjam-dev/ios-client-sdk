@@ -61,8 +61,8 @@ internal class FishjamClientInternal: MembraneRTCDelegate, WebSocketDelegate {
 
     func websocketDidConnect() {
         onSocketOpen()
-        let authRequest = Jellyfish_PeerMessage.with({
-            $0.authRequest = Jellyfish_PeerMessage.AuthRequest.with({
+        let authRequest = Fishjam_PeerMessage.with({
+            $0.authRequest = Fishjam_PeerMessage.AuthRequest.with({
                 $0.token = self.config?.token ?? ""
             })
         })
@@ -75,7 +75,7 @@ internal class FishjamClientInternal: MembraneRTCDelegate, WebSocketDelegate {
 
     func websocketDidReceiveData(data: Data) {
         do {
-            let peerMessage = try Jellyfish_PeerMessage(serializedData: data)
+            let peerMessage = try Fishjam_PeerMessage(serializedData: data)
             if case .authenticated(_) = peerMessage.content {
                 onAuthSuccess()
             } else if case .mediaEvent(_) = peerMessage.content {
@@ -115,8 +115,8 @@ internal class FishjamClientInternal: MembraneRTCDelegate, WebSocketDelegate {
 
     func onSendMediaEvent(event: SerializedMediaEvent) {
         let mediaEvent =
-            Jellyfish_PeerMessage.with({
-                $0.mediaEvent = Jellyfish_PeerMessage.MediaEvent.with({
+            Fishjam_PeerMessage.with({
+                $0.mediaEvent = Fishjam_PeerMessage.MediaEvent.with({
                     $0.data = event
                 })
             })

@@ -20,7 +20,7 @@ final class FishjamClientSdkTests: XCTestCase {
         return self.mockedWebSocket
     }
 
-    static func generateDataFromMessage(_ message: Jellyfish_PeerMessage) -> Data {
+    static func generateDataFromMessage(_ message: Fishjam_PeerMessage) -> Data {
         guard let serializedData = try? message.serializedData() else {
             return Data()
         }
@@ -29,28 +29,28 @@ final class FishjamClientSdkTests: XCTestCase {
     }
 
     let authRequest = generateDataFromMessage(
-        Jellyfish_PeerMessage.with({
-            $0.authRequest = Jellyfish_PeerMessage.AuthRequest.with({
+        Fishjam_PeerMessage.with({
+            $0.authRequest = Fishjam_PeerMessage.AuthRequest.with({
                 $0.token = "testTOKEN"
             })
         }))
 
     let authResponse = generateDataFromMessage(
-        Jellyfish_PeerMessage.with({
-            $0.authenticated = Jellyfish_PeerMessage.Authenticated()
+        Fishjam_PeerMessage.with({
+            $0.authenticated = Fishjam_PeerMessage.Authenticated()
         }))
 
     let joinEvent = generateDataFromMessage(
-        Jellyfish_PeerMessage.with({
-            $0.mediaEvent = Jellyfish_PeerMessage.MediaEvent.with({
+        Fishjam_PeerMessage.with({
+            $0.mediaEvent = Fishjam_PeerMessage.MediaEvent.with({
                 $0.data = "join"
             })
         })
     )
 
     let sdpOfferEvent = generateDataFromMessage(
-        Jellyfish_PeerMessage.with({
-            $0.mediaEvent = Jellyfish_PeerMessage.MediaEvent.with({
+        Fishjam_PeerMessage.with({
+            $0.mediaEvent = Fishjam_PeerMessage.MediaEvent.with({
                 $0.data = "sdpOffer"
             })
         })
