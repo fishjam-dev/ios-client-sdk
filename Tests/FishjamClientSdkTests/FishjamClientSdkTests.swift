@@ -57,11 +57,11 @@ final class FishjamClientSdkTests: XCTestCase {
     )
 
     override func setUp() {
-        let webrtc = mock(JellyfishMembraneRTC.self)
-        let jellyfishClient = FishjamClientInternal(
+        let webrtc = mock(FishjamMembraneRTC.self)
+        let fishjamClient = FishjamClientInternal(
             listener: self.fishjamClientListener, websocketFactory: getMockWebsocket)
-        jellyfishClient.webrtcClient = webrtc
-        self.fishjamClient = jellyfishClient
+        fishjamClient.webrtcClient = webrtc
+        self.fishjamClient = fishjamClient
         self.webrtc = webrtc
         givenSwift(self.mockedWebSocket.connect()).will {
             self.fishjamClient?.websocketDidConnect()

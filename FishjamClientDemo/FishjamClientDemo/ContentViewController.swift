@@ -39,7 +39,7 @@ class ParticipantVideo: Identifiable, ObservableObject {
 }
 
 class ContentViewController: ObservableObject {
-    private var jellyfishClient: FishjamClientSdk?
+    private var fishjamClient: FishjamClientSdk?
 
     @Published var participants: [String: Participant]
     @Published var participantVideos: [ParticipantVideo]
@@ -57,7 +57,7 @@ class ContentViewController: ObservableObject {
         self.localParticipantId = "local"
         self.connected = false
 
-        self.jellyfishClient = FishjamClientSdk(listener: self)
+        self.fishjamClient = FishjamClientSdk(listener: self)
     }
 
     public func connect(peerToken: String) {
@@ -81,16 +81,16 @@ class ContentViewController: ObservableObject {
             simulcastConfig: SimulcastConfig(enabled: false)
         )
 
-        jellyfishClient?.connect(config: conf)
+        fishjamClient?.connect(config: conf)
 
-        self.localVideoTrack = jellyfishClient?.createVideoTrack(
+        self.localVideoTrack = fishjamClient?.createVideoTrack(
             videoParameters: videoParameters, metadata: .init(videoTrackMetadata))
-        self.localAudioTrack = jellyfishClient?.createAudioTrack(metadata: .init(audioTrackMetadata))
+        self.localAudioTrack = fishjamClient?.createAudioTrack(metadata: .init(audioTrackMetadata))
 
     }
 
     public func disconnect() {
-        jellyfishClient?.cleanUp()
+        fishjamClient?.cleanUp()
     }
 }
 
@@ -267,7 +267,7 @@ extension ContentViewController: FishjamClientListener {
     }
 
     func onAuthSuccess() {
-        jellyfishClient?.join(peerMetadata: .init(["displayName": "iphoneUser"]))
+        fishjamClient?.join(peerMetadata: .init(["displayName": "iphoneUser"]))
     }
 
     func onAuthError() {}
