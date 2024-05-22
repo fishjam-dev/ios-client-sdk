@@ -62,7 +62,7 @@ class ContentViewController: ObservableObject {
 
     public func connect(peerToken: String) {
         let conf = Config(
-            websocketUrl: (Bundle.main.infoDictionary?["jellyfish_url"] as! String),
+            websocketUrl: (Bundle.main.infoDictionary?["fishjam_url"] as! String),
             token: peerToken
         )
 
