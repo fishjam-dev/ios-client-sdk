@@ -5,8 +5,8 @@
 //  Created by Karol Sygiet on 02/06/2023.
 //
 
+import FishjamClientSdk
 import Foundation
-import JellyfishClientSdk
 import UIKit
 
 struct Participant {

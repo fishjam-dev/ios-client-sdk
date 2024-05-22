@@ -2,7 +2,7 @@ import Foundation
 import Mockingbird
 import XCTest
 
-@testable import JellyfishClientSdk
+@testable import FishjamClientSdk
 @testable import Starscream
 
 final class FishjamClientSdkTests: XCTestCase {
