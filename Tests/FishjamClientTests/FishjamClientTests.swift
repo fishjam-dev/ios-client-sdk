@@ -2,10 +2,10 @@ import Foundation
 import Mockingbird
 import XCTest
 
-@testable import FishjamClientSdk
+@testable import FishjamClient
 @testable import Starscream
 
-final class FishjamClientSdkTests: XCTestCase {
+final class FishjamClientTests: XCTestCase {
     let mockedWebSocket = mock(FishjamWebsocket.self)
     let fishjamClientListener = mock(FishjamClientListener.self)
     let testConfig = Config(websocketUrl: "ws://test:4000/socket/peer/websocket", token: "testTOKEN")

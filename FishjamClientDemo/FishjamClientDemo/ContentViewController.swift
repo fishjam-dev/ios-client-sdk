@@ -5,7 +5,7 @@
 //  Created by Karol Sygiet on 02/06/2023.
 //
 
-import FishjamClientSdk
+import FishjamClient
 import Foundation
 import UIKit
 
@@ -39,7 +39,7 @@ class ParticipantVideo: Identifiable, ObservableObject {
 }
 
 class ContentViewController: ObservableObject {
-    private var fishjamClient: FishjamClientSdk?
+    private var fishjamClient: FishjamClient?
 
     @Published var participants: [String: Participant]
     @Published var participantVideos: [ParticipantVideo]
@@ -57,7 +57,7 @@ class ContentViewController: ObservableObject {
         self.localParticipantId = "local"
         self.connected = false
 
-        self.fishjamClient = FishjamClientSdk(listener: self)
+        self.fishjamClient = FishjamClient(listener: self)
     }
 
     public func connect(peerToken: String) {

@@ -1,4 +1,4 @@
-import FishjamClientSdk
+import FishjamClient
 import SwiftUI
 
 struct ParticipantVideoView: View {

@@ -14,7 +14,7 @@
 		2FB8B3D42A20C6DA0060E251 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FB8B3D32A20C6DA0060E251 /* ContentView.swift */; };
 		2FB8B3D62A20C6DD0060E251 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2FB8B3D52A20C6DD0060E251 /* Assets.xcassets */; };
 		2FB8B3D92A20C6DD0060E251 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2FB8B3D82A20C6DD0060E251 /* Preview Assets.xcassets */; };
-		2FB8B4022A20D5B30060E251 /* FishjamClientSdk in Frameworks */ = {isa = PBXBuildFile; productRef = 2FB8B4012A20D5B30060E251 /* FishjamClientSdk */; };
+		2FB8B4022A20D5B30060E251 /* FishjamClient in Frameworks */ = {isa = PBXBuildFile; productRef = 2FB8B4012A20D5B30060E251 /* FishjamClient */; };
 		2FEEFCD62A5FED1700A8805C /* Debug.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 2FEEFCD52A5FED1700A8805C /* Debug.xcconfig */; };
 /* End PBXBuildFile section */
 
@@ -47,8 +47,8 @@
 		2FB8B3D82A20C6DD0060E251 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		2FB8B3DE2A20C6DD0060E251 /* FishjamClientDemoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FishjamClientDemoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		2FB8B3E82A20C6DD0060E251 /* FishjamClientDemoUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FishjamClientDemoUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		2FB8B3FE2A20D5110060E251 /* FishjamClientSdk */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = FishjamClientSdk; path = ../FishjamClientSdk; sourceTree = "<group>"; };
-		2FB8B3FF2A20D53A0060E251 /* FishjamClientSdk */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = FishjamClientSdk; path = ../FishjamClientSdk; sourceTree = "<group>"; };
+		2FB8B3FE2A20D5110060E251 /* FishjamClient */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = FishjamClient; path = ../FishjamClient; sourceTree = "<group>"; };
+		2FB8B3FF2A20D53A0060E251 /* FishjamClient */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = FishjamClient; path = ../FishjamClient; sourceTree = "<group>"; };
 		2FEEFCD52A5FED1700A8805C /* Debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Debug.xcconfig; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -57,7 +57,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2FB8B4022A20D5B30060E251 /* FishjamClientSdk in Frameworks */,
+				2FB8B4022A20D5B30060E251 /* FishjamClient in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -83,7 +83,7 @@
 			children = (
 				2FEEFCD52A5FED1700A8805C /* Debug.xcconfig */,
 				2FB1A6D02A3087BF004C2B3C /* Release.xcconfig */,
-				2FB8B3FE2A20D5110060E251 /* FishjamClientSdk */,
+				2FB8B3FE2A20D5110060E251 /* FishjamClient */,
 				2FB8B3FB2A20C7A60060E251 /* Packages */,
 				2FB8B3D02A20C6DA0060E251 /* FishjamClientDemo */,
 				2FB8B3CF2A20C6DA0060E251 /* Products */,
@@ -126,7 +126,7 @@
 		2FB8B3FB2A20C7A60060E251 /* Packages */ = {
 			isa = PBXGroup;
 			children = (
-				2FB8B3FF2A20D53A0060E251 /* FishjamClientSdk */,
+				2FB8B3FF2A20D53A0060E251 /* FishjamClient */,
 			);
 			name = Packages;
 			sourceTree = "<group>";
@@ -155,7 +155,7 @@
 			);
 			name = FishjamClientDemo;
 			packageProductDependencies = (
-				2FB8B4012A20D5B30060E251 /* FishjamClientSdk */,
+				2FB8B4012A20D5B30060E251 /* FishjamClient */,
 			);
 			productName = FishjamClientDemo;
 			productReference = 2FB8B3CE2A20C6DA0060E251 /* FishjamClientDemo.app */;
@@ -605,9 +605,9 @@
 /* End XCConfigurationList section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		2FB8B4012A20D5B30060E251 /* FishjamClientSdk */ = {
+		2FB8B4012A20D5B30060E251 /* FishjamClient */ = {
 			isa = XCSwiftPackageProductDependency;
-			productName = FishjamClientSdk;
+			productName = FishjamClient;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

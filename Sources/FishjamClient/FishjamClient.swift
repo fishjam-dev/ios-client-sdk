@@ -48,7 +48,7 @@ internal func websocketFactory(url: String) -> FishjamWebsocket {
     return FishjamClientWebSocket(socket: WebSocket(request: urlRequest))
 }
 
-public class FishjamClientSdk {
+public class FishjamClient {
     private var client: FishjamClientInternal
     private var webrtcClient: MembraneRTC
 

@@ -11,5 +11,5 @@ printf "DONE\n\n"
 file="./protos/fishjam/peer_notifications.proto"
 
 printf "Compiling: file $file\n"
-protoc --swift_out="./Sources/FishjamClientSdk" $file
+protoc --swift_out="./Sources/FishjamClient" $file
 printf "DONE\n"

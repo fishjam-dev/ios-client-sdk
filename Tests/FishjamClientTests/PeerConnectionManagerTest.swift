@@ -1,7 +1,7 @@
 import WebRTC
 import XCTest
 
-@testable import FishjamClientSdk
+@testable import FishjamClient
 
 class PeerConnectionManagerTest: XCTestCase {
     var manager: PeerConnectionManager!
