@@ -11,13 +11,13 @@ jobs:
         run: brew install swift-format xcbeautify
 
       - name: Run formatter 🎨
-        run: swift-format format -i -r ./**/**/*.swift --configuration swift-format-config.json
+        run: yarn format
 
       - name: Run lint 👀
-        run: swift-format lint -r -s ./**/**/*.swift --configuration swift-format-config.json
+        run: yarn lint
 
       - name: Generate mocks 🫥
-        run: swift package update Mockingbird && ./scripts/gen-mocks.sh
+        run: yarn mocks
 
       - name: Run tests 💀
-        run: set -o pipefail && xcodebuild -scheme FishjamClientTests test -destination "platform=iOS Simulator,name=iPhone 14,OS=latest" | xcbeautify
+        run: yarn test
