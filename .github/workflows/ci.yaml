@@ -17,7 +17,7 @@ jobs:
         run: swift-format lint -r -s ./**/**/*.swift --configuration swift-format-config.json
 
       - name: Generate mocks 🫥
-        run: swift package update Mockingbird && ./gen-mocks.sh
+        run: swift package update Mockingbird && ./scripts/gen-mocks.sh
 
       - name: Run tests 💀
         run: set -o pipefail && xcodebuild -scheme FishjamClientTests test -destination "platform=iOS Simulator,name=iPhone 14,OS=latest" | xcbeautify
