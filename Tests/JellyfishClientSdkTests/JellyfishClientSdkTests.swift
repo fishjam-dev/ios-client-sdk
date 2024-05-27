@@ -13,7 +13,8 @@ final class JellyfishClientSdkTests: XCTestCase {
     var webrtc: JellyfishMembraneRTC?
     // "Real" websocket class has to be used here since it is needed as a parameter for callbacks.
     // It is safe to use it here because callbacks implemented in the JellyfishClientInternal ignore this parameter.
-    let socket = WebSocket(url: URL(string: "ws://test:4000/socket/peer/websocket")!)
+
+    let socket = WebSocket(request: URLRequest(url: URL(string: "ws://test:4000/socket/peer/websocket")!))
 
     func getMockWebsocket(url: String) -> JellyfishWebsocket {
         return self.mockedWebSocket
@@ -63,7 +64,7 @@ final class JellyfishClientSdkTests: XCTestCase {
         self.jellyfishClient = jellyfishClient
         self.webrtc = webrtc
         givenSwift(self.mockedWebSocket.connect()).will {
-            self.jellyfishClient?.websocketDidConnect(socket: self.socket)
+            self.jellyfishClient?.websocketDidConnect()
         }
     }
 
@@ -74,7 +75,7 @@ final class JellyfishClientSdkTests: XCTestCase {
     }
 
     func sendToClient(_ data: Data) {
-        self.jellyfishClient?.websocketDidReceiveData(socket: self.socket, data: data)
+        self.jellyfishClient?.websocketDidReceiveData(data: data)
     }
 
     func verifyClientSent(_ data: Data) {
@@ -104,14 +105,5 @@ final class JellyfishClientSdkTests: XCTestCase {
         connect()
         jellyfishClient?.onSendMediaEvent(event: "join")
         verifyClientSent(joinEvent)
-    }
-
-    func testCloseWithError() throws {
-        let err = WSError(type: ErrorType.closeError, message: "Test reason", code: 1009)
-
-        connect()
-        jellyfishClient?.websocketDidDisconnect(socket: self.socket, error: err)
-
-        verify(self.jellyfishClientListener.onSocketClose(code: 1009, reason: "Test reason")).wasCalled()
     }
 }

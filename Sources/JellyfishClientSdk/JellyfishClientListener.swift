@@ -4,7 +4,7 @@ public protocol JellyfishClientListener {
     /**
      * Emitted when the websocket connection is closed
      */
-    func onSocketClose(code: Int, reason: String)
+    func onSocketClose(code: UInt16, reason: String)
 
     /**
      * Emitted when occurs an error in the websocket connection

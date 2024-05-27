@@ -254,7 +254,7 @@ extension ContentViewController: JellyfishClientListener {
 
     func onPeerUpdated(endpoint _: Endpoint) {}
 
-    func onSocketClose(code: Int, reason: String) {
+    func onSocketClose(code: UInt16, reason: String) {
         if code != 1000 || reason == "invalid token" {
             self.errorMessage = setErrorMessage(code: code, message: reason)
         }
@@ -274,7 +274,7 @@ extension ContentViewController: JellyfishClientListener {
 
     func onDisconnected() {}
 
-    private func setErrorMessage(code: Int, message: String) -> String {
+    private func setErrorMessage(code: UInt16, message: String) -> String {
         return String(code) + ": " + message
     }
 }

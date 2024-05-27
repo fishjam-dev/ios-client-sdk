@@ -20,15 +20,6 @@
         }
       },
       {
-        "package": "RxSwift",
-        "repositoryURL": "https://github.com/ReactiveX/RxSwift.git",
-        "state": {
-          "branch": null,
-          "revision": "9dcaa4b333db437b0fbfaf453fad29069044a8b4",
-          "version": "6.6.0"
-        }
-      },
-      {
         "package": "WebRTC",
         "repositoryURL": "https://github.com/webrtc-sdk/Specs.git",
         "state": {
@@ -42,8 +33,8 @@
         "repositoryURL": "https://github.com/daltoniam/Starscream.git",
         "state": {
           "branch": null,
-          "revision": "a063fda2b8145a231953c20e7a646be254365396",
-          "version": "3.1.2"
+          "revision": "c6bfd1af48efcc9a9ad203665db12375ba6b145a",
+          "version": "4.0.8"
         }
       },
       {
@@ -87,8 +78,8 @@
         "repositoryURL": "https://github.com/davidstump/SwiftPhoenixClient.git",
         "state": {
           "branch": null,
-          "revision": "882231977f6381827ad564ccaff622de2d550477",
-          "version": "4.0.0"
+          "revision": "588bf6baab5d049752748e19a4bff32421ea40ec",
+          "version": "5.3.2"
         }
       }
     ]
