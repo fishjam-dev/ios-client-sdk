@@ -1,6 +1,6 @@
 //
 //  ContentView.swift
-//  JellyfishClientDemo
+//  FishjamClientDemo
 //
 //  Created by Karol Sygiet on 26/05/2023.
 //

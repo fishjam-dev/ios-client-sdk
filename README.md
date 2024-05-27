@@ -6,9 +6,9 @@
 
 The repository consists of 3 separate components:
 
-- `JellyfishClientSdk` - Fishjam client fully compatible with `Fishjam`, responsible for exchanging media events and
+- `FishjamClient` - Fishjam client fully compatible with `Fishjam`, responsible for exchanging media events and
   receiving media streams which then are presented to the user
-- `JellyfishCLientDemo` - Demo application utilizing `Fishjam` client
+- `FishjamClientDemo` - Demo application utilizing `Fishjam` client
 - `MembraneRTC` - iOS WebRTC client
 
 ### Example App
@@ -24,7 +24,7 @@ API documentation is available [here](https://fishjam-dev.github.io/ios-client-s
 
 ## Installation
 
-Add FishjamClientSDK dependency to your project.
+Add FishjamClient dependency to your project.
 
 ## Developing
 

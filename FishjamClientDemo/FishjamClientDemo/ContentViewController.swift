@@ -1,12 +1,12 @@
 //
 //  ContentViewController.swift
-//  JellyfishClientDemo
+//  FishjamClientDemo
 //
 //  Created by Karol Sygiet on 02/06/2023.
 //
 
+import FishjamClient
 import Foundation
-import JellyfishClientSdk
 import UIKit
 
 struct Participant {
@@ -39,7 +39,7 @@ class ParticipantVideo: Identifiable, ObservableObject {
 }
 
 class ContentViewController: ObservableObject {
-    private var jellyfishClient: JellyfishClientSdk?
+    private var fishjamClient: FishjamClient?
 
     @Published var participants: [String: Participant]
     @Published var participantVideos: [ParticipantVideo]
@@ -57,12 +57,12 @@ class ContentViewController: ObservableObject {
         self.localParticipantId = "local"
         self.connected = false
 
-        self.jellyfishClient = JellyfishClientSdk(listener: self)
+        self.fishjamClient = FishjamClient(listener: self)
     }
 
     public func connect(peerToken: String) {
         let conf = Config(
-            websocketUrl: (Bundle.main.infoDictionary?["jellyfish_url"] as! String),
+            websocketUrl: (Bundle.main.infoDictionary?["fishjam_url"] as! String),
             token: peerToken
         )
 
@@ -81,20 +81,20 @@ class ContentViewController: ObservableObject {
             simulcastConfig: SimulcastConfig(enabled: false)
         )
 
-        jellyfishClient?.connect(config: conf)
+        fishjamClient?.connect(config: conf)
 
-        self.localVideoTrack = jellyfishClient?.createVideoTrack(
+        self.localVideoTrack = fishjamClient?.createVideoTrack(
             videoParameters: videoParameters, metadata: .init(videoTrackMetadata))
-        self.localAudioTrack = jellyfishClient?.createAudioTrack(metadata: .init(audioTrackMetadata))
+        self.localAudioTrack = fishjamClient?.createAudioTrack(metadata: .init(audioTrackMetadata))
 
     }
 
     public func disconnect() {
-        jellyfishClient?.cleanUp()
+        fishjamClient?.cleanUp()
     }
 }
 
-extension ContentViewController: JellyfishClientListener {
+extension ContentViewController: FishjamClientListener {
     func onBandwidthEstimationChanged(estimation: Int) {
 
     }
@@ -267,7 +267,7 @@ extension ContentViewController: JellyfishClientListener {
     }
 
     func onAuthSuccess() {
-        jellyfishClient?.join(peerMetadata: .init(["displayName": "iphoneUser"]))
+        fishjamClient?.join(peerMetadata: .init(["displayName": "iphoneUser"]))
     }
 
     func onAuthError() {}

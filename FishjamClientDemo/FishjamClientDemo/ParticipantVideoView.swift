@@ -1,4 +1,4 @@
-import JellyfishClientSdk
+import FishjamClient
 import SwiftUI
 
 struct ParticipantVideoView: View {

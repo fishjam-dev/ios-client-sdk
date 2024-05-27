@@ -20,4 +20,4 @@ jobs:
         run: swift package update Mockingbird && ./gen-mocks.sh
 
       - name: Run tests 💀
-        run: set -o pipefail && xcodebuild -scheme JellyfishClientSdkTests test -destination "platform=iOS Simulator,name=iPhone 14,OS=latest" | xcbeautify
+        run: set -o pipefail && xcodebuild -scheme FishjamClientTests test -destination "platform=iOS Simulator,name=iPhone 14,OS=latest" | xcbeautify
