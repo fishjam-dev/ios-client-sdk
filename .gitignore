@@ -105,3 +105,4 @@ lib_InternalSwiftSyntaxParser.dylib
 .mockingbird/
 
 .DS_Store
+/.idea
