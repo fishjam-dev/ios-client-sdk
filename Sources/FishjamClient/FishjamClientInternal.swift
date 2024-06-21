@@ -160,6 +160,7 @@ internal class FishjamClientInternal: MembraneRTCDelegate, WebSocketDelegate {
     }
 
     func onSocketError() {
+        isAuthenticated = false
         listener.onSocketError()
     }
 
@@ -176,6 +177,7 @@ internal class FishjamClientInternal: MembraneRTCDelegate, WebSocketDelegate {
     }
 
     func onDisconnected() {
+        isAuthenticated = false
         listener.onDisconnected()
     }
 
