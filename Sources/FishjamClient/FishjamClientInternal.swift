@@ -7,6 +7,7 @@ internal class FishjamClientInternal: MembraneRTCDelegate, WebSocketDelegate {
     private var listener: FishjamClientListener
     private var websocketFactory: (String) -> FishjamWebsocket
     var webrtcClient: FishjamMembraneRTC?
+    private var isAuthenticated = false
 
     public init(listener: FishjamClientListener, websocketFactory: @escaping (String) -> FishjamWebsocket) {
         self.listener = listener
@@ -23,10 +24,12 @@ internal class FishjamClientInternal: MembraneRTCDelegate, WebSocketDelegate {
 
     func leave() {
         webrtcClient?.disconnect()
+        isAuthenticated = false
     }
 
     func cleanUp() {
         webrtcClient?.disconnect()
+        isAuthenticated = false
         webSocket?.disconnect()
         webSocket = nil
         onDisconnected()
@@ -77,6 +80,7 @@ internal class FishjamClientInternal: MembraneRTCDelegate, WebSocketDelegate {
         do {
             let peerMessage = try Fishjam_PeerMessage(serializedData: data)
             if case .authenticated(_) = peerMessage.content {
+                isAuthenticated = true
                 onAuthSuccess()
             } else if case .mediaEvent(_) = peerMessage.content {
                 receiveEvent(event: peerMessage.mediaEvent.data)
@@ -114,6 +118,10 @@ internal class FishjamClientInternal: MembraneRTCDelegate, WebSocketDelegate {
     }
 
     func onSendMediaEvent(event: SerializedMediaEvent) {
+        if (!isAuthenticated) {
+          print("Tried to send media event: \(event) before authentication")
+          return
+        }
         let mediaEvent =
             Fishjam_PeerMessage.with({
                 $0.mediaEvent = Fishjam_PeerMessage.MediaEvent.with({
@@ -152,6 +160,7 @@ internal class FishjamClientInternal: MembraneRTCDelegate, WebSocketDelegate {
     }
 
     func onSocketError() {
+        isAuthenticated = false
         listener.onSocketError()
     }
 
@@ -168,6 +177,7 @@ internal class FishjamClientInternal: MembraneRTCDelegate, WebSocketDelegate {
     }
 
     func onDisconnected() {
+        isAuthenticated = false
         listener.onDisconnected()
     }
 
