@@ -2,5 +2,12 @@
   "devDependencies": {
     "@release-it/bumper": "^4.0.0",
     "release-it": "^15.5.0"
+  },
+  "scripts": {
+    "prepare": "./scripts/init.sh",
+    "lint": "swift-format lint -r -s ./**/**/*.swift --configuration swift-format-config.json",
+    "format": "swift-format format -r -i ./**/**/*.swift --configuration swift-format-config.json",
+    "test": "set -o pipefail && xcodebuild -scheme FishjamClientTests test -destination \"platform=iOS Simulator,name=iPhone 14,OS=latest\" | xcbeautify",
+    "mocks": "swift package update Mockingbird && ./scripts/gen-mocks.sh"
   }
 }

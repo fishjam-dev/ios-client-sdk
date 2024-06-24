@@ -91,6 +91,7 @@ iOSInjectionProject/
 
 
 node_modules
+yarn-error.log
 
 FishjamClientDemo/Debug.xcconfig
 FishjamClientDemo/Release.xcconfig
